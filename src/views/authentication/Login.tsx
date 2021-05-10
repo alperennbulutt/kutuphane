@@ -94,7 +94,7 @@ export default function Login() {
       <Hidden mdDown>
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 15, mb: 15 }}>
-            Hi, Welcome Back
+            Hoş Geldiniz
           </Typography>
           <img src="/static/illustrations/illustration_login.svg" alt="login" />
         </SectionStyle>

@@ -6,6 +6,9 @@ import axios from '../../utils/axios';
 // @types
 import { User } from '../../@types/account';
 
+
+import { CONSTS } from "./const";
+
 // ----------------------------------------------------------------------
 
 type AuthJWTState = {
@@ -109,7 +112,7 @@ export function login({
 }) {
   return async () => {
     const { dispatch } = store;
-    const response = await axios.post('/api/account/login', {
+    const response = await axios.post(CONSTS.AnnouncementAddAnnouncement, {
       email,
       password
     });

@@ -151,7 +151,7 @@ export default function GuestList({ title }: GuestListPropsType) {
   return (
     <Page title="User: List | Minimal-UI">
       <Container>
-        <h1 style={{ padding: 20 }}>{title}</h1>
+        <h1 style={{ padding: 20, marginLeft: 100 }}>{title}</h1>
         <Card>
           <UserListToolbar
             numSelected={selected.length}

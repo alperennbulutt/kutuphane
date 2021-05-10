@@ -21,7 +21,7 @@ export default function Turnstile() {
         </Button>
       </Grid>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={5}>
         <Grid item xs={6}>
           <GuestList title="Giriş Turnikesi" />
         </Grid>
