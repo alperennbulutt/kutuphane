@@ -55,32 +55,32 @@ const sidebarConfig = [
       },
       {
         title: 'Çalışma Alanları',
-        href: PATH_DASHBOARD.general.ecommerce,
+        href: PATH_DASHBOARD.general.workingArea,
         icon: ICONS.analytics
       },
       {
         title: 'Sessiz Kütüphane',
-        href: PATH_DASHBOARD.user.cards,
+        href: PATH_DASHBOARD.general.silentLibrary,
         icon: ICONS.ecommerce
       },
       {
         title: 'Randevular',
-        href: PATH_DASHBOARD.general.ecommerce,
+        href: PATH_DASHBOARD.general.apointment,
         icon: ICONS.ecommerce
       },
       {
         title: 'Çalışma Takvimi',
-        href: PATH_DASHBOARD.general.ecommerce,
+        href: PATH_DASHBOARD.general.workingSchedule,
         icon: ICONS.ecommerce
       },
       {
         title: 'Masalar',
-        href: PATH_DASHBOARD.general.ecommerce,
+        href: PATH_DASHBOARD.general.table,
         icon: ICONS.ecommerce
       },
       {
         title: 'Duyurular',
-        href: PATH_DASHBOARD.general.ecommerce,
+        href: PATH_DASHBOARD.general.announcement,
         icon: ICONS.editor
       }
     ]

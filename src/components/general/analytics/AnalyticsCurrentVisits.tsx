@@ -66,7 +66,7 @@ export default function AnalyticsCurrentVisits() {
 
   return (
     <Card>
-      <CardHeader title="Current Visits" />
+      <CardHeader title="Giriş Yöntemi" />
       <ChartWrapperStyle dir="ltr">
         <ReactApexChart
           type="pie"

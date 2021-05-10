@@ -41,7 +41,13 @@ export const PATH_DASHBOARD = {
   general: {
     turnstile: path(ROOTS_DASHBOARD, '/turnstile'),
     ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
-    analytics: path(ROOTS_DASHBOARD, '/analytics')
+    analytics: path(ROOTS_DASHBOARD, '/analytics'),
+    workingArea: path(ROOTS_DASHBOARD, '/workingArea'),
+    silentLibrary: path(ROOTS_DASHBOARD, '/silentLibrary'),
+    apointment: path(ROOTS_DASHBOARD, '/apointment'),
+    workingSchedule: path(ROOTS_DASHBOARD, '/workingSchedule'),
+    table: path(ROOTS_DASHBOARD, '/table'),
+    announcement: path(ROOTS_DASHBOARD, '/announcement')
   },
   mail: {
     root: path(ROOTS_DASHBOARD, '/mail'),
@@ -67,6 +73,7 @@ export const PATH_DASHBOARD = {
     list: path(ROOTS_DASHBOARD, '/user/list'),
     account: path(ROOTS_DASHBOARD, '/user/account')
   },
+
   eCommerce: {
     root: path(ROOTS_DASHBOARD, '/e-commerce'),
     shop: path(ROOTS_DASHBOARD, '/e-commerce/shop'),
@@ -86,7 +93,8 @@ export const PATH_DASHBOARD = {
       ROOTS_DASHBOARD,
       '/blog/post/portfolio-review-is-this-portfolio-too-creative'
     ),
-    newPost: path(ROOTS_DASHBOARD, '/blog/new-post')
+    newPost: path(ROOTS_DASHBOARD, '/blog/new-post'),
+    qrCode: path(ROOTS_DASHBOARD, '/qrcode')
   },
   foundations: {
     root: path(ROOTS_DASHBOARD, '/foundations'),

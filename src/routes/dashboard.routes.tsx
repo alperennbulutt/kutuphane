@@ -22,14 +22,42 @@ const DashboardRoutes = {
     },
     {
       exact: true,
-      path: PATH_DASHBOARD.general.ecommerce,
-      component: lazy(() => import('../views/GeneralEcommerce'))
+      path: PATH_DASHBOARD.general.analytics,
+      component: lazy(() => import('../views/kutuphane/Analytics'))
+    },
+
+    {
+      exact: true,
+      path: PATH_DASHBOARD.general.workingArea,
+      component: lazy(() => import('../views/kutuphane/WorkingArea'))
     },
     {
       exact: true,
-      path: PATH_DASHBOARD.general.analytics,
-      component: lazy(() => import('../views/GeneralAnalytics'))
+      path: PATH_DASHBOARD.general.silentLibrary,
+      component: lazy(() => import('../views/kutuphane/SilentLibrary'))
     },
+    {
+      exact: true,
+      path: PATH_DASHBOARD.general.apointment,
+      component: lazy(() => import('../views/kutuphane/Apointment'))
+    },
+    {
+      exact: true,
+      path: PATH_DASHBOARD.general.workingSchedule,
+      component: lazy(() => import('../views/kutuphane/WorkingSchedule'))
+    },
+    {
+      exact: true,
+      path: PATH_DASHBOARD.general.table,
+      component: lazy(() => import('../views/kutuphane/Table'))
+    },
+
+    {
+      exact: true,
+      path: PATH_DASHBOARD.general.announcement,
+      component: lazy(() => import('../views/kutuphane/Announcement'))
+    },
+
     {
       exact: true,
       path: PATH_DASHBOARD.root,
@@ -83,8 +111,8 @@ const DashboardRoutes = {
     },
     {
       exact: true,
-      path: PATH_DASHBOARD.blog.newPost,
-      component: lazy(() => import('../views/BlogNewPost'))
+      path: PATH_DASHBOARD.blog.qrCode,
+      component: lazy(() => import('../views/kutuphane/QrCode'))
     },
 
     // MANAGEMENT : USER
