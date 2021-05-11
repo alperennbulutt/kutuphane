@@ -6,8 +6,7 @@ import axios from '../../utils/axios';
 // @types
 import { User } from '../../@types/account';
 
-
-import { CONSTS } from "./const";
+import { CONSTS } from './const';
 
 // ----------------------------------------------------------------------
 

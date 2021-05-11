@@ -45,9 +45,9 @@ export default function LoginForm() {
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
-      .email('Email must be a valid email address')
-      .required('Email is required'),
-    password: Yup.string().required('Password is required')
+      .email('Geçerli bir e-posta adresi olmalıdır.')
+      .required('E-posta gereklidir.'),
+    password: Yup.string().required('Şifre gereklidir.')
   });
 
   const formik = useFormik<InitialValues>({
@@ -63,7 +63,7 @@ export default function LoginForm() {
           email: values.email,
           password: values.password
         });
-        enqueueSnackbar('Login success', {
+        enqueueSnackbar('Giriş Başarılı', {
           variant: 'success',
           action: (key) => (
             <MIconButton size="small" onClick={() => closeSnackbar(key)}>
@@ -105,7 +105,7 @@ export default function LoginForm() {
           fullWidth
           autoComplete="username"
           type="email"
-          label="Email address"
+          label="E-posta"
           {...getFieldProps('email')}
           error={
             Boolean(touched.email && errors.email) ||
@@ -122,7 +122,7 @@ export default function LoginForm() {
           fullWidth
           autoComplete="current-password"
           type={showPassword ? 'text' : 'password'}
-          label="Password"
+          label="Şifre"
           {...getFieldProps('password')}
           InputProps={{
             endAdornment: (
@@ -157,7 +157,7 @@ export default function LoginForm() {
                 checked={values.remember}
               />
             }
-            label="Remember me"
+            label="Beni Hatırla"
           />
 
           <Link
@@ -165,7 +165,7 @@ export default function LoginForm() {
             variant="subtitle2"
             to={PATH_AUTH.resetPassword}
           >
-            Forgot password?
+            Şifreni mi Unuttun ?
           </Link>
         </Box>
 
@@ -176,7 +176,7 @@ export default function LoginForm() {
           variant="contained"
           pending={isSubmitting}
         >
-          Login
+          Giriş
         </LoadingButton>
       </Form>
     </FormikProvider>

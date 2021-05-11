@@ -1,12 +1,10 @@
 export const CONSTS = {
-  //Announcements ------------------------------------------------------------------------------
   AnnouncementAddAnnouncement: '/api/Announcement/AddAnnouncement',
   AnnouncementDeleteAnnouncement:
     '/api/Announcement/DeleteAnnouncement/{announcementId}',
   AnnouncementGetAnnouncementList: '/api/Announcement/GetAnnouncementsList',
   AnnouncementEditAnnounement: '/api/Announcement/EditAnnounement',
 
-  //Appointment ------------------------------------------------------------------------------
   AppointmentCancelAppointment:
     '/api/Appointment/CancelAppointment/{appointmentId}/{cancellationReason}',
 
@@ -35,7 +33,6 @@ export const CONSTS = {
     '/api/Appointment/AddAppointmentRestrictionDate',
   AppointmentDeleteAppointmentRestrictionDate:
     '/api/Appointment/DeleteAppointmentRestrictionDate/{appointmentRestrictionDateId}',
-  //RfidCard ------------------------------------------------------------------------------
 
   RfidCardActiveRfidCardList: '/api/RfidCard/ActiveRfidCardList',
   RfidCardQuestAndVisitorList: '/api/RfidCard/QuestAndVisitorList',
@@ -44,7 +41,6 @@ export const CONSTS = {
   RfidCardAddRfidCardUser: '/api/RfidCard/AddRfidCardUser/{cardNumber}',
   RfidCardDeleteRfidCard: '/api/RfidCard/DeleteRfidCard',
 
-  //Statistics ------------------------------------------------------------------------------
   StatisticsGetTotalNumberOfAppointments:
     '/api/Statistics/GetTotalNumberOfAppointments',
   StatisticsGetTotalRfidQrCodeStatistics:
@@ -59,11 +55,7 @@ export const CONSTS = {
   StatisticsGetMonthVisitorStatistics:
     '/api/Statistics/GetMonthVisitorStatistics/{month}',
 
-  //SystemSettings ------------------------------------------------------------------------------
-
   SystemSettingsLatestDateUpdate: '/api/SystemSettings/LatestDateUpdate/{day}',
-
-  //Table ------------------------------------------------------------------------------
 
   TableGetTable: '/api/Table/GetTable/{barcodeNumber}',
   ChangeTableWorkingArea:
@@ -71,26 +63,16 @@ export const CONSTS = {
   TableGetAllTables: '/api/Table/GetAllTables',
   IsThereAppointmentTable: '/api/Table/IsThereAppointmentTable/{tableId}',
 
-  //Turnstile ------------------------------------------------------------------------------
-
   TurnstileTurnstileRegisters:
     '/api/Turnstile/TurnstileRegisters/{turnstileLocation}/{turnstileType}',
 
-  //Util ------------------------------------------------------------------------------
-
   UtilMisafirQRCode: '/api/Util/MisafirQRCode',
-
-  //VacationDay ------------------------------------------------------------------------------
 
   VacationDayGetVacationDayList: '/api/VacationDay/GetVacationDayList',
   VacationDayAddVacationDay: '/api/VacationDay/AddVacationDay',
 
-  //Visitor ------------------------------------------------------------------------------
-
   VisitorVisitorTurnstileMovement:
     '/api/Visitor/VisitorTurnstileMovement/{identificationNumber}',
-
-  //WorkingArea ------------------------------------------------------------------------------
 
   WorkingAreaAddClassroom: '/api/WorkingArea/AddClassroom',
   WorkingAreaWorkingAreaStatus:

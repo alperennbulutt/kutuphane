@@ -78,14 +78,14 @@ export default function Login() {
               mt: { md: -2 }
             }}
           >
-            Don’t have an account? &nbsp;
+            Hesabınız yok mu? &nbsp;
             <Link
               underline="none"
               variant="subtitle2"
               component={RouterLink}
               to={PATH_AUTH.register}
             >
-              Get started
+              Hadi Başlayalım
             </Link>
           </Typography>
         </Hidden>
@@ -94,7 +94,7 @@ export default function Login() {
       <Hidden mdDown>
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 15, mb: 15 }}>
-            Hoş Geldiniz
+            Hoş Geldiniz!
           </Typography>
           <img src="/static/illustrations/illustration_login.svg" alt="login" />
         </SectionStyle>
@@ -105,10 +105,10 @@ export default function Login() {
           <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="h4" gutterBottom>
-                Sign in to Minimal
+                Giriş Yapın
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>
-                Enter your details below.
+                Bilgilerinizi aşağıya giriniz.
               </Typography>
             </Box>
             <Tooltip title={method === 'firebase' ? 'Firebase' : 'JWT'}>
