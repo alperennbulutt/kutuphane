@@ -54,6 +54,7 @@ export default function LoginForm() {
     initialValues: {
       email: '',
       password: '',
+
       remember: true
     },
     validationSchema: LoginSchema,

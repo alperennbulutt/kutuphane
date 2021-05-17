@@ -111,7 +111,9 @@ export default function Login() {
                 Bilgilerinizi aşağıya giriniz.
               </Typography>
             </Box>
-            <Tooltip title={method === 'firebase' ? 'Firebase' : 'JWT'}>
+            <Tooltip
+              title={method === 'firebase' ? 'Firebase' : 'Talas Belediyesi'}
+            >
               <Box
                 component="img"
                 src={`/static/icons/${

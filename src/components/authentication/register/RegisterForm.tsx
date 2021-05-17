@@ -101,7 +101,7 @@ export default function RegisterForm() {
           <Grid item xs={6}>
             <TextField
               fullWidth
-              label="First name"
+              label="Ad"
               {...getFieldProps('firstName')}
               error={Boolean(touched.firstName && errors.firstName)}
               helperText={touched.firstName && errors.firstName}
@@ -110,7 +110,7 @@ export default function RegisterForm() {
           <Grid item xs={6}>
             <TextField
               fullWidth
-              label="Last name"
+              label="Soyad"
               {...getFieldProps('lastName')}
               error={Boolean(touched.lastName && errors.lastName)}
               helperText={touched.lastName && errors.lastName}
@@ -121,7 +121,7 @@ export default function RegisterForm() {
         <TextField
           fullWidth
           autoComplete="username"
-          label="Email address"
+          label="E-posta adresi"
           {...getFieldProps('email')}
           error={
             Boolean(touched.email && errors.email) ||
@@ -138,7 +138,7 @@ export default function RegisterForm() {
           fullWidth
           autoComplete="current-password"
           type={showPassword ? 'text' : 'password'}
-          label="Password"
+          label="Parola"
           {...getFieldProps('password')}
           InputProps={{
             endAdornment: (
@@ -169,7 +169,7 @@ export default function RegisterForm() {
             variant="contained"
             pending={isSubmitting}
           >
-            Register
+            Kayıt Ol
           </LoadingButton>
         </Box>
       </Form>

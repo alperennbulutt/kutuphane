@@ -47,11 +47,11 @@ export default function ResetPassword() {
           {!sent ? (
             <>
               <Typography variant="h3" gutterBottom>
-                Forgot your password?
+                Parolanızı mı unuttunuz?
               </Typography>
               <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-                Please enter the email address associated with your account and
-                We will email you a link to reset your password.
+                Lütfen hesabınızla ilişkili e-posta adresini girin ve şifrenizi
+                sıfırlamak için size bir e-posta göndereceğiz.
               </Typography>
 
               <ResetPasswordForm
@@ -66,7 +66,7 @@ export default function ResetPassword() {
                 to={PATH_AUTH.login}
                 sx={{ mt: 1 }}
               >
-                Back
+                Geri
               </Button>
             </>
           ) : (
@@ -78,13 +78,13 @@ export default function ResetPassword() {
                 sx={{ mb: 5, mx: 'auto' }}
               />
               <Typography variant="h3" gutterBottom>
-                Request sent successfully
+                İstek başarıyla gönderildi
               </Typography>
               <Typography>
-                We have sent a confirmation email to &nbsp;
                 <strong>{email}</strong>
                 <br />
-                Please check your email.
+                Mail adresine bir onay e-postası gönderdik Lütfen emailinizi
+                kontrol ediniz.
               </Typography>
 
               <Button
@@ -94,7 +94,7 @@ export default function ResetPassword() {
                 to={PATH_AUTH.login}
                 sx={{ mt: 5 }}
               >
-                Back
+                Geri
               </Button>
             </Box>
           )}

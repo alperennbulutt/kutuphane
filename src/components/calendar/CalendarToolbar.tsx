@@ -24,10 +24,10 @@ import { CalendarView } from '../../@types/calendar';
 // ----------------------------------------------------------------------
 
 const VIEW_OPTIONS = [
-  { value: 'dayGridMonth', label: 'Month', icon: roundViewModule },
-  { value: 'timeGridWeek', label: 'Week', icon: roundViewWeek },
-  { value: 'timeGridDay', label: 'Day', icon: roundViewDay },
-  { value: 'listWeek', label: 'Agenda', icon: roundViewAgenda }
+  { value: 'dayGridMonth', label: 'Aylık', icon: roundViewModule },
+  { value: 'timeGridWeek', label: 'Haftalık', icon: roundViewWeek },
+  { value: 'timeGridDay', label: 'Günlük', icon: roundViewDay },
+  { value: 'listWeek', label: 'Gündem', icon: roundViewAgenda }
 ] as const;
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -96,7 +96,7 @@ export default function CalendarToolbar({
           onClick={onToday}
           sx={{ mx: 0.5 }}
         >
-          Today
+          Bugün
         </MButton>
 
         <IconButton onClick={onNextDate}>

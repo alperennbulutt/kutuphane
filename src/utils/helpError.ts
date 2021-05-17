@@ -53,6 +53,19 @@ export function emailError(errors: string) {
       (errors === userNotFound.code && userNotFound.text)
   };
 }
+export function userNameError(errors: string) {
+  return {
+    error:
+      errors === invalidEmail.code ||
+      errors === userDisabled.code ||
+      errors === userNotFound.code,
+    helperText:
+      (errors === emailAlreadyinUse.code && emailAlreadyinUse.text) ||
+      (errors === invalidEmail.code && invalidEmail.text) ||
+      (errors === userDisabled.code && userDisabled.text) ||
+      (errors === userNotFound.code && userNotFound.text)
+  };
+}
 
 export function passwordError(errors: string) {
   return {

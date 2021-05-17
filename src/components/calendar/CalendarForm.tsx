@@ -80,7 +80,7 @@ export default function CalendarForm({
   const isCreating = !event;
 
   const EventSchema = Yup.object().shape({
-    title: Yup.string().max(255).required('Title is required'),
+    title: Yup.string().max(255).required('Başlık gereklidir.'),
     description: Yup.string().max(5000)
   });
 
@@ -142,7 +142,7 @@ export default function CalendarForm({
         <DialogContent sx={{ pb: 0, overflowY: 'unset' }}>
           <TextField
             fullWidth
-            label="Title"
+            label="Başlık"
             {...getFieldProps('title')}
             error={Boolean(touched.title && errors.title)}
             helperText={touched.title && errors.title}
@@ -153,7 +153,7 @@ export default function CalendarForm({
             fullWidth
             multiline
             maxRows={4}
-            label="Description"
+            label="Açıklama"
             {...getFieldProps('description')}
             error={Boolean(touched.description && errors.description)}
             helperText={touched.description && errors.description}
@@ -164,12 +164,12 @@ export default function CalendarForm({
             control={
               <Switch checked={values.allDay} {...getFieldProps('allDay')} />
             }
-            label="All day"
+            label="Tüm Gün"
             sx={{ mb: 3 }}
           />
 
           <MobileDateTimePicker
-            label="Start date"
+            label="Başlama tarihi"
             value={values.start}
             inputFormat="dd/MM/yyyy hh:mm a"
             onChange={(date) => setFieldValue('start', date)}
@@ -179,7 +179,7 @@ export default function CalendarForm({
           />
 
           <MobileDateTimePicker
-            label="End date"
+            label="Bitiş Tarihi"
             value={values.end}
             inputFormat="dd/MM/yyyy hh:mm a"
             onChange={(date) => setFieldValue('end', date)}
@@ -204,7 +204,7 @@ export default function CalendarForm({
 
         <DialogActions>
           {!isCreating && (
-            <Tooltip title="Delete Event">
+            <Tooltip title="Olayı Sil">
               <IconButton onClick={handleDelete}>
                 <Icon icon={trash2Fill} width={20} height={20} />
               </IconButton>
@@ -217,7 +217,7 @@ export default function CalendarForm({
             color="inherit"
             onClick={onCancel}
           >
-            Cancel
+            İptal
           </Button>
           <LoadingButton
             type="submit"
@@ -225,7 +225,7 @@ export default function CalendarForm({
             pending={isSubmitting}
             pendingIndicator="Loading..."
           >
-            Add
+            Ekle
           </LoadingButton>
         </DialogActions>
       </Form>

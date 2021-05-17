@@ -74,14 +74,14 @@ export default function Register() {
         </RouterLink>
         <Hidden smDown>
           <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-            Already have an account? &nbsp;
+            Zaten hesabınız var mı? &nbsp;
             <Link
               underline="none"
               variant="subtitle2"
               component={RouterLink}
               to={PATH_AUTH.login}
             >
-              Login
+              Giriş
             </Link>
           </Typography>
         </Hidden>
@@ -90,7 +90,7 @@ export default function Register() {
       <Hidden mdDown>
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 5, mb: 15 }}>
-            Manage the job more effectively with Minimal
+            Kayıt olmak artık çok kolay!
           </Typography>
           <img
             alt="register"
@@ -104,10 +104,10 @@ export default function Register() {
           <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="h4" gutterBottom>
-                Get started absolutely free.
+                Kayıt Alanı
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>
-                Free forever. No credit card needed.
+                Belirtilen alanlara bilgilerinizi giriniz.
               </Typography>
             </Box>
             <Box
@@ -128,7 +128,7 @@ export default function Register() {
             align="center"
             sx={{ color: 'text.secondary', mt: 3 }}
           >
-            By registering, I agree to Minimal&nbsp;
+            By registering, I agree to Talas Belediyesi&nbsp;
             <Link underline="always" sx={{ color: 'text.primary' }}>
               Terms of Service
             </Link>

@@ -1,4 +1,11 @@
 export const CONSTS = {
+  Login: '/login',
+  Register: '/Register',
+  CreateRole: '/CreateRole',
+  AccountLogout: '/api/Account/Logout',
+  AccountSendMail: '/api/Account/SendMail',
+  AccountResetPassword: '/api/Account/ResetPassword',
+
   AnnouncementAddAnnouncement: '/api/Announcement/AddAnnouncement',
   AnnouncementDeleteAnnouncement:
     '/api/Announcement/DeleteAnnouncement/{announcementId}',

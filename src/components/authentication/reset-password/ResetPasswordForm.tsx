@@ -65,7 +65,7 @@ export default function ResetPasswordForm({
           fullWidth
           {...getFieldProps('email')}
           type="email"
-          label="Email address"
+          label="E-posta Adresi"
           error={
             Boolean(touched.email && errors.email) ||
             emailError(errors.afterSubmit || '').error
@@ -84,7 +84,7 @@ export default function ResetPasswordForm({
           variant="contained"
           pending={isSubmitting}
         >
-          Reset Password
+          Parolayı Sıfırla
         </LoadingButton>
       </Form>
     </FormikProvider>

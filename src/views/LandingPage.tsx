@@ -38,8 +38,6 @@ export default function LandingPage() {
         <LandingHugePackElements />
         <LandingDarkMode />
         <LandingCleanInterfaces />
-        <LandingAdvertisement />
-        <LandingFooter />
       </ContentStyle>
     </RootStyle>
   );

@@ -2,7 +2,6 @@ import { lazy } from 'react';
 import { Redirect } from 'react-router-dom';
 // layouts
 import HomeLayout from '../layouts/home';
-
 // ----------------------------------------------------------------------
 
 const HomeRoutes = {
