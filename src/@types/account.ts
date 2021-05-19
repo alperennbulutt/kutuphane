@@ -15,4 +15,12 @@ export type User = {
   about: string | null;
   role: string;
   isPublic: boolean;
+  // database value
+
+  userName: string;
+  access_token: string;
+  token_type: string;
+  expires_in: string;
+  issued: string;
+  expires: string;
 };

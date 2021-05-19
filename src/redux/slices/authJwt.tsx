@@ -28,7 +28,14 @@ const unAuthUser = {
   zipCode: null,
   about: null,
   role: '',
-  isPublic: true
+  isPublic: true,
+  // database value
+  userName: '',
+  access_token: '',
+  token_type: '',
+  expires_in: '',
+  issued: '',
+  expires: ''
 };
 
 const initialState: AuthJWTState = {
@@ -111,11 +118,11 @@ export function login({
     const { dispatch } = store;
     const response = await axios.post(CONSTS.Login, {
       email,
-      password
+      password,
+      name: ''
     });
     const { accessToken, user } = response.data;
     setSession(accessToken);
-
     dispatch(slice.actions.loginSuccess({ user }));
   };
 }

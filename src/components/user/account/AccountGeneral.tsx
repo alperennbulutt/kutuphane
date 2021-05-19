@@ -49,7 +49,13 @@ export default function AccountGeneral() {
       city: user.city,
       zipCode: user.zipCode,
       about: user.about,
-      isPublic: user.isPublic
+      isPublic: user.isPublic,
+      access_token: user.access_token,
+      token_type: user.token_type,
+      expires_in: user.expires_in,
+      issued: user.issued,
+      expires: user.expires,
+      userName: user.userName
     },
 
     validationSchema: UpdateUserSchema,

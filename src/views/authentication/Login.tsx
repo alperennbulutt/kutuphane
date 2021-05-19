@@ -127,8 +127,8 @@ export default function Login() {
           {method === 'firebase' && <AuthWithSocial />}
 
           <Alert severity="info" sx={{ mb: 5 }}>
-            Use email : <strong>demo@minimals.cc</strong> / password :
-            <strong>&nbsp;demo1234</strong>
+            Use email : <strong>admin@gmail.com</strong> / password :
+            <strong>&nbsp;Ocn.20</strong>
           </Alert>
 
           <LoginForm />

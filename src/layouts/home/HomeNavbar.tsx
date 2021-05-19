@@ -33,10 +33,7 @@ import MenuPopover from '../../components/MenuPopover';
 // ----------------------------------------------------------------------
 
 const MENU_LINKS = [
-  { title: 'Home', icon: homeFill, href: '/' },
-  { title: 'Components', icon: roundStreetview, href: PATH_HOME.components },
-  { title: 'Dashboard', icon: roundSpeed, href: PATH_HOME.dashboard },
-  { title: 'Documentation', icon: bookOpenFill, href: PATH_DOCS.root }
+  { title: 'Dashboard', icon: roundSpeed, href: PATH_HOME.dashboard }
 ];
 
 const APP_BAR_MOBILE = 64;

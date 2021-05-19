@@ -12,24 +12,7 @@ import { User } from '../@types/account';
 const JWT_SECRET = 'minimal-secret-key';
 const JWT_EXPIRES_IN = '5 days';
 
-const users: User[] = [
-  {
-    id: '8864c717-587d-472a-929a-8e5f298024da-0',
-    displayName: 'Jaydon Frankie',
-    email: 'demo@minimals.cc',
-    password: 'demo1234',
-    photoURL: '/static/mock-images/avatars/avatar_default.jpg',
-    phoneNumber: '+40 777666555',
-    country: 'United States',
-    address: '90210 Broadway Blvd',
-    state: 'California',
-    city: 'San Francisco',
-    zipCode: '94116',
-    about: '',
-    role: 'admin',
-    isPublic: true
-  }
-];
+const users: User[] = [];
 
 // ----------------------------------------------------------------------
 
@@ -86,7 +69,13 @@ mock.onPost('/api/account/register').reply(async (config) => {
       zipCode: null,
       about: null,
       role: 'user',
-      isPublic: true
+      isPublic: true,
+      access_token: '',
+      token_type: '',
+      userName: '',
+      expires_in: '',
+      issued: '',
+      expires: ''
     };
 
     const accessToken = jwt.sign({ userId: user.id }, JWT_SECRET, {

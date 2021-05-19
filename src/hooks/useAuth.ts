@@ -87,7 +87,13 @@ export default function useAuth(method: Method = 'jwt') {
     zipCode: profile.zipCode || '',
     about: profile.about || '',
     role: profile.role || '',
-    isPublic: profile.isPublic || false
+    isPublic: profile.isPublic || false,
+    access_token: user.access_token,
+    token_type: user.token_type,
+    expires_in: user.expires_in,
+    issued: user.issued,
+    expires: user.expires,
+    userName: user.userName
   };
 
   // Firebase Auth

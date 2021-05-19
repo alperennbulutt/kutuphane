@@ -167,7 +167,7 @@ export default function DashboardSidebar({
           <MyAvatar />
           <Box sx={{ ml: 2 }}>
             <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-              {user.displayName}
+              {user.userName}
             </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               {user.role}
