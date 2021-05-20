@@ -90,52 +90,9 @@ export default function LandingHero() {
           <ContentStyle>
             <motion.div variants={varFadeInRight}>
               <Typography variant="h1" sx={{ color: 'common.white' }}>
-                Start a <br />
-                New Project <br /> with
-                <Typography
-                  component="span"
-                  variant="h1"
-                  sx={{ color: 'primary.main' }}
-                >
-                  &nbsp;Minimal
-                </Typography>
+                Talas Kütüphanesi Admin Sayfası <br />
               </Typography>
             </motion.div>
-
-            <motion.div variants={varFadeInRight}>
-              <Typography sx={{ py: 5, color: 'common.white' }}>
-                The starting point for your next project based on
-                easy-to-customize Material-UI © helps you build apps faster and
-                better.
-              </Typography>
-            </motion.div>
-
-            <Box
-              component={motion.div}
-              variants={varFadeInRight}
-              sx={{
-                mb: 5,
-                display: 'flex',
-                alignItems: 'center',
-                color: 'common.white',
-                justifyContent: { xs: 'center', md: 'flex-start' }
-              }}
-            >
-              <Box
-                component="img"
-                alt="sketch icon"
-                src="/static/icons/ic_sketch.svg"
-                sx={{ mr: 1, width: 20, height: 20 }}
-              />
-              <Link
-                color="inherit"
-                underline="always"
-                href={PATH_HOME.cloud}
-                target="_blank"
-              >
-                Preview in Sketch Cloud
-              </Link>
-            </Box>
 
             <motion.div variants={varFadeInRight}>
               <Button
@@ -148,40 +105,6 @@ export default function LandingHero() {
                 Live Preview
               </Button>
             </motion.div>
-
-            <Box
-              sx={{
-                mt: 5,
-                display: 'flex',
-                justifyContent: { xs: 'center', md: 'flex-start' },
-                '& > :not(:last-of-type)': { mr: 1.5 }
-              }}
-            >
-              <motion.img
-                variants={varFadeInRight}
-                src="/static/icons/ic_m_sketch.svg"
-              />
-              <motion.img
-                variants={varFadeInRight}
-                src="/static/icons/ic_m_figma.svg"
-              />
-              <motion.img
-                variants={varFadeInRight}
-                src="/static/icons/ic_m_material.svg"
-              />
-              <motion.img
-                variants={varFadeInRight}
-                src="/static/icons/ic_m_react.svg"
-              />
-              <motion.img
-                variants={varFadeInRight}
-                src="/static/icons/ic_m_js.svg"
-              />
-              <motion.img
-                variants={varFadeInRight}
-                src="/static/icons/ic_m_ts.svg"
-              />
-            </Box>
           </ContentStyle>
         </Container>
       </RootStyle>

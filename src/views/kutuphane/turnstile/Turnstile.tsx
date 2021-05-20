@@ -3,21 +3,22 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_DASHBOARD } from '../../../routes/paths';
 
-import GuestList from '../GuestList';
+import GuestList from '../../GuestList';
 
 export default function Turnstile() {
   return (
     <Container>
       <Grid>
         <Button
+          style={{ float: 'right' }}
           variant="contained"
           component={RouterLink}
           to={PATH_DASHBOARD.blog.qrCode}
           startIcon={<Icon icon={plusFill} />}
         >
-          Misafir için QR Kodu Üret
+          QR KODU
         </Button>
       </Grid>
 

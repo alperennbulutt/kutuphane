@@ -121,8 +121,8 @@ export function login({
       password,
       name: ''
     });
-    const { accessToken, user } = response.data;
-    setSession(accessToken);
+    const { access_token, user } = response.data.data;
+    setSession(access_token);
     dispatch(slice.actions.loginSuccess({ user }));
   };
 }

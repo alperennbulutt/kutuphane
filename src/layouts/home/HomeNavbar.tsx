@@ -32,10 +32,6 @@ import MenuPopover from '../../components/MenuPopover';
 
 // ----------------------------------------------------------------------
 
-const MENU_LINKS = [
-  { title: 'Dashboard', icon: roundSpeed, href: PATH_HOME.dashboard }
-];
-
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 96;
 
@@ -85,34 +81,34 @@ export default function HomeNavbar() {
   const [openMenu, setOpenMenu] = useState(false);
   const isHome = pathname === '/';
 
-  const renderMenuDesktop = (
-    <>
-      {MENU_LINKS.map((link) => (
-        <Link
-          exact
-          to={link.href}
-          key={link.title}
-          underline="none"
-          variant="subtitle2"
-          component={RouterLink}
-          activeClassName="isDesktopActive"
-          sx={{
-            mr: 5,
-            color: 'text.primary',
-            transition: (theme) =>
-              theme.transitions.create('opacity', {
-                duration: theme.transitions.duration.shortest
-              }),
-            '&:hover': { opacity: 0.48 },
-            ...(isHome && { color: 'common.white' }),
-            ...(offset && { color: 'text.primary' })
-          }}
-        >
-          {link.title}
-        </Link>
-      ))}
-    </>
-  );
+  // const renderMenuDesktop = (
+  //   <>
+  //     {MENU_LINKS.map((link) => (
+  //       <Link
+  //         exact
+  //         to={link.href}
+  //         key={link.title}
+  //         underline="none"
+  //         variant="subtitle2"
+  //         component={RouterLink}
+  //         activeClassName="isDesktopActive"
+  //         sx={{
+  //           mr: 5,
+  //           color: 'text.primary',
+  //           transition: (theme) =>
+  //             theme.transitions.create('opacity', {
+  //               duration: theme.transitions.duration.shortest
+  //             }),
+  //           '&:hover': { opacity: 0.48 },
+  //           ...(isHome && { color: 'common.white' }),
+  //           ...(offset && { color: 'text.primary' })
+  //         }}
+  //       >
+  //         {link.title}
+  //       </Link>
+  //     ))}
+  //   </>
+  // );
 
   const renderMenuMobile = (
     <MenuPopover
@@ -121,7 +117,7 @@ export default function HomeNavbar() {
       anchorEl={anchorRef.current}
       onClose={() => setOpenMenu(false)}
     >
-      <List>
+      {/* <List>
         {MENU_LINKS.map((link) => (
           <MenuItem
             exact
@@ -140,7 +136,7 @@ export default function HomeNavbar() {
             </ListItemText>
           </MenuItem>
         ))}
-      </List>
+      </List> */}
     </MenuPopover>
   );
 
@@ -168,16 +164,14 @@ export default function HomeNavbar() {
           </RouterLink>
           <Box sx={{ flexGrow: 1 }} />
 
-          <Hidden mdDown>{renderMenuDesktop}</Hidden>
-
           <Button
             underline="none"
             variant="contained"
             component={Link}
             target="_blank"
-            href={PATH_HOME.purchase}
+            href={PATH_HOME.dashboard}
           >
-            Purchase Now
+            Login
           </Button>
 
           <Hidden mdUp>

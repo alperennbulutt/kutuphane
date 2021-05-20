@@ -29,10 +29,15 @@ import Page from '../components/Page';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar } from '../components/user/list';
+import { getAllAnnouncement } from '../redux/slices/announcement';
+import { AnnouncementModel } from '../@types/announcementModel';
 
 // ----------------------------------------------------------------------
 
-const TABLE_HEAD = [{ id: 'name', label: 'Saat', alignRight: false }];
+const TABLE_HEAD = [
+  { id: 'id', label: 'Saat', alignRight: false },
+  { id: 'title', label: 'Title', alignRight: false }
+];
 
 // ----------------------------------------------------------------------
 
@@ -55,7 +60,7 @@ function getComparator(order: string, orderBy: string) {
 }
 
 function applySortFilter(
-  array: UserManager[],
+  array: AnnouncementModel[],
   comparator: (a: any, b: any) => number,
   query: string
 ) {
@@ -68,7 +73,7 @@ function applySortFilter(
   if (query) {
     return filter(
       array,
-      (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      (_user) => _user.title.toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
   }
   return stabilizedThis.map((el) => el[0]);
@@ -82,15 +87,22 @@ type GuestListPropsType = {
 export default function GuestList({ title }: GuestListPropsType) {
   const dispatch = useDispatch();
   const { userList } = useSelector((state: RootState) => state.user);
+  const { announcementList, announcement } = useSelector(
+    (state: RootState) => state.announcement
+  );
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [selected, setSelected] = useState<string[]>([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [
+    rowOptionclick,
+    setRowOptionclick
+  ] = useState<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    dispatch(getUserList());
+    dispatch(getAllAnnouncement());
   }, [dispatch]);
 
   const handleRequestSort = (property: string) => {
@@ -101,7 +113,7 @@ export default function GuestList({ title }: GuestListPropsType) {
 
   const handleSelectAllClick = (checked: boolean) => {
     if (checked) {
-      const newSelecteds = userList.map((n) => n.name);
+      const newSelecteds = announcementList.map((n) => n.title);
       setSelected(newSelecteds);
       return;
     }
@@ -141,10 +153,18 @@ export default function GuestList({ title }: GuestListPropsType) {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userList.length) : 0;
 
   const filteredUsers = applySortFilter(
-    userList,
+    announcementList,
     getComparator(order, orderBy),
     filterName
   );
+  const handleOptionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setRowOptionclick(event.currentTarget);
+    const announcementId = String(
+      event.currentTarget.attributes.getNamedItem('itemid')?.value
+    );
+    // dispatch(getAllAnnouncement());
+    // setVehicleId(vehicleId);
+  };
 
   const isUserNotFound = filteredUsers.length === 0;
 
@@ -175,8 +195,8 @@ export default function GuestList({ title }: GuestListPropsType) {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const { id, name, avatarUrl, isVerified } = row;
-                      const isItemSelected = selected.indexOf(name) !== -1;
+                      const { title, id } = row;
+                      const isItemSelected = selected.indexOf(title) !== -1;
 
                       return (
                         <TableRow
@@ -186,7 +206,7 @@ export default function GuestList({ title }: GuestListPropsType) {
                           role="checkbox"
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
-                          onClick={() => handleClick(name)}
+                          onClick={() => handleClick(title)}
                         >
                           <TableCell component="th" scope="row" padding="none">
                             <Box
@@ -198,17 +218,13 @@ export default function GuestList({ title }: GuestListPropsType) {
                             >
                               <Box
                                 component={Avatar}
-                                alt={name}
-                                src={avatarUrl}
+                                alt={title}
                                 sx={{ mx: 2 }}
                               />
                               <Typography variant="subtitle2" noWrap>
-                                {name}
+                                {title}
                               </Typography>
                             </Box>
-                          </TableCell>
-                          <TableCell align="left">
-                            {isVerified ? 'Yes' : 'No'}
                           </TableCell>
 
                           <TableCell align="right">

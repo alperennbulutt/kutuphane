@@ -18,7 +18,7 @@ const DashboardRoutes = {
     {
       exact: true,
       path: PATH_DASHBOARD.general.turnstile,
-      component: lazy(() => import('../views/kutuphane/Turnstile'))
+      component: lazy(() => import('../views/kutuphane/turnstile/Turnstile'))
     },
     {
       exact: true,

@@ -12,6 +12,8 @@ import productReducer from './slices/product';
 import authJwtReducer from './slices/authJwt';
 import settingsReducer from './slices/settings';
 import calendarReducer from './slices/calendar';
+import Turnstile from '../views/kutuphane/turnstile/Turnstile';
+import announcementReducer from './slices/announcement';
 
 // ----------------------------------------------------------------------
 
@@ -43,6 +45,7 @@ const rootReducer = combineReducers({
   chat: chatReducer,
   blog: blogReducer,
   user: userReducer,
+  announcement: announcementReducer,
   settings: settingsReducer,
   calendar: calendarReducer,
   product: persistReducer(productPersistConfig, productReducer),
