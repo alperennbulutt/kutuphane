@@ -21,7 +21,6 @@ import {
 // hooks
 import useAuth from '../../hooks/useAuth';
 //
-import MyAvatar from '../MyAvatar';
 import BadgeStatus from '../BadgeStatus';
 
 // ----------------------------------------------------------------------
@@ -46,10 +45,6 @@ export default function ChatAccount() {
   return (
     <>
       <Box sx={{ position: 'relative' }}>
-        <MyAvatar
-          onClick={handleOpen}
-          sx={{ cursor: 'pointer', width: 48, height: 48 }}
-        />
         <BadgeStatus
           status={status}
           sx={{ position: 'absolute', bottom: 2, right: 2 }}
@@ -72,8 +67,6 @@ export default function ChatAccount() {
             alignItems: 'center'
           }}
         >
-          <MyAvatar />
-
           <Box sx={{ ml: 2, mr: 3 }}>
             <Typography noWrap variant="subtitle1">
               {user.displayName}

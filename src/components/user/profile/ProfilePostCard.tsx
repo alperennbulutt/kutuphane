@@ -19,7 +19,6 @@ import { fDate } from '../../../utils/formatTime';
 import { UserPost } from '../../../@types/user';
 import { User } from '../../../@types/account';
 //
-import MyAvatar from '../../MyAvatar';
 import ProfilePostCardInput from './ProfilePostCardInput';
 import ProfilePostCardAction from './ProfilePostCardAction';
 import ProfilePostCardComments from './ProfilePostCardComments';
@@ -69,7 +68,6 @@ export default function ProfilePostCard({
     <Card sx={{ mb: 3, ...sx }}>
       <CardHeader
         disableTypography
-        avatar={<MyAvatar />}
         title={
           <Link
             to="#"

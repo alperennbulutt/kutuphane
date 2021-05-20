@@ -4,7 +4,6 @@ import roundAddPhotoAlternate from '@iconify/icons-ic/round-add-photo-alternate'
 // material
 import { Box, TextField, IconButton, InputAdornment } from '@material-ui/core';
 //
-import MyAvatar from '../../MyAvatar';
 import EmojiPicker from '../../EmojiPicker';
 
 // ----------------------------------------------------------------------
@@ -28,7 +27,6 @@ export default function ProfilePostCardInput({
 }: ProfilePostCardInputProps) {
   return (
     <Box sx={{ mt: 3, display: 'flex', alignItems: 'center' }}>
-      <MyAvatar />
       <TextField
         fullWidth
         size="small"

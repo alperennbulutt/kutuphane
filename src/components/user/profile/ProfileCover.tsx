@@ -2,7 +2,6 @@
 import { alpha, experimentalStyled as styled } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
 // material
-import MyAvatar from '../../MyAvatar';
 // @types
 import { Profile } from '../../../@types/user';
 import { User } from '../../../@types/account';
@@ -63,16 +62,6 @@ export default function ProfileCover({
   return (
     <RootStyle>
       <InfoStyle>
-        <MyAvatar
-          sx={{
-            mx: 'auto',
-            borderWidth: 2,
-            borderStyle: 'solid',
-            borderColor: 'common.white',
-            width: { xs: 80, md: 128 },
-            height: { xs: 80, md: 128 }
-          }}
-        />
         <Box
           sx={{
             ml: { md: 3 },

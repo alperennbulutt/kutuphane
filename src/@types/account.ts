@@ -15,6 +15,8 @@ export type User = {
   about: string | null;
   role: string;
   isPublic: boolean;
+
+  
   // database value
 
   userName: string;

@@ -18,12 +18,12 @@ import useAuth from '../../hooks/useAuth';
 import { PATH_DASHBOARD, PATH_DOCS } from '../../routes/paths';
 // components
 import Logo from '../../components/Logo';
-import MyAvatar from '../../components/MyAvatar';
 import Scrollbar from '../../components/Scrollbar';
 //
 import MenuLinks from './SidebarConfig';
 import SidebarItem from './SidebarItem';
-
+// Multi Language
+import useLocales from '../../hooks/useLocales';
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -140,6 +140,8 @@ export default function DashboardSidebar({
   isOpenSidebar,
   onCloseSidebar
 }: NavBarProps) {
+  const { allLang, currentLang, translate, onChangeLang } = useLocales();
+
   const { pathname } = useLocation();
   const { user } = useAuth();
 
@@ -150,6 +152,15 @@ export default function DashboardSidebar({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
+  function translateConverter(menulist: TNavItem[]) {
+    menulist.map((p) => {
+      p.title = translate(p.title);
+      if (p.items) {
+        translateConverter(p.items);
+      }
+    });
+  }
+
   const renderContent = (
     <Scrollbar>
       <Box sx={{ px: 2.5, py: 3 }}>
@@ -157,24 +168,6 @@ export default function DashboardSidebar({
           <Logo />
         </RouterLink>
       </Box>
-
-      <Link
-        underline="none"
-        component={RouterLink}
-        to={PATH_DASHBOARD.user.account}
-      >
-        <AccountStyle>
-          <MyAvatar />
-          <Box sx={{ ml: 2 }}>
-            <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-              {user.userName}
-            </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {user.role}
-            </Typography>
-          </Box>
-        </AccountStyle>
-      </Link>
 
       {MenuLinks.map((list) => (
         <List
@@ -192,7 +185,8 @@ export default function DashboardSidebar({
                 typography: 'overline'
               }}
             >
-              {list.subheader}
+              {translate(list.subheader)}
+              {translateConverter(list.items)}
             </ListSubheader>
           }
         >
@@ -216,7 +210,7 @@ export default function DashboardSidebar({
             variant="subtitle1"
             sx={{ color: 'grey.800' }}
           >
-            Hi, {user.displayName}
+            Hi
           </Typography>
           <Typography variant="body2" sx={{ mb: 2, color: 'grey.600' }}>
             Need help?

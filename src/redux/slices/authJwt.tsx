@@ -180,11 +180,11 @@ export function getInitialize() {
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
 
-        const response = await axios.get('/api/account/my-account');
+        // const response = await axios.get('/api/account/my-account');
         dispatch(
           slice.actions.getInitialize({
-            isAuthenticated: true,
-            user: response.data.user
+            isAuthenticated: true
+            // user: response.data.user
           })
         );
       } else {
