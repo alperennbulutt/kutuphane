@@ -18,44 +18,44 @@ const DashboardRoutes = {
     {
       exact: true,
       path: PATH_DASHBOARD.general.turnstile,
-      component: lazy(() => import('../views/kutuphane/turnstile/Turnstile'))
+      component: lazy(() => import('../views/libraryViews/turnstile/Turnstile'))
     },
     {
       exact: true,
       path: PATH_DASHBOARD.general.analytics,
-      component: lazy(() => import('../views/kutuphane/Analytics'))
+      component: lazy(() => import('../views/libraryViews/Analytics'))
     },
 
     {
       exact: true,
       path: PATH_DASHBOARD.general.workingArea,
-      component: lazy(() => import('../views/kutuphane/WorkingArea'))
+      component: lazy(() => import('../views/libraryViews/WorkingArea'))
     },
     {
       exact: true,
       path: PATH_DASHBOARD.general.silentLibrary,
-      component: lazy(() => import('../views/kutuphane/SilentLibrary'))
+      component: lazy(() => import('../views/libraryViews/SilentLibrary'))
     },
     {
       exact: true,
       path: PATH_DASHBOARD.general.apointment,
-      component: lazy(() => import('../views/kutuphane/Apointment'))
+      component: lazy(() => import('../views/libraryViews/Apointment'))
     },
     {
       exact: true,
       path: PATH_DASHBOARD.general.workingSchedule,
-      component: lazy(() => import('../views/kutuphane/WorkingSchedule'))
+      component: lazy(() => import('../views/libraryViews/WorkingSchedule'))
     },
     {
       exact: true,
       path: PATH_DASHBOARD.general.table,
-      component: lazy(() => import('../views/kutuphane/Table'))
+      component: lazy(() => import('../views/libraryViews/Table'))
     },
 
     {
       exact: true,
       path: PATH_DASHBOARD.general.announcement,
-      component: lazy(() => import('../views/kutuphane/Announcement'))
+      component: lazy(() => import('../views/libraryViews/Announcement'))
     },
 
     {
@@ -112,7 +112,7 @@ const DashboardRoutes = {
     {
       exact: true,
       path: PATH_DASHBOARD.blog.qrCode,
-      component: lazy(() => import('../views/kutuphane/QrCode'))
+      component: lazy(() => import('../views/libraryViews/QrCode'))
     },
 
     // MANAGEMENT : USER

@@ -3,8 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import { dispatch } from '../store';
 // utils
 import axios from '../../utils/axios';
-import { AnnouncementModel } from '../../@types/announcementModel';
+import {
+  AnnouncementModel,
+  AddAnnouncementModel
+} from '../../@types/announcementModel';
 import { CONSTS } from './const';
+import { MapDeckglOverlay } from '../../components/map';
 // ----------------------------------------------------------------------
 
 // type VehicleState = {
@@ -31,21 +35,7 @@ const announcementInit = {
   announcementTypeName: '',
   takedownDate: ''
 };
-const vehicleDocumentsInit = {
-  id: '',
-  tenantId: 0,
-  createDate: '',
-  createUserName: '',
-  updateDate: '',
-  updateUserName: '',
-  documentName: '',
-  documentTypeCode: '',
-  validityPeriodTypeCode: '',
-  validityPeriod: 0,
-  lastRenewalDate: '',
-  documentImagePath: '',
-  isDeleted: false
-};
+
 const initialState: AnnouncementState = {
   isLoading: false,
   error: false,
@@ -70,23 +60,23 @@ const slice = createSlice({
     },
 
     // GET PROFILE
-    getAllVehicleSuccess(state, action) {
+    getAllAnnouncementSuccess(state, action) {
       state.isLoading = false;
       state.announcementList = action.payload;
     },
 
     // GET PROFILE
-    filterVehicleSuccess(state, action) {
+    filterAnnouncementSuccess(state, action) {
       state.isLoading = false;
       state.announcementList = action.payload;
     },
     // GET PROFILE
-    saveVehicleSuccess(state, action) {
+    saveAnnouncementSuccess(state, action) {
       state.isLoading = false;
       state.announcementList = action.payload;
     },
     // GET PROFILE
-    getVehicleByIdSuccess(state, action) {
+    getAnnouncementleByIdSuccess(state, action) {
       state.isLoading = false;
       state.announcement = action.payload;
     },
@@ -105,10 +95,32 @@ const slice = createSlice({
 export default slice.reducer;
 
 // Actions
-// Actions
 export const { onToggleDetailModal } = slice.actions;
 
 // ----------------------------------------------------------------------
+
+export function addAnnouncement(model: any) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.post(
+        `${CONSTS.AnnouncementAddAnnouncement}`,
+        {
+          title: model.title,
+          description: model.description,
+          publicationDate: model.publicationDate,
+          announcementTypeId: Number(model.announcementTypeId),
+          takedownDate: model.takedownDate
+        }
+      );
+      localStorage.setItem('id', response.data.data.id);
+
+      dispatch(getAllAnnouncement());
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
 
 export function getAllAnnouncement() {
   return async () => {
@@ -118,7 +130,7 @@ export function getAllAnnouncement() {
         CONSTS.AnnouncementGetAnnouncementList,
         {}
       );
-      dispatch(slice.actions.getAllVehicleSuccess(response.data.data));
+      dispatch(slice.actions.getAllAnnouncementSuccess(response.data.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -139,6 +151,200 @@ export function deleteAnnouncement(model: any) {
     }
   };
 }
+
+export function updateAnnouncement(model: any) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.post(
+        `${CONSTS.AnnouncementEditAnnounement}`,
+        {
+          id: model.id,
+          title: model.title,
+          description: model.description,
+          publicationDate: Number(model.publicationDate),
+          announcementTypeId: model.announcementTypeId,
+          takedownDate: model.takedownDate
+        }
+      );
+
+      dispatch(getAllAnnouncement());
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+export function filterAnnouncement(_query: string, _registered: boolean) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.post(
+        CONSTS.AnnouncementGetAnnouncementList,
+        {
+          query: _query,
+          registered: _registered
+        }
+      );
+      dispatch(slice.actions.filterAnnouncementSuccess(response.data.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+// export function getAllVehicle() {
+//   return async () => {
+//     dispatch(slice.actions.startLoading());
+//     try {
+//       const response = await axios.get(
+//         CONSTS.ASSET_MANAGEMENT_VEHICLE_GET_ALL,
+//         {}
+//       );
+//       dispatch(slice.actions.getAllVehicleSuccess(response.data.data));
+//     } catch (error) {
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
+
+// export function getVehicleById(vehicleId: string) {
+//   return async () => {
+//     dispatch(slice.actions.startLoading());
+//     try {
+//       const response = await axios.get(
+//         `${CONSTS.ASSET_MANAGEMENT_VEHICLE_GET}?vehicleId=${vehicleId}`
+//       );
+//       dispatch(slice.actions.getVehicleByIdSuccess(response.data.data));
+//     } catch (error) {
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
+
+// export function filterAnnouncement(_query: string, _registered: boolean) {
+//   return async () => {
+//     dispatch(slice.actions.startLoading());
+//     try {
+//       const response = await axios.post(
+//         CONSTS.ASSET_MANAGEMENT_VEHICLE_FILTER,
+//         {
+//           query: _query,
+//           registered: _registered
+//         }
+//       );
+//       dispatch(slice.actions.filterVehicleSuccess(response.data.data));
+//     } catch (error) {
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
+
+// export function saveAnnouncement(model: any) {
+//   return async () => {
+//     dispatch(slice.actions.startLoading());
+//     try {
+//       const response = await axios.post(CONSTS.AnnouncementEditAnnounement, {
+//         ...model
+//       });
+//       localStorage.setItem('vehicleId', response.data.data.id);
+//       dispatch(getAllAnnouncement());
+//     } catch (error) {
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
+
+// export function removeAnnouncement(model: any) {
+//   return async () => {
+//     dispatch(slice.actions.startLoading());
+//     try {
+//       const response = await axios.post(
+//         `${CONSTS.AnnouncementDeleteAnnouncement}`,
+//         model
+//       );
+//       dispatch(getAllVehicle());
+//     } catch (error) {
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
+
+{
+  /*
+export function getDocumentsByVehicleId(idForVehicle: string) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get(
+        `${CONSTS.ASSET_MANAGEMENT_VEHICLE_GET_DOCUMENS}?vehicleId=${idForVehicle}`
+      );
+      dispatch(
+        slice.actions.getDocumentsByVehicleIdSuccess(response.data.data)
+      );
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+*/
+}
+
+{
+  /* 
+export function saveVehicleDocument(idForVehicle: string, model: any) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.post(
+        `${CONSTS.ASSET_MANAGEMENT_VEHICLE_ADD_DOCUMENT}`,
+        {
+          vehicleId: idForVehicle,
+          documentDetails: model
+        }
+      );
+      localStorage.removeItem('vehicleId');
+      localStorage.removeItem('documentPath');
+      dispatch(getAllVehicle());
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+*/
+}
+{
+  /* 
+export function saveDocumentManagement(fileName: string, data: any) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.post(`${CONSTS.MANAGEMENT_UPLOAD_FILE}`, {
+        FileName: fileName,
+        FormFile: data
+      });
+      localStorage.setItem('documentPath', response.data);
+      // dispatch(getAllVehicle());
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+*/
+}
+
+// export function getAllModels() {
+//   return async () => {
+//     dispatch(slice.actions.startLoading());
+//     try {
+//       const response = await axios.get(
+//         CONSTS.,
+//         {}
+//       );
+//     } catch (error) {
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
 
 {
   /*

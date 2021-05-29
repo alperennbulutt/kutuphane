@@ -1,16 +1,21 @@
 export const CONSTS = {
+  // Account -------------------------------------------------------------------------
   Login: '/login',
   Register: '/Register',
   CreateRole: '/CreateRole',
   AccountLogout: '/api/Account/Logout',
   AccountSendMail: '/api/Account/SendMail',
   AccountResetPassword: '/api/Account/ResetPassword',
+  // Announcement ---------------------------------------------------------------------------------------
 
   AnnouncementAddAnnouncement: '/api/Announcement/AddAnnouncement',
   AnnouncementDeleteAnnouncement:
     '/api/Announcement/DeleteAnnouncement/{announcementId}',
   AnnouncementGetAnnouncementList: '/api/Announcement/GetAnnouncementsList',
   AnnouncementEditAnnounement: '/api/Announcement/EditAnnounement',
+  AnnouncementGetPresidentAnnouncementList:
+    '/api/Announcement/GetPresidentAnnouncementList',
+  // Appointment ---------------------------------------------------------------------------------------
 
   AppointmentCancelAppointment:
     '/api/Appointment/CancelAppointment/{appointmentId}/{cancellationReason}',
@@ -40,6 +45,7 @@ export const CONSTS = {
     '/api/Appointment/AddAppointmentRestrictionDate',
   AppointmentDeleteAppointmentRestrictionDate:
     '/api/Appointment/DeleteAppointmentRestrictionDate/{appointmentRestrictionDateId}',
+  // RfidCard ---------------------------------------------------------------------------------------
 
   RfidCardActiveRfidCardList: '/api/RfidCard/ActiveRfidCardList',
   RfidCardQuestAndVisitorList: '/api/RfidCard/QuestAndVisitorList',
@@ -47,6 +53,7 @@ export const CONSTS = {
     '/api/RfidCard/IdentificationNumberVisitor/{identificationNumber}',
   RfidCardAddRfidCardUser: '/api/RfidCard/AddRfidCardUser/{cardNumber}',
   RfidCardDeleteRfidCard: '/api/RfidCard/DeleteRfidCard',
+  // Statistics ---------------------------------------------------------------------------------------
 
   StatisticsGetTotalNumberOfAppointments:
     '/api/Statistics/GetTotalNumberOfAppointments',
@@ -62,24 +69,40 @@ export const CONSTS = {
   StatisticsGetMonthVisitorStatistics:
     '/api/Statistics/GetMonthVisitorStatistics/{month}',
 
+  // SystemSettings --------------------------------------------------------------------------------------
+
   SystemSettingsLatestDateUpdate: '/api/SystemSettings/LatestDateUpdate/{day}',
+  SystemSettingsGetLatestDate: '/api/SystemSettings/GetLatestDate',
+
+  // Table ---------------------------------------------------------------------------------------------------
 
   TableGetTable: '/api/Table/GetTable/{barcodeNumber}',
   ChangeTableWorkingArea:
     '/api/Table/ChangeTableWorkingArea/{tableId}/{isInWarehouse}/{newWorkingAreaId}',
   TableGetAllTables: '/api/Table/GetAllTables',
   IsThereAppointmentTable: '/api/Table/IsThereAppointmentTable/{tableId}',
+  TableDeleteIsInWarehouse: '/api/Table/DeleteIsInWarehouse/{tableId}',
+
+  // Turnstile -----------------------------------------------------------------------------------------
 
   TurnstileTurnstileRegisters:
     '/api/Turnstile/TurnstileRegisters/{turnstileLocation}/{turnstileType}',
 
+  // Util ----------------------------------------------------------------------------------------------
+
   UtilMisafirQRCode: '/api/Util/MisafirQRCode',
+
+  // VacationDay ------------------------------------------------------------------------------------------
 
   VacationDayGetVacationDayList: '/api/VacationDay/GetVacationDayList',
   VacationDayAddVacationDay: '/api/VacationDay/AddVacationDay',
 
+  // Visitor ------------------------------------------------------------------------------------------------
+
   VisitorVisitorTurnstileMovement:
     '/api/Visitor/VisitorTurnstileMovement/{identificationNumber}',
+
+  // WorkingArea ------------------------------------------------------------------------------------------------
 
   WorkingAreaAddClassroom: '/api/WorkingArea/AddClassroom',
   WorkingAreaWorkingAreaStatus:

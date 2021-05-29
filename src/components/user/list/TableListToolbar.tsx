@@ -41,17 +41,17 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-type UserListToolbarProps = {
+type TableListToolbarProps = {
   numSelected: number;
   filterName: string;
   onFilterName: (value: string) => void;
 };
 
-export default function UserListToolbar({
+export default function TableListToolbar({
   numSelected,
   filterName,
   onFilterName
-}: UserListToolbarProps) {
+}: TableListToolbarProps) {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
 

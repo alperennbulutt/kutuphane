@@ -67,6 +67,12 @@ export type UserManager = {
   role: string;
 };
 
+// Addded table head
+export type TableHead = {
+  barcod: string;
+  location: string;
+};
+
 export type UserData = {
   id: string;
   avatarUrl: string;

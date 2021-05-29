@@ -51,17 +51,17 @@ const sidebarConfig = [
       {
         title: 'Ziyaretçi İstatistikleri',
         href: PATH_DASHBOARD.general.analytics,
-        icon: ICONS.ecommerce
+        icon: ICONS.analytics
       },
       {
         title: 'Çalışma Alanları',
         href: PATH_DASHBOARD.general.workingArea,
-        icon: ICONS.analytics
+        icon: ICONS.map
       },
       {
         title: 'Sessiz Kütüphane',
         href: PATH_DASHBOARD.general.silentLibrary,
-        icon: ICONS.ecommerce
+        icon: ICONS.page
       },
       {
         title: 'Randevular',
@@ -71,12 +71,12 @@ const sidebarConfig = [
       {
         title: 'Çalışma Takvimi',
         href: PATH_DASHBOARD.general.workingSchedule,
-        icon: ICONS.ecommerce
+        icon: ICONS.calendar
       },
       {
         title: 'Masalar',
         href: PATH_DASHBOARD.general.table,
-        icon: ICONS.ecommerce
+        icon: ICONS.animate
       },
       {
         title: 'Duyurular',

@@ -5,7 +5,7 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 
 import { PATH_DASHBOARD } from '../../../routes/paths';
 
-import GuestList from '../../GuestList';
+import TurnstileList from '../../TurnstileList';
 
 export default function Turnstile() {
   return (
@@ -23,11 +23,11 @@ export default function Turnstile() {
       </Grid>
 
       <Grid container spacing={5}>
-        <Grid item xs={6}>
-          <GuestList title="Giriş Turnikesi" />
+        <Grid item md={6}>
+          <TurnstileList title="Giriş Turnikesi" />
         </Grid>
-        <Grid item xs={6}>
-          <GuestList title="Çıkış Turnikesi" />
+        <Grid item md={6}>
+          <TurnstileList title="Çıkış Turnikesi" />
         </Grid>
       </Grid>
     </Container>
