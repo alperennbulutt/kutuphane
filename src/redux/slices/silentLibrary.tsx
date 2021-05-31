@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { dispatch } from '../store';
 // utils
 import axios from '../../utils/axios';
-import { VisitorInformationModel } from '../../@types/turnstileModel';
+import { TableModel } from '../../@types/tableModel';
 import { CONSTS } from './const';
 // ----------------------------------------------------------------------
 
@@ -15,28 +15,27 @@ import { CONSTS } from './const';
 //   vehicle: VehicleManager;
 //   vehicleDocuments: VehicleDocumentManager[];
 // };
-type TurnstileState = {
+type TableState = {
   isLoading: boolean;
   error: boolean;
   detailModalIsOpen: boolean;
-  turnstileList: VisitorInformationModel[];
-  turnstile: VisitorInformationModel;
+  tableList: TableModel[];
+  table: TableModel;
 };
-const turnstileInit = {
-  name: '',
-  surname: '',
-  identificationNumber: '',
-  passingDate: '',
-  passingTypeId: 0,
-  passingTypeName: ''
+const TableInit = {
+  tableId: 0,
+  barcodeNumber: '',
+  workingAreaId: 0,
+  workingAreaName: '',
+  isInWarehouse: true
 };
 
-const initialState: TurnstileState = {
+const initialState: TableState = {
   isLoading: false,
   error: false,
   detailModalIsOpen: false,
-  turnstileList: [],
-  turnstile: turnstileInit
+  tableList: [],
+  table: TableInit
 };
 
 const slice = createSlice({
@@ -57,23 +56,23 @@ const slice = createSlice({
     // GET PROFILE
     getAllVehicleSuccess(state, action) {
       state.isLoading = false;
-      state.turnstileList = action.payload;
+      state.tableList = action.payload;
     },
 
     // GET PROFILE
     filterVehicleSuccess(state, action) {
       state.isLoading = false;
-      state.turnstileList = action.payload;
+      state.tableList = action.payload;
     },
     // GET PROFILE
     saveVehicleSuccess(state, action) {
       state.isLoading = false;
-      state.turnstileList = action.payload;
+      state.tableList = action.payload;
     },
     // GET PROFILE
     getVehicleByIdSuccess(state, action) {
       state.isLoading = false;
-      state.turnstile = action.payload;
+      state.table = action.payload;
     },
     onToggleDetailModal(state, action) {
       state.detailModalIsOpen = action.payload;
@@ -94,11 +93,11 @@ export const { onToggleDetailModal } = slice.actions;
 
 // ----------------------------------------------------------------------
 
-export function getAllTurnstile() {
+export function getAllTable() {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get(CONSTS.TurnstileTurnstileRegisters, {});
+      const response = await axios.get(CONSTS.TableGetAllTables, {});
       dispatch(slice.actions.getAllVehicleSuccess(response.data.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -106,20 +105,20 @@ export function getAllTurnstile() {
   };
 }
 
-// export function deleteTurnstile(model: any) {
-//   return async () => {
-//     dispatch(slice.actions.startLoading());
-//     try {
-//       const response = await axios.post(
-//         `${CONSTS.AnnouncementDeleteAnnouncement}`,
-//         model
-//       );
-//       dispatch(getAllAnnouncement());
-//     } catch (error) {
-//       dispatch(slice.actions.hasError(error));
-//     }
-//   };
-// }
+export function deleteTable(model: any) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.post(
+        `${CONSTS.TableDeleteIsInWarehouse}`,
+        model
+      );
+      dispatch(getAllTable());
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
 
 {
   /*

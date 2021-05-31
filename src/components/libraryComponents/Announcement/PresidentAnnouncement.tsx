@@ -16,8 +16,17 @@ import {
   IconButton,
   Typography,
   TableContainer,
-  TablePagination
+  TablePagination,
+  Popover,
+  List,
+  ListItemIcon,
+  ListItem,
+  ListItemText,
+  Checkbox
 } from '@material-ui/core';
+import DraftsIcon from '@material-ui/icons/Details';
+import { useTheme, styled } from '@material-ui/core/styles';
+
 // redux
 import { RootState } from '../../../redux/store';
 import { getUserList } from '../../../redux/slices/user';
@@ -29,8 +38,15 @@ import Page from '../../Page';
 import Scrollbar from '../../Scrollbar';
 import SearchNotFound from '../../SearchNotFound';
 import { UserListHead, UserListToolbar } from '../../user/list';
-import { getAllAnnouncement } from '../../../redux/slices/announcement';
-import { GetPresidentAnnouncementModel } from '../../../@types/announcementModel';
+import {
+  deleteAnnouncement,
+  getPresidentAnnouncement,
+  getAnnouncementById,
+  onToggleDetailModal
+} from '../../../redux/slices/presidentAnnouncement';
+import { PresidentAnnouncementModel } from '../../../@types/announcementModel';
+import useLocales from '../../../hooks/useLocales';
+import Details from './Details';
 
 // ----------------------------------------------------------------------
 
@@ -60,7 +76,7 @@ function getComparator(order: string, orderBy: string) {
 }
 
 function applySortFilter(
-  array: GetPresidentAnnouncementModel[],
+  array: PresidentAnnouncementModel[],
   comparator: (a: any, b: any) => number,
   query: string
 ) {
@@ -84,26 +100,64 @@ type GuestListPropsType = {
   title: string;
 };
 
-export default function PresidentAnnouncement({ title }: GuestListPropsType) {
+export default function PresindentAnnouncement({ title }: GuestListPropsType) {
   const dispatch = useDispatch();
-  const { userList } = useSelector((state: RootState) => state.user);
-  const { announcementList, announcement } = useSelector(
-    (state: RootState) => state.announcement
+  // const { userList } = useSelector((state: RootState) => state.user);
+  const { presidentAnnouncementList, presidentAnnouncement } = useSelector(
+    (state: RootState) => state.presidentAnnouncement
   );
+  const { allLang, currentLang, translate, onChangeLang } = useLocales();
+
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [selected, setSelected] = useState<string[]>([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  // const [id, setAnnouncementId] = useState('');
+
   const [
     rowOptionclick,
     setRowOptionclick
   ] = useState<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    dispatch(getAllAnnouncement());
+    dispatch(getPresidentAnnouncement());
   }, [dispatch]);
+
+  const TABLE_HEAD = [
+    {
+      id: 'id',
+      label: translate('vehicle.list.tab.table.vehicletypecode'),
+      alignRight: false
+    },
+    {
+      id: 'title',
+      label: translate('vehicle.list.tab.table.vehicleplate'),
+      alignRight: false
+    },
+    {
+      id: 'description',
+      label: translate('vehicle.list.tab.table.passengercapacity'),
+      alignRight: false
+    },
+    {
+      id: 'vehicleStatusCode',
+      label: translate('vehicle.list.tab.table.vehiclestatuscode'),
+      alignRight: false
+    },
+    {
+      id: 'vehicleBrand',
+      label: translate('vehicle.list.tab.table.vehiclebrand'),
+      alignRight: false
+    },
+    {
+      id: 'vehicleModel',
+      label: translate('vehicle.list.tab.table.vehiclemodel'),
+      alignRight: false
+    },
+    { id: '' }
+  ];
 
   const handleRequestSort = (property: string) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -113,7 +167,7 @@ export default function PresidentAnnouncement({ title }: GuestListPropsType) {
 
   const handleSelectAllClick = (checked: boolean) => {
     if (checked) {
-      const newSelecteds = announcementList.map((n) => n.title);
+      const newSelecteds = presidentAnnouncementList.map((n) => n.title);
       setSelected(newSelecteds);
       return;
     }
@@ -144,16 +198,37 @@ export default function PresidentAnnouncement({ title }: GuestListPropsType) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const handleOptionClose = () => {
+    setRowOptionclick(null);
+  };
 
   const handleFilterByName = (filterName: string) => {
     setFilterName(filterName);
   };
+  // popever list
+  const ListWrapperStyle = styled('div')(({ theme }) => ({
+    width: '100%',
+    boxShadow: theme.customShadows.z8,
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: theme.palette.background.paper
+  }));
+
+  const handleDetailModalOpen = () => {
+    dispatch(onToggleDetailModal(true));
+    setRowOptionclick(null);
+  };
+
+  // const handleRemoveVehicle = (vehicleId: string[]) => {
+  //   dispatch(deleteAnnouncement(vehicleId));
+  // };
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userList.length) : 0;
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - presidentAnnouncementList.length)
+      : 0;
 
   const filteredUsers = applySortFilter(
-    announcementList,
+    presidentAnnouncementList,
     getComparator(order, orderBy),
     filterName
   );
@@ -162,11 +237,23 @@ export default function PresidentAnnouncement({ title }: GuestListPropsType) {
     const announcementId = String(
       event.currentTarget.attributes.getNamedItem('itemid')?.value
     );
-    // dispatch(getAllAnnouncement());
-    // setVehicleId(vehicleId);
+    dispatch(getPresidentAnnouncement());
+    //  dispatch(getAnnouncementById(id));
+    //  setAnnouncementId(id);
   };
+  const _filteredAnnouncement = applySortFilter(
+    presidentAnnouncementList,
+    getComparator(order, orderBy),
+    filterName
+  );
 
-  const isUserNotFound = filteredUsers.length === 0;
+  // const filteredAnnouncement = _filteredAnnouncement.filter(
+  //   (x) => x.isDeleted === false
+  // );
+
+  // const isUserNotFound = filteredAnnouncement.length === 0;
+
+  // const isUserNotFound = filteredUsers.length === 0;
 
   return (
     <Page title="User: List | Minimal-UI">
@@ -177,6 +264,9 @@ export default function PresidentAnnouncement({ title }: GuestListPropsType) {
             numSelected={selected.length}
             filterName={filterName}
             onFilterName={handleFilterByName}
+            // onDelete={handleRemoveVehicle}
+            // selected={selected}
+            // translate={translate}
           />
 
           <Scrollbar>
@@ -186,7 +276,7 @@ export default function PresidentAnnouncement({ title }: GuestListPropsType) {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={userList.length}
+                  rowCount={presidentAnnouncementList.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
@@ -206,9 +296,40 @@ export default function PresidentAnnouncement({ title }: GuestListPropsType) {
                           role="checkbox"
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
-                          onClick={() => handleClick(title)}
+                          // onClick={() => handleClick(title)}
                         >
+                          <TableCell
+                            padding="checkbox"
+                            onClick={() => handleClick(title)}
+                          >
+                            <Checkbox checked={isItemSelected} />
+                          </TableCell>
                           <TableCell component="th" scope="row" padding="none">
+                            {title}
+                          </TableCell>
+                          <TableCell align="left">{title}</TableCell>
+                          <TableCell align="left">{title}</TableCell>
+                          <TableCell align="left">{title}</TableCell>
+                          <TableCell align="left">{title}</TableCell>
+                          <TableCell align="left">{title}</TableCell>
+
+                          {/* <TableCell align="left">
+                                {isRegistered ? 'Yes' : 'No'}
+                              </TableCell> */}
+
+                          <TableCell align="right">
+                            <IconButton
+                              itemID={title}
+                              onClick={handleOptionClick}
+                            >
+                              <Icon
+                                width={20}
+                                height={20}
+                                icon={moreVerticalFill}
+                              />
+                            </IconButton>
+                          </TableCell>
+                          {/* <TableCell component="th" scope="row" padding="none">
                             <Box
                               sx={{
                                 py: 2,
@@ -235,7 +356,7 @@ export default function PresidentAnnouncement({ title }: GuestListPropsType) {
                                 icon={moreVerticalFill}
                               />
                             </IconButton>
-                          </TableCell>
+                          </TableCell> */}
                         </TableRow>
                       );
                     })}
@@ -245,7 +366,7 @@ export default function PresidentAnnouncement({ title }: GuestListPropsType) {
                     </TableRow>
                   )}
                 </TableBody>
-                {isUserNotFound && (
+                {/* {isUserNotFound && (
                   <TableBody>
                     <TableRow>
                       <TableCell align="center" colSpan={6}>
@@ -255,15 +376,42 @@ export default function PresidentAnnouncement({ title }: GuestListPropsType) {
                       </TableCell>
                     </TableRow>
                   </TableBody>
-                )}
+                )} */}
               </Table>
             </TableContainer>
           </Scrollbar>
+          <Popover
+            open={Boolean(rowOptionclick)}
+            anchorEl={rowOptionclick}
+            onClose={handleOptionClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'center'
+            }}
+          >
+            <Box sx={{ p: 0, maxWidth: 280 }}>
+              <ListWrapperStyle>
+                <List component="nav" aria-label="main mailbox folders">
+                  <ListItem button onClick={handleDetailModalOpen}>
+                    <ListItemIcon>
+                      <DraftsIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={translate('Detay')} />
+                  </ListItem>
+                </List>
+              </ListWrapperStyle>
+            </Box>
+          </Popover>
+          <Details />
 
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={userList.length}
+            count={presidentAnnouncementList.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(e, page) => setPage(page)}

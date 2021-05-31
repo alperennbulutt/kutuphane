@@ -1,13 +1,12 @@
 import { filter } from 'lodash';
 import { Icon } from '@iconify/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
-
+import { useTheme } from '@material-ui/core/styles';
 // material
-import { useTheme, styled } from '@material-ui/core/styles';
-import DraftsIcon from '@material-ui/icons/Details';
 import {
+  Slide,
   Box,
   Card,
   Table,
@@ -20,37 +19,45 @@ import {
   Typography,
   TableContainer,
   TablePagination,
-  Popover,
-  List,
-  ListItemIcon,
-  ListItem,
-  ListItemText,
-  Checkbox
+  Button,
+  Checkbox,
+  TextField,
+  Grid,
+  Dialog
 } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
+import { Label } from '@material-ui/icons';
+import { TransitionProps } from '@material-ui/core/transitions';
+
 // redux
-import { RootState } from '../redux/store';
+import { RootState } from '../../../redux/store';
+import { PATH_DASHBOARD } from '../../../routes/paths';
 
-// routes
-// @types
-import { VisitorInformationModel } from '../@types/turnstileModel';
 // components
-import Page from '../components/Page';
-import Scrollbar from '../components/Scrollbar';
-import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, UserListToolbar } from '../components/user/list';
+import Page from '../../Page';
+import Scrollbar from '../../Scrollbar';
+import SearchNotFound from '../../SearchNotFound';
+import MoveTableButton from '../Tables/MoveTableButton';
 import {
-  getAllTurnstile,
-  onToggleDetailModal
-} from '../redux/slices/turnstile';
-
-// burası değişecek
-import Details from '../components/libraryComponents/Announcement/Details';
+  TableListHead,
+  TableListToolbar,
+  UserListToolbar
+} from '../../user/list';
+import { getAllTable } from '../../../redux/slices/table';
+import { TableModel } from '../../../@types/tableModel';
+import ShowReservationButton from './ShowReservationButton';
+import DeleteTableButton from './DeleteTableButton';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'id', label: 'Saat', alignRight: false },
-  { id: 'title', label: 'Title', alignRight: false }
+  { id: '' },
+  { id: 'role', label: 'Barkod Numarası', alignRight: false },
+  { id: 'isVerified', label: 'Bulunduğu Yer', alignRight: false },
+  { id: '' },
+  { id: '' },
+
+  { id: '' }
 ];
 
 // ----------------------------------------------------------------------
@@ -74,7 +81,7 @@ function getComparator(order: string, orderBy: string) {
 }
 
 function applySortFilter(
-  array: VisitorInformationModel[],
+  array: TableModel[],
   comparator: (a: any, b: any) => number,
   query: string
 ) {
@@ -87,23 +94,35 @@ function applySortFilter(
   if (query) {
     return filter(
       array,
-      (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      (_user) =>
+        _user.barcodeNumber.toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
   }
   return stabilizedThis.map((el) => el[0]);
 }
 
+const Transition = forwardRef(
+  (
+    props: TransitionProps & {
+      children?: React.ReactElement;
+    },
+    ref: React.Ref<unknown>
+  ) => <Slide direction="up" ref={ref} {...props} />
+);
+
 // Propsları Bu şekilde veriyoruz
-type TurnstileListPropsType = {
+type TableListPropsType = {
   title: string;
 };
 
-export default function TurnstileList({ title }: TurnstileListPropsType) {
+export default function SilentList({ title }: TableListPropsType) {
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+
   const dispatch = useDispatch();
+
   const { userList } = useSelector((state: RootState) => state.user);
-  const { turnstileList, turnstile } = useSelector(
-    (state: RootState) => state.turnstile
-  );
+  const { tableList, table } = useSelector((state: RootState) => state.table);
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [selected, setSelected] = useState<string[]>([]);
@@ -116,7 +135,7 @@ export default function TurnstileList({ title }: TurnstileListPropsType) {
   ] = useState<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    dispatch(getAllTurnstile());
+    dispatch(getAllTable());
   }, [dispatch]);
 
   const handleRequestSort = (property: string) => {
@@ -127,7 +146,7 @@ export default function TurnstileList({ title }: TurnstileListPropsType) {
 
   const handleSelectAllClick = (checked: boolean) => {
     if (checked) {
-      const newSelecteds = turnstileList.map((n) => n.name);
+      const newSelecteds = tableList.map((n) => n.workingAreaName);
       setSelected(newSelecteds);
       return;
     }
@@ -152,47 +171,39 @@ export default function TurnstileList({ title }: TurnstileListPropsType) {
     setSelected(newSelected);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const handleOptionClose = () => {
-    setRowOptionclick(null);
-  };
 
   const handleFilterByName = (filterName: string) => {
     setFilterName(filterName);
   };
-  // popever list
-  const ListWrapperStyle = styled('div')(({ theme }) => ({
-    width: '100%',
-    boxShadow: theme.customShadows.z8,
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme.palette.background.paper
-  }));
-
-  const handleDetailModalOpen = () => {
-    dispatch(onToggleDetailModal(true));
-    setRowOptionclick(null);
-  };
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - turnstileList.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userList.length) : 0;
 
   const filteredUsers = applySortFilter(
-    turnstileList,
+    tableList,
     getComparator(order, orderBy),
     filterName
   );
   const handleOptionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setRowOptionclick(event.currentTarget);
-    const announcementId = String(
+    const tableId = String(
       event.currentTarget.attributes.getNamedItem('itemid')?.value
     );
-    // dispatch(getAllAnnouncement());
+    // dispatch(getAlltable());
     // setVehicleId(vehicleId);
+  };
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
   const isUserNotFound = filteredUsers.length === 0;
@@ -201,84 +212,97 @@ export default function TurnstileList({ title }: TurnstileListPropsType) {
     <Page title="User: List | Minimal-UI">
       <Container>
         <h1>{title}</h1>
+        <br />
+        <Grid container spacing={2} padding={2}>
+          <Grid xs={12} sm={3} paddingRight={1}>
+            <TextField type="datetime-local" fullWidth>
+              <option key={0} label="" />
+            </TextField>
+          </Grid>
+          <Grid xs={12} sm={3} paddingRight={1}>
+            <TextField type="datetime-local" fullWidth>
+              <option key={0} label="" />
+            </TextField>
+          </Grid>
+          <Grid xs={12} sm={3}>
+            <Button
+              size="large"
+              variant="outlined"
+              color="primary"
+              onClick={handleClickOpen}
+            >
+              Tarihe Göre Listele
+            </Button>
+          </Grid>
+          <Grid xs={12} sm={3}>
+            <Button
+              size="large"
+              variant="outlined"
+              color="primary"
+              onClick={handleClickOpen}
+            >
+              Masa Ekle
+            </Button>
+            <Dialog
+              // fullScreen
+              fullWidth
+              maxWidth="sm"
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Transition}
+            >
+              <Grid container>
+                <TextField style={{ padding: 20 }}>asdasd</TextField>
+                <Button
+                  style={{ marginTop: 20 }}
+                  size="large"
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleClickOpen}
+                >
+                  Kaydet
+                </Button>
+              </Grid>
+            </Dialog>
+          </Grid>
+        </Grid>
+
         <Card>
-          <UserListToolbar
+          <TableListToolbar
             numSelected={selected.length}
             filterName={filterName}
             onFilterName={handleFilterByName}
-            // onDelete={handleRemoveVehicle}
-            // selected={selected}
-            // translate={translate}
           />
 
           <Scrollbar>
-            <TableContainer>
+            <TableContainer sx={{ minWidth: 300 }}>
               <Table>
-                <UserListHead
+                <TableListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={turnstileList.length}
+                  rowCount={userList.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const {
-                        name,
-                        identificationNumber,
-                        passingDate,
-                        passingTypeId,
-                        passingTypeName,
-                        surname
-                      } = row;
-                      const isItemSelected = selected.indexOf(name) !== -1;
+                      const { barcodeNumber, tableId, workingAreaName } = row;
+                      const isItemSelected =
+                        selected.indexOf(barcodeNumber) !== -1;
 
                       return (
                         <TableRow
                           hover
-                          key={name}
+                          key={tableId}
                           tabIndex={-1}
-                          role="checkbox"
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
-                          onClick={() => handleClick(title)}
+                          onClick={() => handleClick(barcodeNumber)}
                         >
-                          <TableCell
-                            padding="checkbox"
-                            onClick={() => handleClick(title)}
-                          >
-                            <Checkbox checked={isItemSelected} />
-                          </TableCell>
                           <TableCell component="th" scope="row" padding="none">
-                            {name}
-                          </TableCell>
-                          <TableCell align="left">{surname}</TableCell>
-                          <TableCell align="left">{surname}</TableCell>
-                          <TableCell align="left">{surname}</TableCell>
-                          <TableCell align="left">{surname}</TableCell>
-                          <TableCell align="left">{surname}</TableCell>
-
-                          {/* <TableCell align="left">
-                                {isRegistered ? 'Yes' : 'No'}
-                              </TableCell> */}
-
-                          <TableCell align="right">
-                            <IconButton
-                              itemID={title}
-                              onClick={handleOptionClick}
-                            >
-                              <Icon
-                                width={20}
-                                height={20}
-                                icon={moreVerticalFill}
-                              />
-                            </IconButton>
-                          </TableCell>
-                          {/* <TableCell component="th" scope="row" padding="none">
                             <Box
                               sx={{
                                 py: 2,
@@ -286,26 +310,22 @@ export default function TurnstileList({ title }: TurnstileListPropsType) {
                                 alignItems: 'center'
                               }}
                             >
-                              <Box
+                              {/* <Box
                                 component={Avatar}
-                                alt={title}
+                                alt={}
+                                src={avatarUrl}
                                 sx={{ mx: 2 }}
-                              />
-                              <Typography variant="subtitle2" noWrap>
-                                {title}
-                              </Typography>
+                              /> */}
                             </Box>
                           </TableCell>
-
-                          <TableCell align="right">
-                            <IconButton>
-                              <Icon
-                                width={20}
-                                height={20}
-                                icon={moreVerticalFill}
-                              />
-                            </IconButton>
-                          </TableCell> */}
+                          <TableCell align="left">{barcodeNumber}</TableCell>
+                          <TableCell align="left">{workingAreaName}</TableCell>
+                          <TableCell>
+                            <DeleteTableButton />
+                          </TableCell>
+                          <TableCell>
+                            <ShowReservationButton />
+                          </TableCell>
                         </TableRow>
                       );
                     })}
@@ -315,7 +335,7 @@ export default function TurnstileList({ title }: TurnstileListPropsType) {
                     </TableRow>
                   )}
                 </TableBody>
-                {/* {isUserNotFound && (
+                {isUserNotFound && (
                   <TableBody>
                     <TableRow>
                       <TableCell align="center" colSpan={6}>
@@ -325,46 +345,20 @@ export default function TurnstileList({ title }: TurnstileListPropsType) {
                       </TableCell>
                     </TableRow>
                   </TableBody>
-                )} */}
+                )}
               </Table>
             </TableContainer>
           </Scrollbar>
-          <Popover
-            open={Boolean(rowOptionclick)}
-            anchorEl={rowOptionclick}
-            onClose={handleOptionClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'center'
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'center'
-            }}
-          >
-            <Box sx={{ p: 0, maxWidth: 280 }}>
-              <ListWrapperStyle>
-                <List component="nav" aria-label="main mailbox folders">
-                  <ListItem button onClick={handleDetailModalOpen}>
-                    <ListItemIcon>
-                      <DraftsIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Detay" />
-                  </ListItem>
-                </List>
-              </ListWrapperStyle>
-            </Box>
-          </Popover>
-          <Details />
 
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={turnstileList.length}
+            count={userList.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(e, page) => setPage(page)}
             onRowsPerPageChange={(e) => handleChangeRowsPerPage}
+            labelRowsPerPage="Sayfa Başına Satır"
           />
         </Card>
       </Container>

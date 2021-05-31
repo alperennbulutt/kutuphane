@@ -85,8 +85,7 @@ export const CONSTS = {
 
   // Turnstile -----------------------------------------------------------------------------------------
 
-  TurnstileTurnstileRegisters:
-    '/api/Turnstile/TurnstileRegisters/{turnstileLocation}/{turnstileType}',
+  TurnstileTurnstileRegisters: '/api/Turnstile/GetTurnstileRegisters/2/2',
 
   // Util ----------------------------------------------------------------------------------------------
 

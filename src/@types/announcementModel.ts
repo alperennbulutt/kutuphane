@@ -1,5 +1,5 @@
 export type AnnouncementModel = {
-  id: string;
+  id: number;
   title: string;
   description: string;
   publicationDate: string;
@@ -7,8 +7,8 @@ export type AnnouncementModel = {
   announcementTypeName: string;
   takedownDate: string;
 };
-export type GetPresidentAnnouncementModel = {
-  id: string;
+export type PresidentAnnouncementModel = {
+  id: number;
   title: string;
   description: string;
   publicationDate: string;

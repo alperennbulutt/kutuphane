@@ -15,7 +15,7 @@ export default function Announcemnet() {
         <HeaderDashboard
           heading="Duyurular"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
+            { name: 'Ana Sayfa', href: PATH_DASHBOARD.root },
             { name: 'Duyurular' }
           ]}
           action={<FullScreenDialogs />}

@@ -127,13 +127,14 @@ export default function FullScreenDialogs() {
   // Burada Tip dönüşümü Yaptım
   const formik = useFormik<InitialState>({
     // validationSchema: NewAnnouncementSchema,
+    enableReinitialize: true,
     initialValues: {
-      id: 0,
-      title: '',
-      description: '',
-      publicationDate: '',
-      announcementTypeId: 2,
-      takedownDate: ''
+      id: announcement.id,
+      title: announcement.title,
+      description: announcement.description,
+      publicationDate: announcement.publicationDate,
+      announcementTypeId: announcement.announcementTypeId,
+      takedownDate: announcement.takedownDate
     },
     onSubmit: async (values, { resetForm, setErrors, setSubmitting }) => {
       try {

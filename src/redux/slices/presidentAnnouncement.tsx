@@ -4,8 +4,8 @@ import { dispatch } from '../store';
 // utils
 import axios from '../../utils/axios';
 import {
-  AnnouncementModel,
-  AddAnnouncementModel
+  AddAnnouncementModel,
+  PresidentAnnouncementModel
 } from '../../@types/announcementModel';
 import { CONSTS } from './const';
 import { MapDeckglOverlay } from '../../components/map';
@@ -19,14 +19,15 @@ import { MapDeckglOverlay } from '../../components/map';
 //   vehicle: VehicleManager;
 //   vehicleDocuments: VehicleDocumentManager[];
 // };
-type AnnouncementState = {
+type PresidentAnnouncementState = {
   isLoading: boolean;
   error: boolean;
   detailModalIsOpen: boolean;
-  announcementList: AnnouncementModel[];
-  announcement: AnnouncementModel;
+  presidentAnnouncementList: PresidentAnnouncementModel[];
+  presidentAnnouncement: PresidentAnnouncementModel;
 };
-const announcementInit = {
+
+const presidentAnnouncementInit = {
   id: 0,
   title: '',
   description: '',
@@ -36,12 +37,12 @@ const announcementInit = {
   takedownDate: ''
 };
 
-const initialState: AnnouncementState = {
+const initialState: PresidentAnnouncementState = {
   isLoading: false,
   error: false,
   detailModalIsOpen: false,
-  announcementList: [],
-  announcement: announcementInit
+  presidentAnnouncementList: [],
+  presidentAnnouncement: presidentAnnouncementInit
 };
 
 const slice = createSlice({
@@ -60,26 +61,26 @@ const slice = createSlice({
     },
 
     // GET PROFILE
-    getAllAnnouncementSuccess(state, action) {
+    getAllPresidentAnnouncementSuccess(state, action) {
       state.isLoading = false;
-      state.announcementList = action.payload;
+      state.presidentAnnouncementList = action.payload;
     },
 
     // GET PROFILE
-    filterAnnouncementSuccess(state, action) {
+    filterPresidentAnnouncementSuccess(state, action) {
       state.isLoading = false;
-      state.announcementList = action.payload;
+      state.presidentAnnouncementList = action.payload;
     },
     // GET PROFILE
-    saveAnnouncementSuccess(state, action) {
+    savePresidentAnnouncementSuccess(state, action) {
       state.isLoading = false;
-      state.announcementList = action.payload;
+      state.presidentAnnouncementList = action.payload;
     },
 
     // GET PROFILE
-    getAnnouncementByIdSuccess(state, action) {
+    getPresidentAnnouncementByIdSuccess(state, action) {
       state.isLoading = false;
-      state.announcement = action.payload;
+      state.presidentAnnouncement = action.payload;
     },
     onToggleDetailModal(state, action) {
       state.detailModalIsOpen = action.payload;
@@ -116,22 +117,24 @@ export function addAnnouncement(model: any) {
       );
       localStorage.setItem('id', response.data.data.id);
 
-      dispatch(getAllAnnouncement());
+      dispatch(getPresidentAnnouncement());
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
 
-export function getAllAnnouncement() {
+export function getPresidentAnnouncement() {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
       const response = await axios.get(
-        CONSTS.AnnouncementGetAnnouncementList,
+        CONSTS.AnnouncementGetPresidentAnnouncementList,
         {}
       );
-      dispatch(slice.actions.getAllAnnouncementSuccess(response.data.data));
+      dispatch(
+        slice.actions.getAllPresidentAnnouncementSuccess(response.data.data)
+      );
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -146,7 +149,7 @@ export function deleteAnnouncement(model: any) {
         `${CONSTS.AnnouncementDeleteAnnouncement}`,
         model
       );
-      dispatch(getAllAnnouncement());
+      dispatch(getPresidentAnnouncement());
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -160,7 +163,9 @@ export function getAnnouncementById(id: number) {
       const response = await axios.get(
         `${CONSTS.AnnouncementGetAnnouncementList}?id=${id}`
       );
-      dispatch(slice.actions.getAnnouncementByIdSuccess(response.data.data));
+      dispatch(
+        slice.actions.getPresidentAnnouncementByIdSuccess(response.data.data)
+      );
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -183,7 +188,7 @@ export function updateAnnouncement(model: any) {
         }
       );
 
-      dispatch(getAllAnnouncement());
+      dispatch(getPresidentAnnouncement());
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -200,7 +205,9 @@ export function filterAnnouncement(_query: string, _registered: boolean) {
           registered: _registered
         }
       );
-      dispatch(slice.actions.filterAnnouncementSuccess(response.data.data));
+      dispatch(
+        slice.actions.filterPresidentAnnouncementSuccess(response.data.data)
+      );
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

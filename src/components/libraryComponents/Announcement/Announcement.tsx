@@ -39,7 +39,9 @@ import Scrollbar from '../../Scrollbar';
 import SearchNotFound from '../../SearchNotFound';
 import { UserListHead, UserListToolbar } from '../../user/list';
 import {
+  deleteAnnouncement,
   getAllAnnouncement,
+  getAnnouncementById,
   onToggleDetailModal
 } from '../../../redux/slices/announcement';
 import { AnnouncementModel } from '../../../@types/announcementModel';
@@ -112,6 +114,8 @@ export default function Announcement({ title }: GuestListPropsType) {
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  // const [id, setAnnouncementId] = useState('');
+
   const [
     rowOptionclick,
     setRowOptionclick
@@ -214,6 +218,10 @@ export default function Announcement({ title }: GuestListPropsType) {
     setRowOptionclick(null);
   };
 
+  // const handleRemoveVehicle = (vehicleId: string[]) => {
+  //   dispatch(deleteAnnouncement(vehicleId));
+  // };
+
   const emptyRows =
     page > 0
       ? Math.max(0, (1 + page) * rowsPerPage - announcementList.length)
@@ -229,8 +237,9 @@ export default function Announcement({ title }: GuestListPropsType) {
     const announcementId = String(
       event.currentTarget.attributes.getNamedItem('itemid')?.value
     );
-    // dispatch(getAllAnnouncement());
-    // setVehicleId(vehicleId);
+    dispatch(getAllAnnouncement());
+    //  dispatch(getAnnouncementById(id));
+    //  setAnnouncementId(id);
   };
   const _filteredAnnouncement = applySortFilter(
     announcementList,
@@ -255,6 +264,9 @@ export default function Announcement({ title }: GuestListPropsType) {
             numSelected={selected.length}
             filterName={filterName}
             onFilterName={handleFilterByName}
+            // onDelete={handleRemoveVehicle}
+            // selected={selected}
+            // translate={translate}
           />
 
           <Scrollbar>
@@ -288,7 +300,7 @@ export default function Announcement({ title }: GuestListPropsType) {
                         >
                           <TableCell
                             padding="checkbox"
-                            onClick={() => handleClick(id)}
+                            onClick={() => handleClick(title)}
                           >
                             <Checkbox checked={isItemSelected} />
                           </TableCell>
@@ -306,7 +318,10 @@ export default function Announcement({ title }: GuestListPropsType) {
                               </TableCell> */}
 
                           <TableCell align="right">
-                            <IconButton itemID={id} onClick={handleOptionClick}>
+                            <IconButton
+                              itemID={title}
+                              onClick={handleOptionClick}
+                            >
                               <Icon
                                 width={20}
                                 height={20}
@@ -385,9 +400,7 @@ export default function Announcement({ title }: GuestListPropsType) {
                     <ListItemIcon>
                       <DraftsIcon />
                     </ListItemIcon>
-                    <ListItemText
-                      primary={translate('table.actionlist.detail')}
-                    />
+                    <ListItemText primary={translate('Detay')} />
                   </ListItem>
                 </List>
               </ListWrapperStyle>
