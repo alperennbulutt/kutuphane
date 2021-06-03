@@ -10,7 +10,10 @@ import { Grid } from '@material-ui/core';
 
 import SilentLibrary from '../../../views/libraryViews/SilentLibrary';
 import QrCode from '../../../views/libraryViews/QrCode';
-import TurnstileList from '../../../views/TurnstileList';
+import TurnstileList11 from './TurnstileList11';
+import TurnstileList12 from './TurnstileList12';
+import TurnstileList21 from './TurnstileList21';
+import TurnstileList22 from './TurnstileList22';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -89,10 +92,10 @@ export default function FullWidthTabs() {
         <TabPanel value={value} index={0} dir={theme.direction}>
           <Grid container spacing={5}>
             <Grid item md={6}>
-              <TurnstileList title="Giriş Turnikesi" />
+              <TurnstileList11 title="Giriş Turnikesi" />
             </Grid>
             <Grid item md={6}>
-              <TurnstileList title="Çıkış Turnikesi" />
+              <TurnstileList12 title="Çıkış Turnikesi" />
             </Grid>
           </Grid>
         </TabPanel>
@@ -100,10 +103,10 @@ export default function FullWidthTabs() {
         <TabPanel value={value} index={1} dir={theme.direction}>
           <Grid container spacing={5}>
             <Grid item md={6}>
-              <TurnstileList title="Giriş Turnikesi" />
+              <TurnstileList21 title="Giriş Turnikesi" />
             </Grid>
             <Grid item md={6}>
-              <TurnstileList title="Çıkış Turnikesi" />
+              <TurnstileList22 title="Çıkış Turnikesi" />
             </Grid>
           </Grid>
         </TabPanel>

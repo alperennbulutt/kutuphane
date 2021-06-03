@@ -38,6 +38,11 @@ const DashboardRoutes = {
     },
     {
       exact: true,
+      path: PATH_DASHBOARD.general.showApointment,
+      component: lazy(() => import('../views/libraryViews/ShowApointment'))
+    },
+    {
+      exact: true,
       path: PATH_DASHBOARD.general.apointment,
       component: lazy(() => import('../views/libraryViews/Apointment'))
     },

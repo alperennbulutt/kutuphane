@@ -16,6 +16,7 @@ import announcementReducer from './slices/announcement';
 import tableReducer from './slices/table';
 import turnstileReducer from './slices/turnstile';
 import presidentAnnouncementReducer from './slices/presidentAnnouncement';
+import classesReducer from './slices/classes';
 
 // ----------------------------------------------------------------------
 
@@ -50,6 +51,7 @@ const rootReducer = combineReducers({
   table: tableReducer,
   announcement: announcementReducer,
   presidentAnnouncement: presidentAnnouncementReducer,
+  classes: classesReducer,
   turnstile: turnstileReducer,
   settings: settingsReducer,
   calendar: calendarReducer,

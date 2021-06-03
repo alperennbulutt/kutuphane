@@ -101,9 +101,9 @@ export default function WorkingRooms({ title }: GuestListPropsType) {
     setRowOptionclick
   ] = useState<HTMLButtonElement | null>(null);
 
-  useEffect(() => {
-    dispatch(getAllAnnouncement());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getAllAnnouncement());
+  // }, [dispatch]);
 
   const handleRequestSort = (property: string) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -268,6 +268,7 @@ export default function WorkingRooms({ title }: GuestListPropsType) {
             page={page}
             onPageChange={(e, page) => setPage(page)}
             onRowsPerPageChange={(e) => handleChangeRowsPerPage}
+            labelRowsPerPage="Sayfa Başına Satır"
           />
         </Card>
       </Container>

@@ -3,7 +3,10 @@ import { Icon } from '@iconify/react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
+
 // material
+import { useTheme, styled } from '@material-ui/core/styles';
+import DraftsIcon from '@material-ui/icons/Details';
 import {
   Box,
   Card,
@@ -24,29 +27,24 @@ import {
   ListItemText,
   Checkbox
 } from '@material-ui/core';
-import DraftsIcon from '@material-ui/icons/Details';
-import { useTheme, styled } from '@material-ui/core/styles';
-
 // redux
 import { RootState } from '../../../redux/store';
-import { getUserList } from '../../../redux/slices/user';
+
 // routes
 // @types
-import { UserManager } from '../../../@types/user';
+import { VisitorInformationModel } from '../../../@types/turnstileModel';
 // components
 import Page from '../../Page';
 import Scrollbar from '../../Scrollbar';
 import SearchNotFound from '../../SearchNotFound';
 import { UserListHead, UserListToolbar } from '../../user/list';
 import {
-  deleteAnnouncement,
-  getPresidentAnnouncement,
-  getAnnouncementById,
+  getAllTurnstile,
   onToggleDetailModal
-} from '../../../redux/slices/presidentAnnouncement';
-import { PresidentAnnouncementModel } from '../../../@types/presidentAnnouncementModel';
-import useLocales from '../../../hooks/useLocales';
-import Details from './Details';
+} from '../../../redux/slices/turnstile';
+
+// burası değişecek
+import Details from '../Announcement/Details';
 
 // ----------------------------------------------------------------------
 
@@ -76,7 +74,7 @@ function getComparator(order: string, orderBy: string) {
 }
 
 function applySortFilter(
-  array: PresidentAnnouncementModel[],
+  array: VisitorInformationModel[],
   comparator: (a: any, b: any) => number,
   query: string
 ) {
@@ -89,75 +87,37 @@ function applySortFilter(
   if (query) {
     return filter(
       array,
-      (_user) => _user.title.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
   }
   return stabilizedThis.map((el) => el[0]);
 }
 
 // Propsları Bu şekilde veriyoruz
-type GuestListPropsType = {
+type TurnstileListPropsType = {
   title: string;
 };
 
-export default function PresindentAnnouncement({ title }: GuestListPropsType) {
+export default function TurnstileList22({ title }: TurnstileListPropsType) {
   const dispatch = useDispatch();
-  // const { userList } = useSelector((state: RootState) => state.user);
-  const { presidentAnnouncementList, presidentAnnouncement } = useSelector(
-    (state: RootState) => state.presidentAnnouncement
+  const { userList } = useSelector((state: RootState) => state.user);
+  const { turnstileList, turnstile } = useSelector(
+    (state: RootState) => state.turnstile
   );
-  const { allLang, currentLang, translate, onChangeLang } = useLocales();
-
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [selected, setSelected] = useState<string[]>([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  // const [id, setAnnouncementId] = useState('');
-
   const [
     rowOptionclick,
     setRowOptionclick
   ] = useState<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    dispatch(getPresidentAnnouncement());
+    dispatch(getAllTurnstile());
   }, [dispatch]);
-
-  const TABLE_HEAD = [
-    {
-      id: 'id',
-      label: translate('vehicle.list.tab.table.vehicletypecode'),
-      alignRight: false
-    },
-    {
-      id: 'title',
-      label: translate('vehicle.list.tab.table.vehicleplate'),
-      alignRight: false
-    },
-    {
-      id: 'description',
-      label: translate('vehicle.list.tab.table.passengercapacity'),
-      alignRight: false
-    },
-    {
-      id: 'vehicleStatusCode',
-      label: translate('vehicle.list.tab.table.vehiclestatuscode'),
-      alignRight: false
-    },
-    {
-      id: 'vehicleBrand',
-      label: translate('vehicle.list.tab.table.vehiclebrand'),
-      alignRight: false
-    },
-    {
-      id: 'vehicleModel',
-      label: translate('vehicle.list.tab.table.vehiclemodel'),
-      alignRight: false
-    },
-    { id: '' }
-  ];
 
   const handleRequestSort = (property: string) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -167,7 +127,7 @@ export default function PresindentAnnouncement({ title }: GuestListPropsType) {
 
   const handleSelectAllClick = (checked: boolean) => {
     if (checked) {
-      const newSelecteds = presidentAnnouncementList.map((n) => n.title);
+      const newSelecteds = turnstileList.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -218,17 +178,11 @@ export default function PresindentAnnouncement({ title }: GuestListPropsType) {
     setRowOptionclick(null);
   };
 
-  // const handleRemoveVehicle = (vehicleId: string[]) => {
-  //   dispatch(deleteAnnouncement(vehicleId));
-  // };
-
   const emptyRows =
-    page > 0
-      ? Math.max(0, (1 + page) * rowsPerPage - presidentAnnouncementList.length)
-      : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userList.length) : 0;
 
   const filteredUsers = applySortFilter(
-    presidentAnnouncementList,
+    turnstileList,
     getComparator(order, orderBy),
     filterName
   );
@@ -237,23 +191,11 @@ export default function PresindentAnnouncement({ title }: GuestListPropsType) {
     const announcementId = String(
       event.currentTarget.attributes.getNamedItem('itemid')?.value
     );
-    dispatch(getPresidentAnnouncement());
-    //  dispatch(getAnnouncementById(id));
-    //  setAnnouncementId(id);
+    // dispatch(getAllAnnouncement());
+    // setVehicleId(vehicleId);
   };
-  // const _filteredAnnouncement = applySortFilter(
-  //   presidentAnnouncementList,
-  //   getComparator(order, orderBy),
-  //   filterName
-  // );
 
-  // const filteredAnnouncement = _filteredAnnouncement.filter(
-  //   (x) => x.isDeleted === false
-  // );
-
-  // const isUserNotFound = filteredAnnouncement.length === 0;
-
-  // const isUserNotFound = filteredUsers.length === 0;
+  const isUserNotFound = filteredUsers.length === 0;
 
   return (
     <Page title="User: List | Minimal-UI">
@@ -270,13 +212,13 @@ export default function PresindentAnnouncement({ title }: GuestListPropsType) {
           />
 
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 300 }}>
+            <TableContainer>
               <Table>
                 <UserListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={presidentAnnouncementList.length}
+                  rowCount={userList.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
@@ -285,18 +227,22 @@ export default function PresindentAnnouncement({ title }: GuestListPropsType) {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const { title, id } = row;
-                      const isItemSelected = selected.indexOf(title) !== -1;
+                      const {
+                        name,
+
+                        surname
+                      } = row;
+                      const isItemSelected = selected.indexOf(name) !== -1;
 
                       return (
                         <TableRow
                           hover
-                          key={id}
+                          key={name}
                           tabIndex={-1}
                           role="checkbox"
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
-                          // onClick={() => handleClick(title)}
+                          onClick={() => handleClick(title)}
                         >
                           <TableCell
                             padding="checkbox"
@@ -305,13 +251,13 @@ export default function PresindentAnnouncement({ title }: GuestListPropsType) {
                             <Checkbox checked={isItemSelected} />
                           </TableCell>
                           <TableCell component="th" scope="row" padding="none">
-                            {title}
+                            {name}
                           </TableCell>
-                          <TableCell align="left">{title}</TableCell>
-                          <TableCell align="left">{title}</TableCell>
-                          <TableCell align="left">{title}</TableCell>
-                          <TableCell align="left">{title}</TableCell>
-                          <TableCell align="left">{title}</TableCell>
+                          <TableCell align="left">{surname}</TableCell>
+                          <TableCell align="left">{surname}</TableCell>
+                          <TableCell align="left">{surname}</TableCell>
+                          <TableCell align="left">{surname}</TableCell>
+                          <TableCell align="left">{surname}</TableCell>
 
                           {/* <TableCell align="left">
                                 {isRegistered ? 'Yes' : 'No'}
@@ -400,7 +346,7 @@ export default function PresindentAnnouncement({ title }: GuestListPropsType) {
                     <ListItemIcon>
                       <DraftsIcon />
                     </ListItemIcon>
-                    <ListItemText primary={translate('Detay')} />
+                    <ListItemText primary="Detay" />
                   </ListItem>
                 </List>
               </ListWrapperStyle>
@@ -411,7 +357,7 @@ export default function PresindentAnnouncement({ title }: GuestListPropsType) {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={presidentAnnouncementList.length}
+            count={userList.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(e, page) => setPage(page)}

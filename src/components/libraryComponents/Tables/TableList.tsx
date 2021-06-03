@@ -76,6 +76,7 @@ function applySortFilter(
   query: string
 ) {
   const stabilizedThis = array.map((el, index) => [el, index] as const);
+  console.log(array);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
@@ -182,7 +183,7 @@ export default function TableList({ title }: TableListPropsType) {
   return (
     <Page title="User: List | Minimal-UI">
       <Container>
-        <h1>{title}</h1>
+        <h1 style={{ padding: 20 }}>{title}</h1>
         <Card>
           <TableListToolbar
             numSelected={selected.length}

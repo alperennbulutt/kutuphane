@@ -46,7 +46,17 @@ const sidebarConfig = [
       {
         title: 'Anlık Turnike Hareketleri',
         href: PATH_DASHBOARD.general.turnstile,
-        icon: ICONS.dashboard
+        icon: ICONS.dashboard,
+        items: [
+          {
+            title: 'Deneme',
+            href: PATH_DASHBOARD.general.analytics
+          },
+          {
+            title: 'Turnike Hareketleri',
+            href: PATH_DASHBOARD.general.turnstile
+          }
+        ]
       },
       {
         title: 'Ziyaretçi İstatistikleri',

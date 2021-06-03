@@ -12,8 +12,11 @@ import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
+import { Link as RouterLink } from 'react-router-dom';
 import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
+
 import { Grid } from '@material-ui/core';
+import { PATH_DASHBOARD } from '../../../routes/paths';
 
 import { MSwitch } from '../../@material-extend';
 
@@ -106,9 +109,15 @@ export default function ShowReservationButton() {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button
+        style={{ float: 'right' }}
+        variant="contained"
+        component={RouterLink}
+        to={PATH_DASHBOARD.general.showApointment}
+      >
         Randevuları Görüntüle
       </Button>
+
       <SimpleDialog
         selectedValue={selectedValue}
         open={open}

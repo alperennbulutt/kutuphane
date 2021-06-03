@@ -114,5 +114,6 @@ export const CONSTS = {
   WorkingAreaDeleteTableFromWorkingArea:
     '/api/WorkingArea/DeleteTableFromWorkingArea/{workingAreaId}/{tableId}',
   WorkingAreaIsThereAppointmentWorkingArea:
-    '/api/WorkingArea/IsThereAppointmentWorkingArea/{workingAreaId}'
+    '/api/WorkingArea/IsThereAppointmentWorkingArea/{workingAreaId}',
+  WorkingAreaGetWorkingAreaList: '/api/WorkingArea/GetWorkingAreaList'
 };

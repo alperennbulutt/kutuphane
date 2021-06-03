@@ -1,10 +1,12 @@
 import { filter } from 'lodash';
 import { Icon } from '@iconify/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
+import { useTheme } from '@material-ui/core/styles';
 // material
 import {
+  Slide,
   Box,
   Card,
   Table,
@@ -16,27 +18,46 @@ import {
   IconButton,
   Typography,
   TableContainer,
-  TablePagination
+  TablePagination,
+  Button,
+  Checkbox,
+  TextField,
+  Grid,
+  Dialog
 } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
+import { Label } from '@material-ui/icons';
+import { TransitionProps } from '@material-ui/core/transitions';
+
 // redux
 import { RootState } from '../../../redux/store';
-import { getUserList } from '../../../redux/slices/user';
-// routes
-// @types
-import { UserManager } from '../../../@types/user';
+import { PATH_DASHBOARD } from '../../../routes/paths';
+
 // components
 import Page from '../../Page';
 import Scrollbar from '../../Scrollbar';
 import SearchNotFound from '../../SearchNotFound';
-import { UserListHead, UserListToolbar } from '../../user/list';
-import { getAllAnnouncement } from '../../../redux/slices/announcement';
-import { AnnouncementModel } from '../../../@types/announcementModel';
+import MoveTableButton from '../Tables/MoveTableButton';
+import {
+  TableListHead,
+  TableListToolbar,
+  UserListToolbar
+} from '../../user/list';
+import { GetWorkingAreaList } from '../../../redux/slices/classes';
+import { ClassesModel } from '../../../@types/classesModel';
+// import ShowReservationButton from './ShowReservationButton';
+// import DeleteTableButton from './DeleteTableButton';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'id', label: 'Saat', alignRight: false },
-  { id: 'title', label: 'Title', alignRight: false }
+  { id: '' },
+  { id: 'role', label: 'Barkod Numarası', alignRight: false },
+  { id: 'isVerified', label: 'Bulunduğu Yer', alignRight: false },
+  { id: '' },
+  { id: '' },
+
+  { id: '' }
 ];
 
 // ----------------------------------------------------------------------
@@ -60,7 +81,7 @@ function getComparator(order: string, orderBy: string) {
 }
 
 function applySortFilter(
-  array: AnnouncementModel[],
+  array: ClassesModel[],
   comparator: (a: any, b: any) => number,
   query: string
 ) {
@@ -73,22 +94,36 @@ function applySortFilter(
   if (query) {
     return filter(
       array,
-      (_user) => _user.title.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      (_user) =>
+        _user.workingAreaName.toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
   }
   return stabilizedThis.map((el) => el[0]);
 }
 
+const Transition = forwardRef(
+  (
+    props: TransitionProps & {
+      children?: React.ReactElement;
+    },
+    ref: React.Ref<unknown>
+  ) => <Slide direction="up" ref={ref} {...props} />
+);
+
 // Propsları Bu şekilde veriyoruz
-type GuestListPropsType = {
+type TableListPropsType = {
   title: string;
 };
 
-export default function Classes({ title }: GuestListPropsType) {
+export default function SilentList({ title }: TableListPropsType) {
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+
   const dispatch = useDispatch();
+
   const { userList } = useSelector((state: RootState) => state.user);
-  const { announcementList, announcement } = useSelector(
-    (state: RootState) => state.announcement
+  const { classesList, classes } = useSelector(
+    (state: RootState) => state.classes
   );
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
@@ -102,7 +137,7 @@ export default function Classes({ title }: GuestListPropsType) {
   ] = useState<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    dispatch(getAllAnnouncement());
+    dispatch(GetWorkingAreaList());
   }, [dispatch]);
 
   const handleRequestSort = (property: string) => {
@@ -113,7 +148,7 @@ export default function Classes({ title }: GuestListPropsType) {
 
   const handleSelectAllClick = (checked: boolean) => {
     if (checked) {
-      const newSelecteds = announcementList.map((n) => n.title);
+      const newSelecteds = classesList.map((n) => n.workingAreaName);
       setSelected(newSelecteds);
       return;
     }
@@ -138,6 +173,10 @@ export default function Classes({ title }: GuestListPropsType) {
     setSelected(newSelected);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -153,17 +192,20 @@ export default function Classes({ title }: GuestListPropsType) {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userList.length) : 0;
 
   const filteredUsers = applySortFilter(
-    announcementList,
+    classesList,
     getComparator(order, orderBy),
     filterName
   );
   const handleOptionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setRowOptionclick(event.currentTarget);
-    const announcementId = String(
+    const tableId = String(
       event.currentTarget.attributes.getNamedItem('itemid')?.value
     );
-    // dispatch(getAllAnnouncement());
+    // dispatch(getAlltable());
     // setVehicleId(vehicleId);
+  };
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
   const isUserNotFound = filteredUsers.length === 0;
@@ -172,6 +214,61 @@ export default function Classes({ title }: GuestListPropsType) {
     <Page title="User: List | Minimal-UI">
       <Container>
         <h1>{title}</h1>
+        <br />
+        <Grid container spacing={2} padding={2}>
+          <Grid xs={12} sm={3} paddingRight={1}>
+            <TextField type="datetime-local" fullWidth>
+              <option key={0} label="" />
+            </TextField>
+          </Grid>
+          <Grid xs={12} sm={3} paddingRight={1}>
+            <TextField type="datetime-local" fullWidth>
+              <option key={0} label="" />
+            </TextField>
+          </Grid>
+          <Grid xs={12} sm={3}>
+            <Button
+              size="large"
+              variant="outlined"
+              color="primary"
+              onClick={handleClickOpen}
+            >
+              Tarihe Göre Listele
+            </Button>
+          </Grid>
+          <Grid xs={12} sm={3}>
+            <Button
+              size="large"
+              variant="outlined"
+              color="primary"
+              onClick={handleClickOpen}
+            >
+              Masa Ekle
+            </Button>
+            <Dialog
+              // fullScreen
+              fullWidth
+              maxWidth="sm"
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Transition}
+            >
+              <Grid container>
+                <TextField style={{ padding: 20 }}>asdasd</TextField>
+                <Button
+                  style={{ marginTop: 20 }}
+                  size="large"
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleClickOpen}
+                >
+                  Kaydet
+                </Button>
+              </Grid>
+            </Dialog>
+          </Grid>
+        </Grid>
+
         <Card>
           <UserListToolbar
             numSelected={selected.length}
@@ -182,60 +279,53 @@ export default function Classes({ title }: GuestListPropsType) {
           <Scrollbar>
             <TableContainer sx={{ minWidth: 300 }}>
               <Table>
-                <UserListHead
+                <TableListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={userList.length}
+                  rowCount={classesList.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const { title, id } = row;
-                      const isItemSelected = selected.indexOf(title) !== -1;
+                      const {
+                        currentCapacity,
+                        isOpenMassAppointment,
+                        location,
+                        tableOfNumber,
+                        workingAreaId,
+                        workingAreaName,
+                        workingAreaTypeId,
+                        workingAreaTypeName
+                      } = row;
+                      const isItemSelected =
+                        selected.indexOf(workingAreaName) !== -1;
 
                       return (
                         <TableRow
                           hover
-                          key={id}
+                          key={workingAreaId}
                           tabIndex={-1}
-                          role="checkbox"
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
-                          onClick={() => handleClick(title)}
+                          onClick={() => handleClick(workingAreaName)}
                         >
-                          <TableCell component="th" scope="row" padding="none">
-                            <Box
-                              sx={{
-                                py: 2,
-                                display: 'flex',
-                                alignItems: 'center'
-                              }}
-                            >
-                              <Box
-                                component={Avatar}
-                                alt={title}
-                                sx={{ mx: 2 }}
-                              />
-                              <Typography variant="subtitle2" noWrap>
-                                {title}
-                              </Typography>
-                            </Box>
+                          <TableCell
+                            padding="checkbox"
+                            onClick={() => handleClick(title)}
+                          >
+                            <Checkbox checked={isItemSelected} />
                           </TableCell>
-
-                          <TableCell align="right">
-                            <IconButton>
-                              <Icon
-                                width={20}
-                                height={20}
-                                icon={moreVerticalFill}
-                              />
-                            </IconButton>
+                          <TableCell align="left">{workingAreaName}</TableCell>
+                          {/* <TableCell>
+                            <DeleteTableButton />
                           </TableCell>
+                          <TableCell>
+                            <ShowReservationButton />
+                          </TableCell> */}
                         </TableRow>
                       );
                     })}
@@ -263,11 +353,12 @@ export default function Classes({ title }: GuestListPropsType) {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={userList.length}
+            count={classesList.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(e, page) => setPage(page)}
             onRowsPerPageChange={(e) => handleChangeRowsPerPage}
+            labelRowsPerPage="Sayfa Başına Satır"
           />
         </Card>
       </Container>

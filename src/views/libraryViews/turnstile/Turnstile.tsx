@@ -5,7 +5,7 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 
 import { PATH_DASHBOARD } from '../../../routes/paths';
 
-import TurnstileList from '../../TurnstileList';
+import TurnstileList from '../../../components/libraryComponents/Turnstile/TurnstileList11';
 import TabPanel from '../../../components/libraryComponents/Turnstile/TabPanel';
 
 export default function Turnstile() {

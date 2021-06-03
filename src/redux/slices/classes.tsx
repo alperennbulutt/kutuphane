@@ -3,9 +3,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import { dispatch } from '../store';
 // utils
 import axios from '../../utils/axios';
-import { PresidentAnnouncementModel } from '../../@types/presidentAnnouncementModel';
+
 import { CONSTS } from './const';
 import { MapDeckglOverlay } from '../../components/map';
+import { ClassesModel } from '../../@types/classesModel';
 // ----------------------------------------------------------------------
 
 // type VehicleState = {
@@ -16,30 +17,30 @@ import { MapDeckglOverlay } from '../../components/map';
 //   vehicle: VehicleManager;
 //   vehicleDocuments: VehicleDocumentManager[];
 // };
-type PresidentAnnouncementState = {
+type ClassesState = {
   isLoading: boolean;
   error: boolean;
   detailModalIsOpen: boolean;
-  presidentAnnouncementList: PresidentAnnouncementModel[];
-  presidentAnnouncement: PresidentAnnouncementModel;
+  classesList: ClassesModel[];
+  classes: ClassesModel;
+};
+const classesInit = {
+  workingAreaId: 1,
+  workingAreaName: '',
+  workingAreaTypeId: 1,
+  currentCapacity: 25,
+  tableOfNumber: 2,
+  location: '',
+  workingAreaTypeName: '',
+  isOpenMassAppointment: true
 };
 
-const presidentAnnouncementInit = {
-  id: 0,
-  title: '',
-  description: '',
-  publicationDate: '',
-  announcementTypeId: 0,
-  announcementTypeName: '',
-  takedownDate: ''
-};
-
-const initialState: PresidentAnnouncementState = {
+const initialState: ClassesState = {
   isLoading: false,
   error: false,
   detailModalIsOpen: false,
-  presidentAnnouncementList: [],
-  presidentAnnouncement: presidentAnnouncementInit
+  classesList: [],
+  classes: classesInit
 };
 
 const slice = createSlice({
@@ -58,26 +59,26 @@ const slice = createSlice({
     },
 
     // GET PROFILE
-    getAllPresidentAnnouncementSuccess(state, action) {
+    getWorkingAreaListSuccess(state, action) {
       state.isLoading = false;
-      state.presidentAnnouncementList = action.payload;
+      state.classesList = action.payload;
     },
 
     // GET PROFILE
-    filterPresidentAnnouncementSuccess(state, action) {
+    filterClassesSuccess(state, action) {
       state.isLoading = false;
-      state.presidentAnnouncementList = action.payload;
+      state.classesList = action.payload;
     },
     // GET PROFILE
-    savePresidentAnnouncementSuccess(state, action) {
+    saveWorkingAreaListSuccess(state, action) {
       state.isLoading = false;
-      state.presidentAnnouncementList = action.payload;
+      state.classesList = action.payload;
     },
 
     // GET PROFILE
-    getPresidentAnnouncementByIdSuccess(state, action) {
+    getWorkingAreaListByIdSuccess(state, action) {
       state.isLoading = false;
-      state.presidentAnnouncement = action.payload;
+      state.classes = action.payload;
     },
     onToggleDetailModal(state, action) {
       state.detailModalIsOpen = action.payload;
@@ -98,118 +99,113 @@ export const { onToggleDetailModal } = slice.actions;
 
 // ----------------------------------------------------------------------
 
-export function addAnnouncement(model: any) {
-  return async () => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.post(
-        `${CONSTS.AnnouncementAddAnnouncement}`,
-        {
-          title: model.title,
-          description: model.description,
-          publicationDate: model.publicationDate,
-          announcementTypeId: Number(model.announcementTypeId),
-          takedownDate: model.takedownDate
-        }
-      );
-      localStorage.setItem('id', response.data.data.id);
+// export function addClasses(model: any) {
+//   return async () => {
+//     dispatch(slice.actions.startLoading());
+//     try {
+//       const response = await axios.post(
+//         `${CONSTS.AnnouncementAddAnnouncement}`,
+//         {
+//           title: model.title,
+//           description: model.description,
+//           publicationDate: model.publicationDate,
+//           announcementTypeId: Number(model.announcementTypeId),
+//           takedownDate: model.takedownDate
+//         }
+//       );
+//       localStorage.setItem('id', response.data.data.id);
 
-      dispatch(getPresidentAnnouncement());
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
+//       dispatch(GetWorkingAreaList());
+//     } catch (error) {
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
 
-export function getPresidentAnnouncement() {
+// listenin çekildiği kısımın
+export function GetWorkingAreaList() {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
       const response = await axios.get(
-        CONSTS.AnnouncementGetPresidentAnnouncementList,
+        CONSTS.WorkingAreaGetWorkingAreaList,
         {}
       );
-      dispatch(
-        slice.actions.getAllPresidentAnnouncementSuccess(response.data.data)
-      );
+      dispatch(slice.actions.getWorkingAreaListSuccess(response.data.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
 
-export function deleteAnnouncement(model: any) {
-  return async () => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.post(
-        `${CONSTS.AnnouncementDeleteAnnouncement}`,
-        model
-      );
-      dispatch(getPresidentAnnouncement());
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
+// export function deleteClasses(model: any) {
+//   return async () => {
+//     dispatch(slice.actions.startLoading());
+//     try {
+//       const response = await axios.post(
+//         `${CONSTS.AnnouncementDeleteAnnouncement}`,
+//         model
+//       );
+//       dispatch(GetWorkingAreaList());
+//     } catch (error) {
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
 
-export function getAnnouncementById(id: number) {
+export function getClassesById(id: number) {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
       const response = await axios.get(
-        `${CONSTS.AnnouncementGetAnnouncementList}?id=${id}`
+        `${CONSTS.WorkingAreaGetWorkingAreaList}?id=${id}`
       );
-      dispatch(
-        slice.actions.getPresidentAnnouncementByIdSuccess(response.data.data)
-      );
+      dispatch(slice.actions.getWorkingAreaListByIdSuccess(response.data.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
 
-export function updateAnnouncement(model: any) {
-  return async () => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.post(
-        `${CONSTS.AnnouncementEditAnnounement}`,
-        {
-          id: model.id,
-          title: model.title,
-          description: model.description,
-          publicationDate: Number(model.publicationDate),
-          announcementTypeId: model.announcementTypeId,
-          takedownDate: model.takedownDate
-        }
-      );
+// export function updateAnnouncement(model: any) {
+//   return async () => {
+//     dispatch(slice.actions.startLoading());
+//     try {
+//       const response = await axios.post(
+//         `${CONSTS.AnnouncementEditAnnounement}`,
+//         {
+//           id: model.id,
+//           title: model.title,
+//           description: model.description,
+//           publicationDate: Number(model.publicationDate),
+//           announcementTypeId: model.announcementTypeId,
+//           takedownDate: model.takedownDate
+//         }
+//       );
 
-      dispatch(getPresidentAnnouncement());
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
-export function filterAnnouncement(_query: string, _registered: boolean) {
-  return async () => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.post(
-        CONSTS.AnnouncementGetAnnouncementList,
-        {
-          query: _query,
-          registered: _registered
-        }
-      );
-      dispatch(
-        slice.actions.filterPresidentAnnouncementSuccess(response.data.data)
-      );
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
+//       dispatch(GetWorkingAreaList());
+//     } catch (error) {
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
+// export function filterAnnouncement(_query: string, _registered: boolean) {
+//   return async () => {
+//     dispatch(slice.actions.startLoading());
+//     try {
+//       const response = await axios.post(
+//         CONSTS.AnnouncementGetAnnouncementList,
+//         {
+//           query: _query,
+//           registered: _registered
+//         }
+//       );
+//       dispatch(slice.actions.filterAnnouncementSuccess(response.data.data));
+//     } catch (error) {
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
 
 // export function getAllVehicle() {
 //   return async () => {

@@ -28,23 +28,23 @@ import {
   Checkbox
 } from '@material-ui/core';
 // redux
-import { RootState } from '../redux/store';
+import { RootState } from '../../../redux/store';
 
 // routes
 // @types
-import { VisitorInformationModel } from '../@types/turnstileModel';
+import { VisitorInformationModel } from '../../../@types/turnstileModel';
 // components
-import Page from '../components/Page';
-import Scrollbar from '../components/Scrollbar';
-import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, UserListToolbar } from '../components/user/list';
+import Page from '../../Page';
+import Scrollbar from '../../Scrollbar';
+import SearchNotFound from '../../SearchNotFound';
+import { UserListHead, UserListToolbar } from '../../user/list';
 import {
   getAllTurnstile,
   onToggleDetailModal
-} from '../redux/slices/turnstile';
+} from '../../../redux/slices/turnstile';
 
 // burası değişecek
-import Details from '../components/libraryComponents/Announcement/Details';
+import Details from '../Announcement/Details';
 
 // ----------------------------------------------------------------------
 
@@ -98,7 +98,7 @@ type TurnstileListPropsType = {
   title: string;
 };
 
-export default function TurnstileList({ title }: TurnstileListPropsType) {
+export default function TurnstileList21({ title }: TurnstileListPropsType) {
   const dispatch = useDispatch();
   const { userList } = useSelector((state: RootState) => state.user);
   const { turnstileList, turnstile } = useSelector(
@@ -179,7 +179,7 @@ export default function TurnstileList({ title }: TurnstileListPropsType) {
   };
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - turnstileList.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userList.length) : 0;
 
   const filteredUsers = applySortFilter(
     turnstileList,
@@ -200,7 +200,7 @@ export default function TurnstileList({ title }: TurnstileListPropsType) {
   return (
     <Page title="User: List | Minimal-UI">
       <Container>
-        <h1>{title}</h1>
+        <h1 style={{ padding: 20 }}>{title}</h1>
         <Card>
           <UserListToolbar
             numSelected={selected.length}
@@ -218,7 +218,7 @@ export default function TurnstileList({ title }: TurnstileListPropsType) {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={turnstileList.length}
+                  rowCount={userList.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
@@ -229,10 +229,7 @@ export default function TurnstileList({ title }: TurnstileListPropsType) {
                     .map((row, index) => {
                       const {
                         name,
-                        identificationNumber,
-                        passingDate,
-                        passingTypeId,
-                        passingTypeName,
+
                         surname
                       } = row;
                       const isItemSelected = selected.indexOf(name) !== -1;
@@ -360,11 +357,12 @@ export default function TurnstileList({ title }: TurnstileListPropsType) {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={turnstileList.length}
+            count={userList.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(e, page) => setPage(page)}
             onRowsPerPageChange={(e) => handleChangeRowsPerPage}
+            labelRowsPerPage="Sayfa Başına Satır"
           />
         </Card>
       </Container>

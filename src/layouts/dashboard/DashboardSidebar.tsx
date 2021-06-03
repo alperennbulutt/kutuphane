@@ -197,7 +197,7 @@ export default function DashboardSidebar({
         </List>
       ))}
 
-      <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
+      {/* <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
         <DocStyle>
           <Box
             component="img"
@@ -225,7 +225,7 @@ export default function DashboardSidebar({
             Documentation
           </Button>
         </DocStyle>
-      </Box>
+      </Box> */}
     </Scrollbar>
   );
 

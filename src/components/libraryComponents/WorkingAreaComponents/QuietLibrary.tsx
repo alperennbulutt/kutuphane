@@ -268,6 +268,7 @@ export default function QuietLibrary({ title }: GuestListPropsType) {
             page={page}
             onPageChange={(e, page) => setPage(page)}
             onRowsPerPageChange={(e) => handleChangeRowsPerPage}
+            labelRowsPerPage="Sayfa Başına Satır"
           />
         </Card>
       </Container>

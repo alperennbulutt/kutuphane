@@ -47,7 +47,8 @@ export const PATH_DASHBOARD = {
     apointment: path(ROOTS_DASHBOARD, '/apointment'),
     workingSchedule: path(ROOTS_DASHBOARD, '/workingSchedule'),
     table: path(ROOTS_DASHBOARD, '/table'),
-    announcement: path(ROOTS_DASHBOARD, '/announcement')
+    announcement: path(ROOTS_DASHBOARD, '/announcement'),
+    showApointment: path(ROOTS_DASHBOARD, '/showApointment')
   },
   mail: {
     root: path(ROOTS_DASHBOARD, '/mail'),

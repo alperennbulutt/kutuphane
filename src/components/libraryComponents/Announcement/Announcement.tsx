@@ -81,6 +81,8 @@ function applySortFilter(
   query: string
 ) {
   const stabilizedThis = array.map((el, index) => [el, index] as const);
+  console.log('buraya girdi');
+  console.log(array);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
@@ -253,12 +255,12 @@ export default function Announcement({ title }: GuestListPropsType) {
 
   // const isUserNotFound = filteredAnnouncement.length === 0;
 
-  // const isUserNotFound = filteredUsers.length === 0;
+  const isUserNotFound = filteredUsers.length === 0;
 
   return (
     <Page title="User: List | Minimal-UI">
       <Container>
-        <h1>{title}</h1>
+        <h1 style={{ padding: 20 }}>{title}</h1>
         <Card>
           <UserListToolbar
             numSelected={selected.length}
@@ -285,7 +287,15 @@ export default function Announcement({ title }: GuestListPropsType) {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const { title, id } = row;
+                      const {
+                        title,
+                        id,
+                        announcementTypeId,
+                        announcementTypeName,
+                        description,
+                        publicationDate,
+                        takedownDate
+                      } = row;
                       const isItemSelected = selected.indexOf(title) !== -1;
 
                       return (
@@ -366,7 +376,7 @@ export default function Announcement({ title }: GuestListPropsType) {
                     </TableRow>
                   )}
                 </TableBody>
-                {/* {isUserNotFound && (
+                {isUserNotFound && (
                   <TableBody>
                     <TableRow>
                       <TableCell align="center" colSpan={6}>
@@ -376,7 +386,7 @@ export default function Announcement({ title }: GuestListPropsType) {
                       </TableCell>
                     </TableRow>
                   </TableBody>
-                )} */}
+                )}
               </Table>
             </TableContainer>
           </Scrollbar>
@@ -416,6 +426,7 @@ export default function Announcement({ title }: GuestListPropsType) {
             page={page}
             onPageChange={(e, page) => setPage(page)}
             onRowsPerPageChange={(e) => handleChangeRowsPerPage}
+            labelRowsPerPage="Sayfa Başına Satır"
           />
         </Card>
       </Container>

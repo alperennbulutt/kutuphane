@@ -6,6 +6,8 @@ const axiosInstance = axios.create();
 
 axiosInstance.interceptors.request.use((config) => {
   config.url = `${process.env.REACT_APP_MAIN_URL}${config.url}`;
+  console.log('url basıldı');
+  console.log(config.url);
 
   return config;
 });

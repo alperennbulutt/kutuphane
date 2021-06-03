@@ -34,7 +34,7 @@ export default function Settings() {
           zIndex: 999
         }}
       >
-        <Tooltip title="Settings">
+        <Tooltip title="Ayarlar">
           <MFab
             color="warning"
             size="medium"
@@ -71,7 +71,7 @@ export default function Settings() {
             justifyContent: 'space-between'
           }}
         >
-          <Typography variant="subtitle1">Settings</Typography>
+          <Typography variant="subtitle1">Ayarlar</Typography>
           <MIconButton onClick={handleCloseSettings}>
             <Icon icon={closeFill} width={20} height={20} />
           </MIconButton>
@@ -80,14 +80,14 @@ export default function Settings() {
 
         <Box sx={{ pt: 3, px: 3 }}>
           <Typography variant="subtitle2" sx={{ mb: 1.5 }}>
-            Mode
+            Ekran Modu
           </Typography>
           <SettingMode />
 
           <Box sx={{ my: 3 }} />
 
           <Typography variant="subtitle2" sx={{ mb: 1.5 }}>
-            Direction
+            Yön
           </Typography>
           <SettingDirection />
         </Box>
