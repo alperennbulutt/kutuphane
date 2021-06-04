@@ -32,7 +32,7 @@ const HeaderStyle = styled('header')(({ theme }) => ({
 
 export default function Page404() {
   return (
-    <RootStyle title="404 Page Not Found | Minimal-UI">
+    <RootStyle title="404 Sayfa Bulunamadı">
       <HeaderStyle>
         <RouterLink to="/">
           <Logo />
@@ -44,12 +44,13 @@ export default function Page404() {
           <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center' }}>
             <motion.div variants={varBounceIn}>
               <Typography variant="h3" gutterBottom>
-                Sorry, page not found!
+                Üzgünüm, sayfa bulunamadı!
               </Typography>
             </motion.div>
             <Typography sx={{ color: 'text.secondary' }}>
-              Sorry, we couldn’t find the page you’re looking for. Perhaps
-              you’ve mistyped the URL? Be sure to check your spelling.
+              Üzgünüz, aradığınız sayfayı bulamadık. Belki URL'yi yanlış mı
+              yazdınız? Doğru yazıp yazmadığınızı kontrol ettiğinizden emin
+              olun.
             </Typography>
 
             <Box
@@ -66,7 +67,7 @@ export default function Page404() {
               variant="contained"
               component={RouterLink}
             >
-              Go to Home
+              AnaSayfa
             </Button>
           </Box>
         </MotionContainer>

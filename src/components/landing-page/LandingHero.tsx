@@ -89,8 +89,12 @@ export default function LandingHero() {
         <Container maxWidth="lg">
           <ContentStyle>
             <motion.div variants={varFadeInRight}>
-              <Typography variant="h1" sx={{ color: 'common.white' }}>
-                Talas Kütüphanesi Admin Sayfası <br />
+              <Typography
+                style={{ padding: 20 }}
+                variant="h1"
+                sx={{ color: 'common.white' }}
+              >
+                Talas Kütüphanesi <br />
               </Typography>
             </motion.div>
 
@@ -102,7 +106,7 @@ export default function LandingHero() {
                 to={PATH_DASHBOARD.root}
                 startIcon={<Icon icon={flashFill} width={20} height={20} />}
               >
-                Live Preview
+                Uygulama Ekranı
               </Button>
             </motion.div>
           </ContentStyle>

@@ -30,7 +30,7 @@ const HeaderStyle = styled('header')(({ theme }) => ({
 
 export default function Page500() {
   return (
-    <RootStyle title="500 Internal Server Error | Minimal-UI">
+    <RootStyle title="500 Sunucu Hatası">
       <HeaderStyle>
         <RouterLink to="/">
           <Logo />
@@ -40,10 +40,10 @@ export default function Page500() {
       <Container>
         <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center' }}>
           <Typography variant="h3" gutterBottom>
-            500 Internal Server Error
+            500 Sunucu Hatası
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>
-            There was an error, please try again later.
+            Bir hata oluştu, lütfen daha sonra tekrar deneyin.
           </Typography>
 
           <Box
@@ -59,7 +59,7 @@ export default function Page500() {
             variant="contained"
             component={RouterLink}
           >
-            Go to Home
+            AnaSayfa
           </Button>
         </Box>
       </Container>

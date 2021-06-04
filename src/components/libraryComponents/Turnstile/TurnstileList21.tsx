@@ -93,12 +93,12 @@ function applySortFilter(
   return stabilizedThis.map((el) => el[0]);
 }
 
-// Propsları Bu şekilde veriyoruz
-type TurnstileListPropsType = {
-  title: string;
-};
+// // Propsları Bu şekilde veriyoruz
+// type TurnstileListPropsType = {
+//   title: string;
+// };
 
-export default function TurnstileList21({ title }: TurnstileListPropsType) {
+export default function TurnstileList21() {
   const dispatch = useDispatch();
   const { userList } = useSelector((state: RootState) => state.user);
   const { turnstileList, turnstile } = useSelector(
@@ -200,7 +200,6 @@ export default function TurnstileList21({ title }: TurnstileListPropsType) {
   return (
     <Page title="User: List | Minimal-UI">
       <Container>
-        <h1 style={{ padding: 20 }}>{title}</h1>
         <Card>
           <UserListToolbar
             numSelected={selected.length}
@@ -242,11 +241,11 @@ export default function TurnstileList21({ title }: TurnstileListPropsType) {
                           role="checkbox"
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
-                          onClick={() => handleClick(title)}
+                          onClick={() => handleClick(name)}
                         >
                           <TableCell
                             padding="checkbox"
-                            onClick={() => handleClick(title)}
+                            onClick={() => handleClick(name)}
                           >
                             <Checkbox checked={isItemSelected} />
                           </TableCell>
@@ -265,7 +264,7 @@ export default function TurnstileList21({ title }: TurnstileListPropsType) {
 
                           <TableCell align="right">
                             <IconButton
-                              itemID={title}
+                              itemID={name}
                               onClick={handleOptionClick}
                             >
                               <Icon
@@ -312,7 +311,7 @@ export default function TurnstileList21({ title }: TurnstileListPropsType) {
                     </TableRow>
                   )}
                 </TableBody>
-                {/* {isUserNotFound && (
+                {isUserNotFound && (
                   <TableBody>
                     <TableRow>
                       <TableCell align="center" colSpan={6}>
@@ -322,7 +321,7 @@ export default function TurnstileList21({ title }: TurnstileListPropsType) {
                       </TableCell>
                     </TableRow>
                   </TableBody>
-                )} */}
+                )}
               </Table>
             </TableContainer>
           </Scrollbar>

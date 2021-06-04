@@ -8,14 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { Grid } from '@material-ui/core';
 
-import SilentLibrary from '../../../views/libraryViews/SilentLibrary';
-import QrCode from '../../../views/libraryViews/QrCode';
-import TurnstileList11 from './TurnstileList11';
-import TurnstileList12 from './TurnstileList12';
-import TurnstileList21 from './TurnstileList21';
-import TurnstileList22 from './TurnstileList22';
-import TurnstileGroundFloor from '../../../views/libraryViews/turnstile/TurnstileGroundFloor';
-import TurnstileFirstFloor from '../../../views/libraryViews/turnstile/TurnstileFirstFloor';
+import TurnstileList11 from '../../../components/libraryComponents/Turnstile/TurnstileList11';
+import TurnstileList12 from '../../../components/libraryComponents/Turnstile/TurnstileList12';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -58,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-export default function FullWidthTabs() {
+export default function TurnstileGroundFloor() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -82,7 +76,7 @@ export default function FullWidthTabs() {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="asdasd Turnikesi" {...a11yProps(0)} />
+          <Tab label="Giriş Turnikesi" {...a11yProps(0)} />
           <Tab label="Çıkış Turnikesi" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
@@ -92,11 +86,17 @@ export default function FullWidthTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <TurnstileGroundFloor />
+          <Grid>
+            <Grid>
+              <TurnstileList11 />
+            </Grid>
+          </Grid>
         </TabPanel>
 
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <TurnstileFirstFloor />
+          <Grid>
+            <TurnstileList12 />
+          </Grid>
         </TabPanel>
       </SwipeableViews>
     </div>
