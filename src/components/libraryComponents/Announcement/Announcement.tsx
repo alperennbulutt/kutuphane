@@ -130,34 +130,22 @@ export default function Announcement({ title }: GuestListPropsType) {
   const TABLE_HEAD = [
     {
       id: 'id',
-      label: translate('vehicle.list.tab.table.vehicletypecode'),
+      label: translate('id'),
       alignRight: false
     },
     {
       id: 'title',
-      label: translate('vehicle.list.tab.table.vehicleplate'),
+      label: translate('title'),
       alignRight: false
     },
     {
       id: 'description',
-      label: translate('vehicle.list.tab.table.passengercapacity'),
+      label: translate('description'),
       alignRight: false
     },
-    {
-      id: 'vehicleStatusCode',
-      label: translate('vehicle.list.tab.table.vehiclestatuscode'),
-      alignRight: false
-    },
-    {
-      id: 'vehicleBrand',
-      label: translate('vehicle.list.tab.table.vehiclebrand'),
-      alignRight: false
-    },
-    {
-      id: 'vehicleModel',
-      label: translate('vehicle.list.tab.table.vehiclemodel'),
-      alignRight: false
-    },
+    { id: '' },
+    { id: '' },
+    { id: '' },
     { id: '' }
   ];
 

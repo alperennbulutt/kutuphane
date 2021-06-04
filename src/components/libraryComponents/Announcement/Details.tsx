@@ -149,7 +149,7 @@ export default function FullScreenDialogs() {
         }
         await dispatch(updateAnnouncement(values));
         handleClose();
-        enqueueSnackbar(translate('global.create.success'), {
+        enqueueSnackbar(translate('Düzenlendi'), {
           variant: 'success'
         });
         resetForm();
@@ -276,6 +276,16 @@ export default function FullScreenDialogs() {
                         ))}
                       </TextField>
                     </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        label={translate('ID')}
+                        {...getFieldProps('id')}
+                        error={Boolean(touched.id && errors.id)}
+                        helperText={touched.id && errors.id}
+                      />
+                    </Grid>
+
                     <Box
                       sx={{
                         mt: 3,

@@ -123,9 +123,9 @@ export default function LandingMinimalHelps() {
             </Typography>
           </MotionInView>
           <MotionInView variants={varFadeInDown}>
-            <Typography variant="h2" align="center">
+            {/* <Typography variant="h2" align="center">
               What Minimal Helps You?
-            </Typography>
+            </Typography> */}
           </MotionInView>
         </Box>
 
@@ -152,12 +152,12 @@ export default function LandingMinimalHelps() {
                       })
                     }}
                   />
-                  <Typography variant="h5" paragraph>
+                  {/* <Typography variant="h5" paragraph>
                     {card.title}
-                  </Typography>
-                  <Typography sx={{ color: 'text.secondary' }}>
+                  </Typography> */}
+                  {/* <Typography sx={{ color: 'text.secondary' }}>
                     {card.description}
-                  </Typography>
+                  </Typography> */}
                 </CardStyle>
               </MotionInView>
             </Grid>

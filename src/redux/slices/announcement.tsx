@@ -174,14 +174,15 @@ export function updateAnnouncement(model: any) {
       const response = await axios.post(
         `${CONSTS.AnnouncementEditAnnounement}`,
         {
-          id: model.id,
+          id: Number(model.id),
           title: model.title,
           description: model.description,
           publicationDate: Number(model.publicationDate),
-          announcementTypeId: model.announcementTypeId,
+          announcementTypeId: Number(model.announcementTypeId),
           takedownDate: model.takedownDate
         }
       );
+      localStorage.setItem('id', response.data.data.id);
 
       dispatch(getAllAnnouncement());
     } catch (error) {

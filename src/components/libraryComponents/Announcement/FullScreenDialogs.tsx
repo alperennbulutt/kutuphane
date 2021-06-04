@@ -141,7 +141,7 @@ export default function FullScreenDialogs() {
         }
         await dispatch(addAnnouncement(values));
         handleClose();
-        enqueueSnackbar(translate('global.create.success'), {
+        enqueueSnackbar(translate('Eklendi'), {
           variant: 'success'
         });
         resetForm();
