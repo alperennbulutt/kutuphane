@@ -85,6 +85,8 @@ export default function FullScreenDialogs() {
   useEffect(() => {
     dispatch(getAllAnnouncement());
   }, [dispatch]);
+  // Dropdown option
+  const optionList = [1, 2];
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -115,9 +117,9 @@ export default function FullScreenDialogs() {
   //   )
   // });
 
-  const test = () => {
-    alert(23);
-  };
+  // const test = () => {
+  //   alert(23);
+  // };
 
   const formik = useFormik<InitialState>({
     // validationSchema: NewAnnouncementSchema,
@@ -264,9 +266,11 @@ export default function FullScreenDialogs() {
 
                       <Grid item xs={12} sm={6}>
                         <TextField
+                          select
                           fullWidth
-                          label="Anons Tipi"
+                          label={translate('Anons Tipi')}
                           {...getFieldProps('announcementTypeId')}
+                          SelectProps={{ native: true }}
                           error={Boolean(
                             touched.announcementTypeId &&
                               errors.announcementTypeId
@@ -275,7 +279,14 @@ export default function FullScreenDialogs() {
                             touched.announcementTypeId &&
                             errors.announcementTypeId
                           }
-                        />
+                        >
+                          <option key={0} label="" />
+                          {optionList.map((a) => (
+                            <option key={a} value={a}>
+                              {a}
+                            </option>
+                          ))}
+                        </TextField>
                       </Grid>
 
                       <Grid item xs={12} sm={6}>

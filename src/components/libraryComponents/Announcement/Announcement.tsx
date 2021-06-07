@@ -50,10 +50,10 @@ import Details from './Details';
 
 // ----------------------------------------------------------------------
 
-const TABLE_HEAD = [
-  { id: 'id', label: 'Saat', alignRight: false },
-  { id: 'title', label: 'Title', alignRight: false }
-];
+// const TABLE_HEAD = [
+//   { id: 'title', label: 'Başlık', alignRight: false },
+//   { id: 'descreption', label: 'Açıklama', alignRight: false }
+// ];
 
 // ----------------------------------------------------------------------
 
@@ -129,24 +129,28 @@ export default function Announcement({ title }: GuestListPropsType) {
 
   const TABLE_HEAD = [
     {
-      id: 'id',
-      label: translate('id'),
-      alignRight: false
-    },
-    {
       id: 'title',
-      label: translate('title'),
+      label: translate('Başlık'),
       alignRight: false
     },
     {
-      id: 'description',
-      label: translate('description'),
+      id: 'descreption',
+      label: translate('Açıklama'),
       alignRight: false
     },
-    { id: '' },
-    { id: '' },
-    { id: '' },
+    {
+      id: 'publicationDate',
+      label: translate('Yayınlanma Tarihi'),
+      alignRight: false
+    },
+    {
+      id: 'takedownDate',
+      label: translate('Bitiş Tarihi'),
+      alignRight: false
+    },
     { id: '' }
+    // { id: '' },
+    // { id: '' }
   ];
 
   const handleRequestSort = (property: string) => {
@@ -208,7 +212,7 @@ export default function Announcement({ title }: GuestListPropsType) {
     setRowOptionclick(null);
   };
 
-  // const handleRemoveVehicle = (vehicleId: string[]) => {
+  // const handleRemoveAnnouncement = (anouncementId: string[]) => {
   //   dispatch(deleteAnnouncement(vehicleId));
   // };
 
@@ -305,11 +309,11 @@ export default function Announcement({ title }: GuestListPropsType) {
                           <TableCell component="th" scope="row" padding="none">
                             {title}
                           </TableCell>
-                          <TableCell align="left">{title}</TableCell>
-                          <TableCell align="left">{title}</TableCell>
-                          <TableCell align="left">{title}</TableCell>
-                          <TableCell align="left">{title}</TableCell>
-                          <TableCell align="left">{title}</TableCell>
+                          <TableCell align="left">{description}</TableCell>
+                          <TableCell align="left">{publicationDate}</TableCell>
+                          <TableCell align="left">{takedownDate}</TableCell>
+                          {/* <TableCell align="left">{title}</TableCell>
+                          <TableCell align="left">{title}</TableCell> */}
 
                           {/* <TableCell align="left">
                                 {isRegistered ? 'Yes' : 'No'}

@@ -177,7 +177,7 @@ export function updateAnnouncement(model: any) {
           id: Number(model.id),
           title: model.title,
           description: model.description,
-          publicationDate: Number(model.publicationDate),
+          publicationDate: model.publicationDate,
           announcementTypeId: Number(model.announcementTypeId),
           takedownDate: model.takedownDate
         }

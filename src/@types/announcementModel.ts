@@ -20,7 +20,7 @@ export type EditAnnounementModel = {
   id: number;
   title: string;
   description: string;
-  publicationDate: string;
+  publicationDate: Date;
   announcementTypeId: number;
-  takedownDate: string;
+  takedownDate: Date;
 };

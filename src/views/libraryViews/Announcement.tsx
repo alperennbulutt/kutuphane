@@ -20,7 +20,7 @@ export default function Announcemnet() {
           ]}
           action={<FullScreenDialogs />}
         />
-        {/* <LeadAnnouncement title="Başkanın Mesajı" /> */}
+        <LeadAnnouncement title="Başkanın Mesajı" />
         <br />
         <Announcement title="Duyuru" />
         <br />

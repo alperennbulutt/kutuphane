@@ -285,7 +285,15 @@ export default function PresindentAnnouncement({ title }: GuestListPropsType) {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const { title, id } = row;
+                      const {
+                        title,
+                        id,
+                        announcementTypeId,
+                        announcementTypeName,
+                        description,
+                        publicationDate,
+                        takedownDate
+                      } = row;
                       const isItemSelected = selected.indexOf(title) !== -1;
 
                       return (

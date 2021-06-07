@@ -83,15 +83,10 @@ export default function FullScreenDialogs() {
     (state: RootState) => state.announcement
   );
 
-  // Buraya ekledim
+  // Dropdown option
   const optionList = [1, 2];
-  // const { allBrands } = useSelector((state: RootState) => state.allBrands);
-
-  // const { allModels } = useSelector((state: RootState) => state.allModels);
 
   const { allLang, currentLang, translate, onChangeLang } = useLocales();
-  const [open, setOpen] = useState(false);
-  const [currentBrand, setCurrentBrand] = useState('');
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -103,38 +98,18 @@ export default function FullScreenDialogs() {
   //   setCurrentBrand(brandId);
   // };
 
-  const NewAnnouncementSchema = Yup.object().shape({
-    vehicleTypeCode: Yup.string().required(
-      translate('vehicle.create.newvehicle.vehicle_type_code_is_required')
-    ),
-    vehiclePlate: Yup.string().required(
-      translate('vehicle.create.newvehicle.vehicle_plate_is_required')
-    ),
-    passengerCapacity: Yup.string().required(
-      translate('vehicle.create.newvehicle.passenger_capacity_is_required')
-    ),
-    vehicleStatusCode: Yup.string().required(
-      translate('vehicle.create.newvehicle.vehicle_status_code_is_required')
-    ),
-    vehicleBrandId: Yup.string().required(
-      translate('vehicle.create.newvehicle.vehicle_brand_is_required')
-    ),
-    vehicleModelId: Yup.string().required(
-      translate('vehicle.create.newvehicle.vehicle_model_is_required')
-    )
-  });
-
   // Burada Tip dönüşümü Yaptım
   const formik = useFormik<InitialState>({
     // validationSchema: NewAnnouncementSchema,
-    enableReinitialize: true,
+    // enableReinitialize: true,
+
     initialValues: {
-      id: announcement.id,
-      title: announcement.title,
-      description: announcement.description,
-      publicationDate: announcement.publicationDate,
-      announcementTypeId: announcement.announcementTypeId,
-      takedownDate: announcement.takedownDate
+      id: 0,
+      title: '',
+      description: '',
+      publicationDate: new Date(),
+      announcementTypeId: 0,
+      takedownDate: new Date()
     },
     onSubmit: async (values, { resetForm, setErrors, setSubmitting }) => {
       try {
