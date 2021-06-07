@@ -101,15 +101,15 @@ export default function FullScreenDialogs() {
   // Burada Tip dönüşümü Yaptım
   const formik = useFormik<InitialState>({
     // validationSchema: NewAnnouncementSchema,
-    // enableReinitialize: true,
+    enableReinitialize: true,
 
     initialValues: {
-      id: 0,
-      title: '',
-      description: '',
-      publicationDate: new Date(),
-      announcementTypeId: 0,
-      takedownDate: new Date()
+      id: announcement.id,
+      title: announcement.title,
+      description: announcement.description,
+      publicationDate: announcement.publicationDate,
+      announcementTypeId: announcement.announcementTypeId,
+      takedownDate: announcement.takedownDate
     },
     onSubmit: async (values, { resetForm, setErrors, setSubmitting }) => {
       try {
@@ -251,7 +251,7 @@ export default function FullScreenDialogs() {
                         ))}
                       </TextField>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    {/* <Grid item xs={12} sm={6}>
                       <TextField
                         fullWidth
                         label={translate('ID')}
@@ -259,7 +259,7 @@ export default function FullScreenDialogs() {
                         error={Boolean(touched.id && errors.id)}
                         helperText={touched.id && errors.id}
                       />
-                    </Grid>
+                    </Grid> */}
 
                     <Box
                       sx={{

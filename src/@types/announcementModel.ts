@@ -2,10 +2,10 @@ export type AnnouncementModel = {
   id: number;
   title: string;
   description: string;
-  publicationDate: string;
+  publicationDate: Date;
   announcementTypeId: number;
   announcementTypeName: string;
-  takedownDate: string;
+  takedownDate: Date;
 };
 
 export type AddAnnouncementModel = {

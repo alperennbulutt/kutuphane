@@ -30,10 +30,10 @@ const announcementInit = {
   id: 0,
   title: '',
   description: '',
-  publicationDate: '',
+  publicationDate: new Date(),
   announcementTypeId: 0,
   announcementTypeName: '',
-  takedownDate: ''
+  takedownDate: new Date()
 };
 
 const initialState: AnnouncementState = {
@@ -153,12 +153,12 @@ export function deleteAnnouncement(model: any) {
   };
 }
 
-export function getAnnouncementById(id: number) {
+export function getAnnouncementById(announcementId: number) {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
       const response = await axios.get(
-        `${CONSTS.AnnouncementGetAnnouncementList}?id=${id}`
+        `${CONSTS.AnnouncementGetAnnouncementById}${announcementId}`
       );
       dispatch(slice.actions.getAnnouncementByIdSuccess(response.data.data));
     } catch (error) {

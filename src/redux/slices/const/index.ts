@@ -15,6 +15,7 @@ export const CONSTS = {
   AnnouncementEditAnnounement: '/api/Announcement/EditAnnounement',
   AnnouncementGetPresidentAnnouncementList:
     '/api/Announcement/GetPresidentAnnouncementList',
+  AnnouncementGetAnnouncementById: '/api/Announcement/GetAnnouncementById/',
   // Appointment ---------------------------------------------------------------------------------------
 
   AppointmentCancelAppointment:

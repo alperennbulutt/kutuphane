@@ -116,7 +116,8 @@ export default function Announcement({ title }: GuestListPropsType) {
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  // const [id, setAnnouncementId] = useState('');
+
+  // const [announcementId, setAnnouncementId] = useState('');
 
   const [
     rowOptionclick,
@@ -228,13 +229,12 @@ export default function Announcement({ title }: GuestListPropsType) {
   );
   const handleOptionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setRowOptionclick(event.currentTarget);
-    const announcementId = String(
+    const id = Number(
       event.currentTarget.attributes.getNamedItem('itemid')?.value
     );
-    dispatch(getAllAnnouncement());
-    //  dispatch(getAnnouncementById(id));
-    //  setAnnouncementId(id);
+    dispatch(getAnnouncementById(id));
   };
+
   const _filteredAnnouncement = applySortFilter(
     announcementList,
     getComparator(order, orderBy),
@@ -321,7 +321,7 @@ export default function Announcement({ title }: GuestListPropsType) {
 
                           <TableCell align="right">
                             <IconButton
-                              itemID={title}
+                              itemID={id.toString()}
                               onClick={handleOptionClick}
                             >
                               <Icon
