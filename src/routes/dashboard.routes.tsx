@@ -18,7 +18,21 @@ const DashboardRoutes = {
     {
       exact: true,
       path: PATH_DASHBOARD.general.turnstile,
-      component: lazy(() => import('../views/libraryViews/turnstile/Turnstile'))
+      component: lazy(
+        () => import('../views/libraryViews/turnstile/TurnstileGround')
+      )
+    },
+    {
+      exact: true,
+      path: PATH_DASHBOARD.general.turnstileFirst,
+      component: lazy(
+        () => import('../views/libraryViews/turnstile/TurnstileFirst')
+      )
+    },
+    {
+      exact: true,
+      path: PATH_DASHBOARD.general.qrCode,
+      component: lazy(() => import('../views/libraryViews/turnstile/QrCode'))
     },
     {
       exact: true,
@@ -113,11 +127,6 @@ const DashboardRoutes = {
       exact: true,
       path: PATH_DASHBOARD.blog.post,
       component: lazy(() => import('../views/BlogPost'))
-    },
-    {
-      exact: true,
-      path: PATH_DASHBOARD.blog.qrCode,
-      component: lazy(() => import('../views/libraryViews/QrCode'))
     },
 
     // MANAGEMENT : USER

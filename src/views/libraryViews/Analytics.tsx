@@ -21,7 +21,7 @@ import {
 
 export default function Analytics() {
   return (
-    <Page title="Dashboard: Analytics | Minimal-UI">
+    <Page title="İstatistikler">
       <Container maxWidth="xl">
         <Box sx={{ pb: 5 }}>
           <Typography variant="h4">Ziyaretçi İstatistikleri</Typography>

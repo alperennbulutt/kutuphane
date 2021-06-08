@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { QRCode } from 'react-qr-svg';
 
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_DASHBOARD } from '../../../routes/paths';
 
 export default function QrCode() {
   return (
@@ -26,7 +26,7 @@ export default function QrCode() {
           style={{ float: 'right' }}
           variant="contained"
           component={RouterLink}
-          to={PATH_DASHBOARD.blog.qrCode}
+          to={PATH_DASHBOARD.general.table}
           startIcon={<Icon icon={plusFill} />}
         >
           Oluştur
@@ -47,7 +47,7 @@ export default function QrCode() {
             fgColor="#000000"
             level="Q"
             style={{ width: 300, maxWidth: 500 }}
-            value="https://www.youtube.com/watch?v=1yAdvoZTT8U"
+            value="https://www.youtube.com/watch?v=oSr7CUS3S_k&t=1s"
           />
         </Card>
       </Grid>

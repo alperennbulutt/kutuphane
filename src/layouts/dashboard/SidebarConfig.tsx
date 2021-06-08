@@ -49,12 +49,16 @@ const sidebarConfig = [
         icon: ICONS.dashboard,
         items: [
           {
-            title: 'Deneme',
-            href: PATH_DASHBOARD.general.analytics
+            title: 'Alt Kat Turnikeleri',
+            href: PATH_DASHBOARD.general.turnstile
           },
           {
-            title: 'Turnike Hareketleri',
-            href: PATH_DASHBOARD.general.turnstile
+            title: 'Giriş Kat Turnike Hareketleri',
+            href: PATH_DASHBOARD.general.turnstileFirst
+          },
+          {
+            title: 'QR Kod Oluştur',
+            href: PATH_DASHBOARD.general.qrCode
           }
         ]
       },

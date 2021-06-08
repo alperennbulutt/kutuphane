@@ -20,7 +20,7 @@ export default function WorkingArea() {
         style={{ float: 'right' }}
         variant="contained"
         component={RouterLink}
-        to={PATH_DASHBOARD.blog.qrCode}
+        to={PATH_DASHBOARD.general.qrCode}
         startIcon={<Icon icon={plusFill} />}
       >
         Derslik Ekle

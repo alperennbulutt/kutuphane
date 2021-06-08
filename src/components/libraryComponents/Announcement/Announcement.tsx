@@ -8,13 +8,11 @@ import {
   Box,
   Card,
   Table,
-  Avatar,
   TableRow,
   TableBody,
   TableCell,
   Container,
   IconButton,
-  Typography,
   TableContainer,
   TablePagination,
   Popover,
@@ -29,10 +27,6 @@ import { useTheme, styled } from '@material-ui/core/styles';
 
 // redux
 import { RootState } from '../../../redux/store';
-import { getUserList } from '../../../redux/slices/user';
-// routes
-// @types
-import { UserManager } from '../../../@types/user';
 // components
 import Page from '../../Page';
 import Scrollbar from '../../Scrollbar';
@@ -104,7 +98,6 @@ type GuestListPropsType = {
 
 export default function Announcement({ title }: GuestListPropsType) {
   const dispatch = useDispatch();
-  // const { userList } = useSelector((state: RootState) => state.user);
   const { announcementList, announcement } = useSelector(
     (state: RootState) => state.announcement
   );
@@ -116,8 +109,6 @@ export default function Announcement({ title }: GuestListPropsType) {
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  // const [announcementId, setAnnouncementId] = useState('');
 
   const [
     rowOptionclick,
@@ -310,8 +301,19 @@ export default function Announcement({ title }: GuestListPropsType) {
                             {title}
                           </TableCell>
                           <TableCell align="left">{description}</TableCell>
-                          <TableCell align="left">{publicationDate}</TableCell>
-                          <TableCell align="left">{takedownDate}</TableCell>
+                          <TableCell align="left">
+                            {publicationDate
+                              .toString()
+                              .slice(
+                                0,
+                                publicationDate.toString().indexOf('T')
+                              )}
+                          </TableCell>
+                          <TableCell align="left">
+                            {takedownDate
+                              .toString()
+                              .slice(0, takedownDate.toString().indexOf('T'))}
+                          </TableCell>
                           {/* <TableCell align="left">{title}</TableCell>
                           <TableCell align="left">{title}</TableCell> */}
 
@@ -402,7 +404,7 @@ export default function Announcement({ title }: GuestListPropsType) {
                     <ListItemIcon>
                       <DraftsIcon />
                     </ListItemIcon>
-                    <ListItemText primary={translate('Detay')} />
+                    <ListItemText primary={translate('Düzenle')} />
                   </ListItem>
                 </List>
               </ListWrapperStyle>

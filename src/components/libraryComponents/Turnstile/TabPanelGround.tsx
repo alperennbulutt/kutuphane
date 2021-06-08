@@ -6,10 +6,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Grid } from '@material-ui/core';
 
-import TurnstileList11 from '../../../components/libraryComponents/Turnstile/TurnstileList11';
-import TurnstileList12 from '../../../components/libraryComponents/Turnstile/TurnstileList12';
+// components
+
+import TurnstileList11 from './TurnstileList11';
+import TurnstileList12 from './TurnstileList12';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-export default function TurnstileGroundFloor() {
+export default function TabPanelGround() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -86,17 +87,11 @@ export default function TurnstileGroundFloor() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <Grid>
-            <Grid>
-              <TurnstileList11 />
-            </Grid>
-          </Grid>
+          <TurnstileList11 title="Alt kat Giriş Turnikesi" />
         </TabPanel>
 
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <Grid>
-            <TurnstileList12 />
-          </Grid>
+          <TurnstileList12 title="alt kat çıkış turnikesi" />
         </TabPanel>
       </SwipeableViews>
     </div>

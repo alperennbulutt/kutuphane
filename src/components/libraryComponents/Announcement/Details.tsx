@@ -178,6 +178,7 @@ export default function FullScreenDialogs() {
                     <Grid container spacing={2}>
                       <Grid item xs={12} sm={6}>
                         <TextField
+                          style={{ padding: 5 }}
                           fullWidth
                           label={translate('Başlık')}
                           {...getFieldProps('title')}
@@ -188,6 +189,7 @@ export default function FullScreenDialogs() {
 
                       <Grid item xs={12} sm={6}>
                         <TextField
+                          style={{ padding: 5 }}
                           fullWidth
                           label={translate('Açıklama')}
                           {...getFieldProps('description')}
@@ -199,6 +201,7 @@ export default function FullScreenDialogs() {
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <TextField
+                          style={{ padding: 5 }}
                           type="datetime-local"
                           fullWidth
                           label={translate('Yayın Tarihi')}
@@ -213,6 +216,7 @@ export default function FullScreenDialogs() {
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <TextField
+                          style={{ padding: 5 }}
                           type="datetime-local"
                           fullWidth
                           label={translate('Yayın Bitiş Tarihi')}
@@ -229,6 +233,7 @@ export default function FullScreenDialogs() {
 
                     <Grid item xs={12} sm={6}>
                       <TextField
+                        style={{ padding: 5 }}
                         select
                         fullWidth
                         label={translate('Duyuru Tipi')}

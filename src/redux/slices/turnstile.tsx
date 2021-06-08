@@ -94,12 +94,73 @@ export const { onToggleDetailModal } = slice.actions;
 
 // ----------------------------------------------------------------------
 
-export function getAllTurnstile() {
+export function getAllTurnstile11() {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get(CONSTS.TurnstileTurnstileRegisters, {});
-      dispatch(slice.actions.getAllVehicleSuccess(response.data.data));
+      const response = await axios.get(
+        CONSTS.TurnstileTurnstileRegisters11,
+        {}
+      );
+      dispatch(
+        slice.actions.getAllVehicleSuccess(
+          response.data.data.visitorInformation
+        )
+      );
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+export function getAllTurnstile12() {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get(
+        CONSTS.TurnstileTurnstileRegisters12,
+        {}
+      );
+      dispatch(
+        slice.actions.getAllVehicleSuccess(
+          response.data.data.visitorInformation
+        )
+      );
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+export function getAllTurnstile21() {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get(
+        CONSTS.TurnstileTurnstileRegisters21,
+        {}
+      );
+      dispatch(
+        slice.actions.getAllVehicleSuccess(
+          response.data.data.visitorInformation
+        )
+      );
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+export function getAllTurnstile22() {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get(
+        CONSTS.TurnstileTurnstileRegisters22,
+        {}
+      );
+      dispatch(
+        slice.actions.getAllVehicleSuccess(
+          response.data.data.visitorInformation
+        )
+      );
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

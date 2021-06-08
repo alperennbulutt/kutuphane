@@ -28,7 +28,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function LandingPage() {
   return (
-    <RootStyle title="Talas Kütüphanesi Giriş Sayfası" id="move_top">
+    <RootStyle title="Talas Belediyesi" id="move_top">
       <LandingHero />
       {/* <ContentStyle>
         <LandingMinimal />

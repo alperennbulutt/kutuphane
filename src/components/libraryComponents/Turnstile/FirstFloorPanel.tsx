@@ -6,16 +6,13 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Grid } from '@material-ui/core';
 
-import SilentLibrary from '../../../views/libraryViews/SilentLibrary';
-import QrCode from '../../../views/libraryViews/QrCode';
+// components
+
 import TurnstileList11 from './TurnstileList11';
 import TurnstileList12 from './TurnstileList12';
 import TurnstileList21 from './TurnstileList21';
 import TurnstileList22 from './TurnstileList22';
-import TurnstileGroundFloor from '../../../views/libraryViews/turnstile/TurnstileGroundFloor';
-import TurnstileFirstFloor from '../../../views/libraryViews/turnstile/TurnstileFirstFloor';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -58,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-export default function FullWidthTabs() {
+export default function TabPanelFirst() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -82,7 +79,7 @@ export default function FullWidthTabs() {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="asdasd Turnikesi" {...a11yProps(0)} />
+          <Tab label="Giriş Turnikesi" {...a11yProps(0)} />
           <Tab label="Çıkış Turnikesi" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
@@ -92,11 +89,11 @@ export default function FullWidthTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <TurnstileGroundFloor />
+          <TurnstileList21 title="giriş kat giriş turnikesi" />
         </TabPanel>
 
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <TurnstileFirstFloor />
+          <TurnstileList22 title="giriş kat çıkış turnikesi" />
         </TabPanel>
       </SwipeableViews>
     </div>

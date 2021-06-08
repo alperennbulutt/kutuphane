@@ -3,21 +3,16 @@ import { Icon } from '@iconify/react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
-
 // material
-import { useTheme, styled } from '@material-ui/core/styles';
-import DraftsIcon from '@material-ui/icons/Details';
 import {
   Box,
   Card,
   Table,
-  Avatar,
   TableRow,
   TableBody,
   TableCell,
   Container,
   IconButton,
-  Typography,
   TableContainer,
   TablePagination,
   Popover,
@@ -27,31 +22,29 @@ import {
   ListItemText,
   Checkbox
 } from '@material-ui/core';
+import DraftsIcon from '@material-ui/icons/Details';
+import { useTheme, styled } from '@material-ui/core/styles';
+
 // redux
 import { RootState } from '../../../redux/store';
-
-// routes
-// @types
-import { VisitorInformationModel } from '../../../@types/turnstileModel';
 // components
 import Page from '../../Page';
 import Scrollbar from '../../Scrollbar';
 import SearchNotFound from '../../SearchNotFound';
 import { UserListHead, UserListToolbar } from '../../user/list';
 import {
-  getAllTurnstile,
+  getAllTurnstile22,
   onToggleDetailModal
 } from '../../../redux/slices/turnstile';
-
-// burası değişecek
-import Details from '../Announcement/Details';
+import { VisitorInformationModel } from '../../../@types/turnstileModel';
+import useLocales from '../../../hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
-const TABLE_HEAD = [
-  { id: 'id', label: 'Saat', alignRight: false },
-  { id: 'title', label: 'Title', alignRight: false }
-];
+// const TABLE_HEAD = [
+//   { id: 'title', label: 'Başlık', alignRight: false },
+//   { id: 'descreption', label: 'Açıklama', alignRight: false }
+// ];
 
 // ----------------------------------------------------------------------
 
@@ -79,6 +72,8 @@ function applySortFilter(
   query: string
 ) {
   const stabilizedThis = array.map((el, index) => [el, index] as const);
+  console.log('buraya girdi');
+  console.log(array);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
@@ -87,37 +82,66 @@ function applySortFilter(
   if (query) {
     return filter(
       array,
-      (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      (_user) =>
+        _user.identificationNumber
+          .toLowerCase()
+          .indexOf(query.toLowerCase()) !== -1
     );
   }
   return stabilizedThis.map((el) => el[0]);
 }
 
-// // Propsları Bu şekilde veriyoruz
-// type TurnstileListPropsType = {
-//   title: string;
-// };
+// Propsları Bu şekilde veriyoruz
+type GuestListPropsType = {
+  title: string;
+};
 
-export default function TurnstileList22() {
+export default function TurnstileList22({ title }: GuestListPropsType) {
   const dispatch = useDispatch();
-  const { userList } = useSelector((state: RootState) => state.user);
   const { turnstileList, turnstile } = useSelector(
     (state: RootState) => state.turnstile
   );
+  const { allLang, currentLang, translate, onChangeLang } = useLocales();
+
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [selected, setSelected] = useState<string[]>([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
   const [
     rowOptionclick,
     setRowOptionclick
   ] = useState<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    dispatch(getAllTurnstile());
+    dispatch(getAllTurnstile22());
   }, [dispatch]);
+
+  const TABLE_HEAD = [
+    {
+      id: 'name',
+      label: translate('Ad/Soyad'),
+      alignRight: false
+    },
+    {
+      id: 'identificationNumber',
+      label: translate('Tc Kimlik'),
+      alignRight: false
+    },
+    {
+      id: 'passingDate',
+      label: translate('Geçiş Saati'),
+      alignRight: false
+    },
+
+    { id: '' },
+    { id: '' }
+
+    // { id: '' },
+    // { id: '' }
+  ];
 
   const handleRequestSort = (property: string) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -127,7 +151,7 @@ export default function TurnstileList22() {
 
   const handleSelectAllClick = (checked: boolean) => {
     if (checked) {
-      const newSelecteds = turnstileList.map((n) => n.name);
+      const newSelecteds = turnstileList.map((n) => n.identificationNumber);
       setSelected(newSelecteds);
       return;
     }
@@ -178,8 +202,12 @@ export default function TurnstileList22() {
     setRowOptionclick(null);
   };
 
+  // const handleRemoveAnnouncement = (anouncementId: string[]) => {
+  //   dispatch(deleteAnnouncement(vehicleId));
+  // };
+
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userList.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - turnstileList.length) : 0;
 
   const filteredUsers = applySortFilter(
     turnstileList,
@@ -188,18 +216,30 @@ export default function TurnstileList22() {
   );
   const handleOptionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setRowOptionclick(event.currentTarget);
-    const announcementId = String(
+    const id = Number(
       event.currentTarget.attributes.getNamedItem('itemid')?.value
     );
-    // dispatch(getAllAnnouncement());
-    // setVehicleId(vehicleId);
+    // dispatch(getAnnouncementById(id));
   };
+
+  const _filteredAnnouncement = applySortFilter(
+    turnstileList,
+    getComparator(order, orderBy),
+    filterName
+  );
+
+  // const filteredAnnouncement = _filteredAnnouncement.filter(
+  //   (x) => x.isDeleted === false
+  // );
+
+  // const isUserNotFound = filteredAnnouncement.length === 0;
 
   const isUserNotFound = filteredUsers.length === 0;
 
   return (
     <Page title="User: List | Minimal-UI">
       <Container>
+        <h1 style={{ padding: 20 }}>{title}</h1>
         <Card>
           <UserListToolbar
             numSelected={selected.length}
@@ -211,13 +251,13 @@ export default function TurnstileList22() {
           />
 
           <Scrollbar>
-            <TableContainer>
+            <TableContainer sx={{ minWidth: 300 }}>
               <Table>
                 <UserListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={userList.length}
+                  rowCount={turnstileList.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
@@ -227,36 +267,49 @@ export default function TurnstileList22() {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
                       const {
+                        identificationNumber,
                         name,
-
+                        passingDate,
+                        passingTypeId,
+                        passingTypeName,
                         surname
                       } = row;
-                      const isItemSelected = selected.indexOf(name) !== -1;
+                      const isItemSelected = selected.indexOf(title) !== -1;
 
                       return (
                         <TableRow
                           hover
-                          key={name}
+                          key={identificationNumber}
                           tabIndex={-1}
                           role="checkbox"
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
-                          onClick={() => handleClick(name)}
+                          // onClick={() => handleClick(title)}
                         >
                           <TableCell
                             padding="checkbox"
-                            onClick={() => handleClick(name)}
+                            onClick={() => handleClick(title)}
                           >
                             <Checkbox checked={isItemSelected} />
                           </TableCell>
                           <TableCell component="th" scope="row" padding="none">
                             {name}
                           </TableCell>
-                          <TableCell align="left">{surname}</TableCell>
-                          <TableCell align="left">{surname}</TableCell>
-                          <TableCell align="left">{surname}</TableCell>
-                          <TableCell align="left">{surname}</TableCell>
-                          <TableCell align="left">{surname}</TableCell>
+                          <TableCell align="left">
+                            {identificationNumber}
+                          </TableCell>
+                          <TableCell align="left">
+                            {passingDate
+                              .toString()
+                              .slice(0, passingDate.toString().indexOf('T'))}
+                          </TableCell>
+                          {/* <TableCell align="left">
+                            {takedownDate
+                              .toString()
+                              .slice(0, takedownDate.toString().indexOf('T'))}
+                          </TableCell> */}
+                          {/* <TableCell align="left">{title}</TableCell>
+                          <TableCell align="left">{title}</TableCell> */}
 
                           {/* <TableCell align="left">
                                 {isRegistered ? 'Yes' : 'No'}
@@ -264,7 +317,7 @@ export default function TurnstileList22() {
 
                           <TableCell align="right">
                             <IconButton
-                              itemID={name}
+                              itemID={identificationNumber.toString()}
                               onClick={handleOptionClick}
                             >
                               <Icon
@@ -325,7 +378,7 @@ export default function TurnstileList22() {
               </Table>
             </TableContainer>
           </Scrollbar>
-          <Popover
+          {/* <Popover
             open={Boolean(rowOptionclick)}
             anchorEl={rowOptionclick}
             onClose={handleOptionClose}
@@ -345,18 +398,17 @@ export default function TurnstileList22() {
                     <ListItemIcon>
                       <DraftsIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Detay" />
+                    <ListItemText primary={translate('Düzenle')} />
                   </ListItem>
                 </List>
               </ListWrapperStyle>
             </Box>
-          </Popover>
-          <Details />
+          </Popover> */}
 
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={userList.length}
+            count={turnstileList.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(e, page) => setPage(page)}

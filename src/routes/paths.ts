@@ -40,6 +40,9 @@ export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   general: {
     turnstile: path(ROOTS_DASHBOARD, '/turnstile'),
+    turnstileFirst: path(ROOTS_DASHBOARD, '/turnstile/first/floor'),
+    qrCode: path(ROOTS_DASHBOARD, '/qrcode'),
+
     ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
     analytics: path(ROOTS_DASHBOARD, '/analytics'),
     workingArea: path(ROOTS_DASHBOARD, '/workingArea'),
@@ -94,8 +97,7 @@ export const PATH_DASHBOARD = {
       ROOTS_DASHBOARD,
       '/blog/post/portfolio-review-is-this-portfolio-too-creative'
     ),
-    newPost: path(ROOTS_DASHBOARD, '/blog/new-post'),
-    qrCode: path(ROOTS_DASHBOARD, '/qrcode')
+    newPost: path(ROOTS_DASHBOARD, '/blog/new-post')
   },
   foundations: {
     root: path(ROOTS_DASHBOARD, '/foundations'),
