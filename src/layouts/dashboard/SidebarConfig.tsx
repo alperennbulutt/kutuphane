@@ -69,8 +69,25 @@ const sidebarConfig = [
       },
       {
         title: 'Çalışma Alanları',
-        href: PATH_DASHBOARD.general.workingArea,
-        icon: ICONS.map
+        href: PATH_DASHBOARD.workingArea.root,
+        icon: ICONS.map,
+        items: [
+          {
+            title: 'Derslikler',
+            href: PATH_DASHBOARD.workingArea.classes
+            // icon: ICONS.analytics
+          },
+          {
+            title: 'Sessiz Kütüphane',
+            href: PATH_DASHBOARD.workingArea.quietLibrary
+            // icon: ICONS.analytics
+          },
+          {
+            title: 'Çalışma Odaları',
+            href: PATH_DASHBOARD.workingArea.workingRooms
+            // icon: ICONS.analytics
+          }
+        ]
       },
       {
         title: 'Sessiz Kütüphane',
@@ -94,8 +111,20 @@ const sidebarConfig = [
       },
       {
         title: 'Duyurular',
-        href: PATH_DASHBOARD.general.announcement,
-        icon: ICONS.editor
+        href: PATH_DASHBOARD.announcement.root,
+        icon: ICONS.editor,
+        items: [
+          {
+            title: 'Başkanın Mesajı',
+            href: PATH_DASHBOARD.announcement.presidentAnnouncement
+            // icon: ICONS.analytics
+          },
+          {
+            title: 'Duyurular',
+            href: PATH_DASHBOARD.announcement.normalAnnouncement
+            // icon: ICONS.analytics
+          }
+        ]
       }
     ]
   }

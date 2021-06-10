@@ -1,8 +1,6 @@
 import { filter } from 'lodash';
-import { Icon } from '@iconify/react';
 import { useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import { useTheme } from '@material-ui/core/styles';
 // material
 import {
@@ -115,7 +113,7 @@ type TableListPropsType = {
   title: string;
 };
 
-export default function SilentList({ title }: TableListPropsType) {
+export default function Classes({ title }: TableListPropsType) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
@@ -211,10 +209,10 @@ export default function SilentList({ title }: TableListPropsType) {
   const isUserNotFound = filteredUsers.length === 0;
 
   return (
-    <Page title="User: List | Minimal-UI">
+    <Page title="Çalışma Alanları | Derslikler">
       <Container>
         <h1>{title}</h1>
-        <br />
+        {/* <br />
         <Grid container spacing={2} padding={2}>
           <Grid xs={12} sm={3} paddingRight={1}>
             <TextField type="datetime-local" fullWidth>
@@ -243,7 +241,7 @@ export default function SilentList({ title }: TableListPropsType) {
               color="primary"
               onClick={handleClickOpen}
             >
-              Masa Ekle
+              Derslik Ekle
             </Button>
             <Dialog
               // fullScreen
@@ -267,7 +265,7 @@ export default function SilentList({ title }: TableListPropsType) {
               </Grid>
             </Dialog>
           </Grid>
-        </Grid>
+        </Grid> */}
 
         <Card>
           <UserListToolbar

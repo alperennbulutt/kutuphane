@@ -41,6 +41,11 @@ import {
 import { AnnouncementModel } from '../../../@types/announcementModel';
 import useLocales from '../../../hooks/useLocales';
 import Details from './Details';
+import HeaderDashboard from '../../HeaderDashboard';
+import FullScreenDialogs from './FullScreenDialogs';
+
+// routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -241,9 +246,17 @@ export default function Announcement({ title }: GuestListPropsType) {
   const isUserNotFound = filteredUsers.length === 0;
 
   return (
-    <Page title="User: List | Minimal-UI">
+    <Page title="Duyurular">
       <Container>
         <h1 style={{ padding: 20 }}>{title}</h1>
+        <HeaderDashboard
+          heading="Duyurular"
+          links={[
+            { name: 'Ana Sayfa', href: PATH_DASHBOARD.root },
+            { name: 'Duyurular' }
+          ]}
+          action={<FullScreenDialogs title="Duyuru Ekle" />}
+        />
         <Card>
           <UserListToolbar
             numSelected={selected.length}

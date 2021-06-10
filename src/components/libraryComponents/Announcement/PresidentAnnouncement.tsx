@@ -47,6 +47,10 @@ import {
 import { PresidentAnnouncementModel } from '../../../@types/presidentAnnouncementModel';
 import useLocales from '../../../hooks/useLocales';
 import Details from './Details';
+import HeaderDashboard from '../../HeaderDashboard';
+import FullScreenDialogs from './FullScreenDialogs';
+// routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -128,32 +132,32 @@ export default function PresindentAnnouncement({ title }: GuestListPropsType) {
   const TABLE_HEAD = [
     {
       id: 'id',
-      label: translate('vehicle.list.tab.table.vehicletypecode'),
+      label: translate('id'),
       alignRight: false
     },
     {
       id: 'title',
-      label: translate('vehicle.list.tab.table.vehicleplate'),
+      label: translate('Başlık'),
       alignRight: false
     },
     {
       id: 'description',
-      label: translate('vehicle.list.tab.table.passengercapacity'),
+      label: translate('Açıklama'),
       alignRight: false
     },
     {
       id: 'vehicleStatusCode',
-      label: translate('vehicle.list.tab.table.vehiclestatuscode'),
+      label: translate('Açıklama'),
       alignRight: false
     },
     {
       id: 'vehicleBrand',
-      label: translate('vehicle.list.tab.table.vehiclebrand'),
+      label: translate('Açıklama'),
       alignRight: false
     },
     {
       id: 'vehicleModel',
-      label: translate('vehicle.list.tab.table.vehiclemodel'),
+      label: translate('Açıklama'),
       alignRight: false
     },
     { id: '' }
@@ -256,9 +260,17 @@ export default function PresindentAnnouncement({ title }: GuestListPropsType) {
   // const isUserNotFound = filteredUsers.length === 0;
 
   return (
-    <Page title="User: List | Minimal-UI">
+    <Page title="Başkanın Mesajı">
       <Container>
-        <h1 style={{ padding: 20 }}>{title}</h1>
+        <HeaderDashboard
+          heading="Duyurular"
+          links={[
+            { name: 'Ana Sayfa', href: PATH_DASHBOARD.root },
+            { name: 'Başkanın Mesajı' }
+          ]}
+          action={<FullScreenDialogs title="Mesaj Ekle" />}
+        />
+
         <Card>
           <UserListToolbar
             numSelected={selected.length}

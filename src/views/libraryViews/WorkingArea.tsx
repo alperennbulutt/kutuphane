@@ -6,7 +6,7 @@ import { PATH_DASHBOARD } from '../../routes/paths';
 
 import Classes from '../../components/libraryComponents/WorkingAreaComponents/Classes';
 import QuietLibrary from '../../components/libraryComponents/WorkingAreaComponents/QuietLibrary';
-import WorkingRooms from '../../components/libraryComponents/WorkingAreaComponents/WorkingRooms';
+import StudiesRooms from '../../components/libraryComponents/WorkingAreaComponents/StudiesRooms';
 import { MSwitch } from '../../components/@material-extend';
 
 export default function WorkingArea() {
@@ -25,14 +25,12 @@ export default function WorkingArea() {
       >
         Derslik Ekle
       </Button>
-
       <Grid>
         <Classes title="Derslikler" />
         <br />
         <QuietLibrary title="Sessiz Kütüphane" />
         <br />
-
-        <WorkingRooms title="Çalışma Odaları" />
+        <StudiesRooms title="Çalışma Odaları" />
       </Grid>
     </Container>
   );

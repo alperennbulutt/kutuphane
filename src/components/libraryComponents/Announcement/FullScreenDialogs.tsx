@@ -73,7 +73,12 @@ interface InitialState
   afterSubmit?: string;
 }
 
-export default function FullScreenDialogs() {
+// Propsları Bu şekilde veriyoruz
+type GetPropsType = {
+  title: string;
+};
+
+export default function FullScreenDialogs({ title }: GetPropsType) {
   const dispatch = useDispatch();
   const { allLang, currentLang, translate, onChangeLang } = useLocales();
   const [open, setOpen] = useState(false);
@@ -199,7 +204,7 @@ export default function FullScreenDialogs() {
         onClick={handleClickOpen}
         startIcon={<Icon icon={plusFill} />}
       >
-        {translate('Duyuru Ekle')}
+        {title}
       </Button>
 
       <Dialog

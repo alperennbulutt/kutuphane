@@ -301,7 +301,7 @@ export default function TurnstileList12({ title }: GuestListPropsType) {
                           <TableCell align="left">
                             {passingDate
                               .toString()
-                              .slice(0, passingDate.toString().indexOf('T'))}
+                              .slice(0, passingDate.indexOf('T'))}
                           </TableCell>
                           {/* <TableCell align="left">
                             {takedownDate

@@ -112,6 +112,8 @@ export const CONSTS = {
   WorkingAreaAddClassroom: '/api/WorkingArea/AddClassroom',
   WorkingAreaWorkingAreaStatus:
     '/api/WorkingArea/WorkingAreaStatus/{workingAreaId}/{isOpenMassAppointmentId}',
+  WorkingAreaGetQuitLibrary: '/api/WorkingArea/GetQuitLibrary',
+  WorkingAreaGetStudiesRoom: '/api/WorkingArea/GetStudiesRoom',
   WorkingAreaDeleteWorkingArea:
     '/api/WorkingArea/DeleteWorkingArea/{workingAreaId}',
   WorkingAreaWorkingAreaList: '/api/WorkingArea/WorkingAreaList',

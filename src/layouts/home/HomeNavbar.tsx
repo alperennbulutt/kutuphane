@@ -171,7 +171,7 @@ export default function HomeNavbar() {
             target="_blank"
             href={PATH_HOME.dashboard}
           >
-            Login
+            Giriş
           </Button>
 
           <Hidden mdUp>

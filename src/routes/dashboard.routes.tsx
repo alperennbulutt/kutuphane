@@ -15,18 +15,35 @@ const DashboardRoutes = {
   routes: [
     // GENERAL
     // ----------------------------------------------------------------------
+
     {
       exact: true,
-      path: PATH_DASHBOARD.general.turnstile,
+      path: PATH_DASHBOARD.workingArea.classes,
       component: lazy(
-        () => import('../views/libraryViews/turnstile/TurnstileGround')
+        () =>
+          import(
+            '../components/libraryComponents/WorkingAreaComponents/Classes'
+          )
       )
     },
     {
       exact: true,
-      path: PATH_DASHBOARD.general.turnstileFirst,
+      path: PATH_DASHBOARD.workingArea.quietLibrary,
       component: lazy(
-        () => import('../views/libraryViews/turnstile/TurnstileFirst')
+        () =>
+          import(
+            '../components/libraryComponents/WorkingAreaComponents/QuietLibrary'
+          )
+      )
+    },
+    {
+      exact: true,
+      path: PATH_DASHBOARD.workingArea.workingRooms,
+      component: lazy(
+        () =>
+          import(
+            '../components/libraryComponents/WorkingAreaComponents/StudiesRooms'
+          )
       )
     },
     {
@@ -42,7 +59,7 @@ const DashboardRoutes = {
 
     {
       exact: true,
-      path: PATH_DASHBOARD.general.workingArea,
+      path: PATH_DASHBOARD.workingArea.root,
       component: lazy(() => import('../views/libraryViews/WorkingArea'))
     },
     {
@@ -71,16 +88,52 @@ const DashboardRoutes = {
       component: lazy(() => import('../views/libraryViews/Table'))
     },
 
+    // Announcement ----------------------------------------------------------------------------
+
+    // {
+    //   exact: true,
+    //   path: PATH_DASHBOARD.announcement.root,
+    //   component: lazy(() => import('../views/libraryViews/Announcement'))
+    // },
     {
       exact: true,
-      path: PATH_DASHBOARD.general.announcement,
-      component: lazy(() => import('../views/libraryViews/Announcement'))
+      path: PATH_DASHBOARD.announcement.normalAnnouncement,
+      component: lazy(
+        () =>
+          import('../components/libraryComponents/Announcement/Announcement')
+      )
     },
+    {
+      exact: true,
+      path: PATH_DASHBOARD.announcement.presidentAnnouncement,
+      component: lazy(
+        () =>
+          import(
+            '../components/libraryComponents/Announcement/PresidentAnnouncement'
+          )
+      )
+    },
+
+    // Turnstile -----------------------------------------------------------------------------------------
 
     {
       exact: true,
       path: PATH_DASHBOARD.root,
       component: () => <Redirect to={PATH_DASHBOARD.general.turnstile} />
+    },
+    {
+      exact: true,
+      path: PATH_DASHBOARD.general.turnstile,
+      component: lazy(
+        () => import('../views/libraryViews/turnstile/TurnstileGround')
+      )
+    },
+    {
+      exact: true,
+      path: PATH_DASHBOARD.general.turnstileFirst,
+      component: lazy(
+        () => import('../views/libraryViews/turnstile/TurnstileFirst')
+      )
     },
 
     // MANAGEMENT : E-COMMERCE

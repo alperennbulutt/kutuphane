@@ -13,8 +13,11 @@ import authJwtReducer from './slices/authJwt';
 import settingsReducer from './slices/settings';
 import calendarReducer from './slices/calendar';
 import announcementReducer from './slices/announcement';
+import quietReducer from './slices/quietLibrary';
+import studiesReducer from './slices/studiesRoom';
 import tableReducer from './slices/table';
 import turnstileReducer from './slices/turnstile';
+import analyticsReducer from './slices/analytics';
 import presidentAnnouncementReducer from './slices/presidentAnnouncement';
 import classesReducer from './slices/classes';
 
@@ -50,9 +53,12 @@ const rootReducer = combineReducers({
   user: userReducer,
   table: tableReducer,
   announcement: announcementReducer,
+  quiet: quietReducer,
+  studies: studiesReducer,
   presidentAnnouncement: presidentAnnouncementReducer,
   classes: classesReducer,
   turnstile: turnstileReducer,
+  analytics: analyticsReducer,
   settings: settingsReducer,
   calendar: calendarReducer,
   product: persistReducer(productPersistConfig, productReducer),

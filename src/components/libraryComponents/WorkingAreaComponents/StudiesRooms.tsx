@@ -8,36 +8,45 @@ import {
   Box,
   Card,
   Table,
-  Avatar,
   TableRow,
   TableBody,
   TableCell,
   Container,
   IconButton,
-  Typography,
   TableContainer,
-  TablePagination
+  TablePagination,
+  Popover,
+  List,
+  ListItemIcon,
+  ListItem,
+  ListItemText,
+  Checkbox
 } from '@material-ui/core';
+import DraftsIcon from '@material-ui/icons/Details';
+import { useTheme, styled } from '@material-ui/core/styles';
+
 // redux
 import { RootState } from '../../../redux/store';
-import { getUserList } from '../../../redux/slices/user';
-// routes
-// @types
-import { UserManager } from '../../../@types/user';
 // components
 import Page from '../../Page';
 import Scrollbar from '../../Scrollbar';
 import SearchNotFound from '../../SearchNotFound';
 import { UserListHead, UserListToolbar } from '../../user/list';
-import { getAllAnnouncement } from '../../../redux/slices/announcement';
-import { AnnouncementModel } from '../../../@types/announcementModel';
+import {
+  GetAllStudiesRoom,
+  onToggleDetailModal,
+  getStudiesRoomById
+} from '../../../redux/slices/studiesRoom';
+import { StudiesRoomModel } from '../../../@types/studiesRoomModel';
+import useLocales from '../../../hooks/useLocales';
+// import Details from './Details';
 
 // ----------------------------------------------------------------------
 
-const TABLE_HEAD = [
-  { id: 'id', label: 'Saat', alignRight: false },
-  { id: 'title', label: 'Title', alignRight: false }
-];
+// const TABLE_HEAD = [
+//   { id: 'title', label: 'Başlık', alignRight: false },
+//   { id: 'descreption', label: 'Açıklama', alignRight: false }
+// ];
 
 // ----------------------------------------------------------------------
 
@@ -60,11 +69,13 @@ function getComparator(order: string, orderBy: string) {
 }
 
 function applySortFilter(
-  array: AnnouncementModel[],
+  array: StudiesRoomModel[],
   comparator: (a: any, b: any) => number,
   query: string
 ) {
   const stabilizedThis = array.map((el, index) => [el, index] as const);
+  console.log('buraya girdi');
+  console.log(array);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
@@ -73,7 +84,8 @@ function applySortFilter(
   if (query) {
     return filter(
       array,
-      (_user) => _user.title.toLowerCase().indexOf(query.toLowerCase()) !== -1
+      (_user) =>
+        _user.workingAreaName.toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
   }
   return stabilizedThis.map((el) => el[0]);
@@ -84,26 +96,54 @@ type GuestListPropsType = {
   title: string;
 };
 
-export default function WorkingRooms({ title }: GuestListPropsType) {
+export default function StudiesRooms({ title }: GuestListPropsType) {
   const dispatch = useDispatch();
-  const { userList } = useSelector((state: RootState) => state.user);
-  const { announcementList, announcement } = useSelector(
-    (state: RootState) => state.announcement
+  const { studiesRoomList, studies } = useSelector(
+    (state: RootState) => state.studies
   );
+  const { allLang, currentLang, translate, onChangeLang } = useLocales();
+
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [selected, setSelected] = useState<string[]>([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
   const [
     rowOptionclick,
     setRowOptionclick
   ] = useState<HTMLButtonElement | null>(null);
 
-  // useEffect(() => {
-  //   dispatch(getAllAnnouncement());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(GetAllStudiesRoom());
+  }, [dispatch]);
+
+  const TABLE_HEAD = [
+    {
+      id: 'title',
+      label: translate('Başlık'),
+      alignRight: false
+    },
+    {
+      id: 'descreption',
+      label: translate('Açıklama'),
+      alignRight: false
+    },
+    {
+      id: 'publicationDate',
+      label: translate('Yayınlanma Tarihi'),
+      alignRight: false
+    },
+    {
+      id: 'takedownDate',
+      label: translate('Bitiş Tarihi'),
+      alignRight: false
+    },
+    { id: '' }
+    // { id: '' },
+    // { id: '' }
+  ];
 
   const handleRequestSort = (property: string) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -113,7 +153,7 @@ export default function WorkingRooms({ title }: GuestListPropsType) {
 
   const handleSelectAllClick = (checked: boolean) => {
     if (checked) {
-      const newSelecteds = announcementList.map((n) => n.title);
+      const newSelecteds = studiesRoomList.map((n) => n.workingAreaName);
       setSelected(newSelecteds);
       return;
     }
@@ -144,39 +184,74 @@ export default function WorkingRooms({ title }: GuestListPropsType) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const handleOptionClose = () => {
+    setRowOptionclick(null);
+  };
 
   const handleFilterByName = (filterName: string) => {
     setFilterName(filterName);
   };
+  // popever list
+  const ListWrapperStyle = styled('div')(({ theme }) => ({
+    width: '100%',
+    boxShadow: theme.customShadows.z8,
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: theme.palette.background.paper
+  }));
+
+  const handleDetailModalOpen = () => {
+    dispatch(onToggleDetailModal(true));
+    setRowOptionclick(null);
+  };
+
+  // const handleRemoveAnnouncement = (anouncementId: string[]) => {
+  //   dispatch(deleteAnnouncement(vehicleId));
+  // };
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userList.length) : 0;
+    page > 0
+      ? Math.max(0, (1 + page) * rowsPerPage - studiesRoomList.length)
+      : 0;
 
   const filteredUsers = applySortFilter(
-    announcementList,
+    studiesRoomList,
     getComparator(order, orderBy),
     filterName
   );
   const handleOptionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setRowOptionclick(event.currentTarget);
-    const announcementId = String(
+    const id = Number(
       event.currentTarget.attributes.getNamedItem('itemid')?.value
     );
-    // dispatch(getAllAnnouncement());
-    // setVehicleId(vehicleId);
+    dispatch(getStudiesRoomById(id));
   };
+
+  const _filteredAnnouncement = applySortFilter(
+    studiesRoomList,
+    getComparator(order, orderBy),
+    filterName
+  );
+
+  // const filteredAnnouncement = _filteredAnnouncement.filter(
+  //   (x) => x.isDeleted === false
+  // );
+
+  // const isUserNotFound = filteredAnnouncement.length === 0;
 
   const isUserNotFound = filteredUsers.length === 0;
 
   return (
-    <Page title="User: List | Minimal-UI">
+    <Page title="Çalışma Alanları | Çalışma Odaları">
       <Container>
-        <h1>{title}</h1>
+        <h1 style={{ padding: 20 }}>{title}</h1>
         <Card>
           <UserListToolbar
             numSelected={selected.length}
             filterName={filterName}
             onFilterName={handleFilterByName}
+            // onDelete={handleRemoveVehicle}
+            // selected={selected}
+            // translate={translate}
           />
 
           <Scrollbar>
@@ -186,7 +261,7 @@ export default function WorkingRooms({ title }: GuestListPropsType) {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={userList.length}
+                  rowCount={studiesRoomList.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
@@ -195,20 +270,73 @@ export default function WorkingRooms({ title }: GuestListPropsType) {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const { title, id } = row;
+                      const {
+                        currentCapacity,
+                        isOpenMassAppointment,
+                        location,
+                        tableOfNumber,
+                        workingAreaId,
+                        workingAreaName,
+                        workingAreaTypeId,
+                        workingAreaTypeName
+                      } = row;
                       const isItemSelected = selected.indexOf(title) !== -1;
 
                       return (
                         <TableRow
                           hover
-                          key={id}
+                          key={workingAreaId}
                           tabIndex={-1}
                           role="checkbox"
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
-                          onClick={() => handleClick(title)}
+                          // onClick={() => handleClick(title)}
                         >
+                          <TableCell
+                            padding="checkbox"
+                            onClick={() => handleClick(title)}
+                          >
+                            <Checkbox checked={isItemSelected} />
+                          </TableCell>
                           <TableCell component="th" scope="row" padding="none">
+                            {title}
+                          </TableCell>
+                          <TableCell align="left">{workingAreaName}</TableCell>
+                          {/* <TableCell align="left">
+                            {publicationDate
+                              .toString()
+                              .slice(
+                                0,
+                                publicationDate.toString().indexOf('T')
+                              )}
+                          </TableCell>
+                          <TableCell align="left">
+                            {takedownDate
+                              .toString()
+                              .slice(0, takedownDate.toString().indexOf('T'))}
+                          </TableCell> */}
+                          <TableCell align="left">{location}</TableCell>
+                          <TableCell align="left">
+                            {workingAreaTypeName}
+                          </TableCell>
+
+                          {/* <TableCell align="left">
+                                {isRegistered ? 'Yes' : 'No'}
+                              </TableCell> */}
+
+                          <TableCell align="right">
+                            <IconButton
+                              itemID={workingAreaId.toString()}
+                              onClick={handleOptionClick}
+                            >
+                              <Icon
+                                width={20}
+                                height={20}
+                                icon={moreVerticalFill}
+                              />
+                            </IconButton>
+                          </TableCell>
+                          {/* <TableCell component="th" scope="row" padding="none">
                             <Box
                               sx={{
                                 py: 2,
@@ -235,7 +363,7 @@ export default function WorkingRooms({ title }: GuestListPropsType) {
                                 icon={moreVerticalFill}
                               />
                             </IconButton>
-                          </TableCell>
+                          </TableCell> */}
                         </TableRow>
                       );
                     })}
@@ -259,11 +387,37 @@ export default function WorkingRooms({ title }: GuestListPropsType) {
               </Table>
             </TableContainer>
           </Scrollbar>
+          {/* <Popover
+            open={Boolean(rowOptionclick)}
+            anchorEl={rowOptionclick}
+            onClose={handleOptionClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'center'
+            }}
+          >
+            <Box sx={{ p: 0, maxWidth: 280 }}>
+              <ListWrapperStyle>
+                <List component="nav" aria-label="main mailbox folders">
+                  <ListItem button onClick={handleDetailModalOpen}>
+                    <ListItemIcon>
+                      <DraftsIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={translate('Düzenle')} />
+                  </ListItem>
+                </List>
+              </ListWrapperStyle>
+            </Box>
+          </Popover> */}
 
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={userList.length}
+            count={studiesRoomList.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(e, page) => setPage(page)}

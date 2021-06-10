@@ -1,8 +1,6 @@
 import { filter } from 'lodash';
-import { Icon } from '@iconify/react';
 import { useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import { useTheme } from '@material-ui/core/styles';
 // material
 import {
@@ -10,17 +8,13 @@ import {
   Box,
   Card,
   Table,
-  Avatar,
   TableRow,
   TableBody,
   TableCell,
   Container,
-  IconButton,
-  Typography,
   TableContainer,
   TablePagination,
   Button,
-  Checkbox,
   TextField,
   Grid,
   Dialog
@@ -241,7 +235,7 @@ export default function SilentList({ title }: TableListPropsType) {
               color="primary"
               onClick={handleClickOpen}
             >
-              Masa Ekle
+              Derslik Ekle
             </Button>
             <Dialog
               // fullScreen

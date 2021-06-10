@@ -41,17 +41,26 @@ export const PATH_DASHBOARD = {
   general: {
     turnstile: path(ROOTS_DASHBOARD, '/turnstile'),
     turnstileFirst: path(ROOTS_DASHBOARD, '/turnstile/first/floor'),
-    qrCode: path(ROOTS_DASHBOARD, '/qrcode'),
-
+    qrCode: path(ROOTS_DASHBOARD, '/turnstile/qrcode'),
     ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
     analytics: path(ROOTS_DASHBOARD, '/analytics'),
-    workingArea: path(ROOTS_DASHBOARD, '/workingArea'),
     silentLibrary: path(ROOTS_DASHBOARD, '/silentLibrary'),
     apointment: path(ROOTS_DASHBOARD, '/apointment'),
     workingSchedule: path(ROOTS_DASHBOARD, '/workingSchedule'),
     table: path(ROOTS_DASHBOARD, '/table'),
-    announcement: path(ROOTS_DASHBOARD, '/announcement'),
     showApointment: path(ROOTS_DASHBOARD, '/showApointment')
+  },
+  announcement: {
+    root: path(ROOTS_DASHBOARD, '/announcement'),
+    presidentAnnouncement: path(ROOTS_DASHBOARD, '/announcement/president'),
+    normalAnnouncement: path(ROOTS_DASHBOARD, '/announcement/normal')
+  },
+
+  workingArea: {
+    root: path(ROOTS_DASHBOARD, '/workingArea'),
+    classes: path(ROOTS_DASHBOARD, '/workingArea/classes'),
+    quietLibrary: path(ROOTS_DASHBOARD, '/workingArea/quiet/library'),
+    workingRooms: path(ROOTS_DASHBOARD, '/workingArea/working/rooms')
   },
   mail: {
     root: path(ROOTS_DASHBOARD, '/mail'),

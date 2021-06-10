@@ -121,6 +121,7 @@ const routes: RouteItem[] = [
     path: PATH_AUTH.loginUnprotected,
     component: lazy(() => import('../views/authentication/Login'))
   },
+
   {
     exact: true,
     guard: GuestGuard,

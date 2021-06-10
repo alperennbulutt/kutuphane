@@ -11,20 +11,8 @@ import { PATH_DASHBOARD } from '../../routes/paths';
 export default function Announcemnet() {
   return (
     <Container>
-      <Grid>
-        <HeaderDashboard
-          heading="Duyurular"
-          links={[
-            { name: 'Ana Sayfa', href: PATH_DASHBOARD.root },
-            { name: 'Duyurular' }
-          ]}
-          action={<FullScreenDialogs />}
-        />
-        <LeadAnnouncement title="Başkanın Mesajı" />
-        <br />
-        <Announcement title="Duyuru" />
-        <br />
-      </Grid>
+      <LeadAnnouncement title="Başkanın Mesajı" />
+      <Announcement title="Duyuru" />
     </Container>
   );
 }
