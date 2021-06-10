@@ -80,8 +80,7 @@ function applySortFilter(
   query: string
 ) {
   const stabilizedThis = array.map((el, index) => [el, index] as const);
-  console.log('buraya girdi');
-  console.log(array);
+
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;

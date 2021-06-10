@@ -1,5 +1,5 @@
 import { map } from 'lodash';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'; // redux bu
 import { dispatch } from '../store';
 // utils
 import axios from '../../utils/axios';
@@ -11,22 +11,15 @@ import { CONSTS } from './const';
 import { MapDeckglOverlay } from '../../components/map';
 // ----------------------------------------------------------------------
 
-// type VehicleState = {
-//   isLoading: boolean;
-//   error: boolean;
-//   detailModalIsOpen: boolean;
-//   vehicleList: VehicleManager[];
-//   vehicle: VehicleManager;
-//   vehicleDocuments: VehicleDocumentManager[];
-// };
 type AnnouncementState = {
   isLoading: boolean;
   error: boolean;
   detailModalIsOpen: boolean;
-  announcementList: AnnouncementModel[];
+  announcementList: AnnouncementModel[]; // farklı olan diğerleri fix
   announcement: AnnouncementModel;
 };
 const announcementInit = {
+  // gelen modelin propertylerin tipleri
   id: 0,
   title: '',
   description: '',
@@ -37,11 +30,12 @@ const announcementInit = {
 };
 
 const initialState: AnnouncementState = {
+  // redux a bağlanıyor böyle
   isLoading: false,
   error: false,
   detailModalIsOpen: false,
-  announcementList: [],
-  announcement: announcementInit
+  announcementList: [], // diğerleri fix
+  announcement: announcementInit // buda öyle announcementInit yukarıda
 };
 
 const slice = createSlice({
@@ -61,6 +55,7 @@ const slice = createSlice({
 
     // GET PROFILE
     getAllAnnouncementSuccess(state, action) {
+      // her  metod için 2 tane error ve succes metodları yazdık
       state.isLoading = false;
       state.announcementList = action.payload;
     },
